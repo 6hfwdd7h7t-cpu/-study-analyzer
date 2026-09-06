@@ -31,7 +31,7 @@
 </head>
 <body>
 <main class="app">
-  <header><div class="title-wrap"><h1>学習・認知パフォーマンス分析</h1><p>正答 × 反応時間 × 自信度</p></div><div class="pill">Web Ver.2</div></header>
+  <header><div class="title-wrap"><h1>学習・認知パフォーマンス分析</h1><p>正答 × 反応時間 × 自信度</p></div><div class="pill">Web Ver.2.1</div></header>
 
   <section id="homeView" class="view active">
     <div class="card"><h2>今日の学習</h2><p class="muted small">登録問題からランダムに出題します。</p>
@@ -71,6 +71,13 @@
     </div></div>
     <div id="qtabList" class="hidden"><div class="card"><h2>登録済み問題</h2><div id="questionList" class="list"></div></div></div>
     <div id="qtabImport" class="hidden">
+      <div class="card"><h2>問題を一括読み込み</h2>
+        <p class="muted small">「問1.」「①〜⑤」「『3』」または「『2、5』」の形式のTXTを読み込みます。1つ選べ / 2つ選べに自動判定します。</p>
+        <div class="field"><label for="bulkCategory">一括登録する分野</label><input id="bulkCategory" placeholder="例：精神、ICF、国試61回"></div>
+        <div class="field"><label for="bulkTextInput">TXTファイル</label><input type="file" id="bulkTextInput" accept=".txt,text/plain"></div>
+        <div id="bulkPreview" class="list hidden"></div>
+        <button class="primary hidden" id="bulkImportBtn" type="button">検出した問題を追加</button>
+      </div>
       <div class="card"><h2>バックアップ / 移行</h2><p class="muted small">JSONは問題・画像・学習履歴を丸ごと保存。CSVは分析用です。</p><div class="row"><button class="secondary" id="exportJsonBtn">JSON保存</button><button class="secondary" id="exportCsvBtn">履歴CSV</button></div><div style="height:10px"></div><label for="importJsonInput">JSONを読み込む</label><input type="file" id="importJsonInput" accept=".json,application/json"></div>
       <div class="card"><h3>初期化</h3><p class="muted small">端末内の問題・画像・履歴をすべて削除します。</p><button class="danger" id="resetBtn">全データ削除</button></div>
     </div>
@@ -90,7 +97,7 @@
     {id:uid(),category:"サンプル",question:"作業療法士が評価で扱う情報として最も適切なのはどれ？",choices:["疾患名だけ","筋力だけ","作業・環境・本人の価値を含む情報","年齢だけ","画像所見だけ"],answer:3},
     {id:uid(),category:"サンプル",question:"自信度が高いのに誤答した問題を別に見る主な目的はどれ？",choices:["誤って定着している知識候補を見つける","回答時間を消す","問題数を減らす","正答率を必ず上げる","分野を削除する"],answer:1}
   ];
-  let questions=loadJson(STORAGE.questions,null); let results=loadJson(STORAGE.results,[]); let pendingImageBlob=null; let previewUrl=null; let activeStudyImageUrl=null;
+  let questions=loadJson(STORAGE.questions,null); let results=loadJson(STORAGE.results,[]); let pendingImageBlob=null; let previewUrl=null; let activeStudyImageUrl=null; let pendingBulkQuestions=[]; let pendingBulkSkipped=[];
   if(!Array.isArray(questions)||questions.length===0){questions=sampleQuestions;saveQuestionsRaw();}
   if(!Array.isArray(results))results=[];
   let session={items:[],index:0,shownAt:0,selected:new Set(),rtMs:null,confidence:null,resultIds:[]};
@@ -139,6 +146,59 @@
   async function onImageChosen(){const file=$("qImage").files?.[0];if(!file){clearPendingImage();return}try{pendingImageBlob=await prepareImage(file);if(previewUrl)URL.revokeObjectURL(previewUrl);previewUrl=URL.createObjectURL(pendingImageBlob);$("qImagePreview").src=previewUrl;$("qImagePreview").classList.remove("hidden");$("removeImageBtn").classList.remove("hidden")}catch(e){clearPendingImage();alert(e.message||"画像を読み込めませんでした。")}}
   async function renderQuestionList(){$("questionList").innerHTML=questions.length?questions.map((q,i)=>`<div class="list-item"><div class="list-title">${esc(q.question)}</div>${q.hasImage?`<img class="q-thumb hidden" data-img-id="${q.id}" alt="問題画像">`:""}<div class="list-meta"><span class="tag">${esc(q.category)}</span><span>${isMulti(q)?"2つ選べ":"1つ選べ"}</span><span>正解 ${answersOf(q).join("・")}</span>${q.hasImage?'<span>画像あり</span>':""}<span>#${i+1}</span></div><div style="height:10px"></div><button class="danger small-delete" data-id="${q.id}" style="padding:8px 10px;min-height:auto">削除</button></div>`).join(""):'<div class="empty">問題がありません。</div>';$$(".small-delete").forEach(btn=>btn.addEventListener("click",async()=>{if(!confirm("この問題を削除しますか？"))return;const q=questions.find(q=>q.id===btn.dataset.id);questions=questions.filter(q=>q.id!==btn.dataset.id);if(q?.hasImage)try{await deleteImage(q.id)}catch{}saveQuestions()}));for(const img of $$(".q-thumb")){const url=await showImageForQuestion(img.dataset.imgId,img);if(url)img.addEventListener("load",()=>URL.revokeObjectURL(url),{once:true})}}
 
+  function normalizeBulkText(s){return String(s??"").replace(/\r\n?/g,"\n").replace(/\u3000/g," ").replace(/[ \t]+/g," ").trim()}
+  function cleanBulkPart(s){return normalizeBulkText(s).replace(/\n+/g," ").replace(/\s+/g," ").trim()}
+  function parseBulkQuestions(raw){
+    const text=normalizeBulkText(raw), starts=[...text.matchAll(/^\s*問\s*(\d+)\s*[\.．:：]?/gm)];
+    const parsed=[],skipped=[];
+    if(!starts.length)return {parsed,skipped:[{label:"ファイル",reason:"『問1.』の形式を検出できませんでした"}]};
+    for(let i=0;i<starts.length;i++){
+      const start=starts[i].index,end=i+1<starts.length?starts[i+1].index:text.length,block=text.slice(start,end).trim(),num=starts[i][1];
+      const optionMatches=[...block.matchAll(/[①②③④⑤]/g)];
+      if(optionMatches.length!==5){skipped.push({label:`問${num}`,reason:"5択問題ではないためスキップ"});continue}
+      const answerMatches=[...block.matchAll(/『\s*([1-5](?:\s*[、,，・]\s*[1-5])?)\s*』/g)];
+      if(!answerMatches.length){skipped.push({label:`問${num}`,reason:"数字の正解『3』/『2、5』を検出できないためスキップ"});continue}
+      const answerMatch=answerMatches[answerMatches.length-1],answers=(answerMatch[1].match(/[1-5]/g)||[]).map(Number);
+      if(!(answers.length===1||answers.length===2)||new Set(answers).size!==answers.length){skipped.push({label:`問${num}`,reason:"正解数が1つまたは2つではないためスキップ"});continue}
+      const firstOpt=optionMatches[0].index;
+      let qtext=block.slice(0,firstOpt).replace(/^\s*問\s*\d+\s*[\.．:：]?\s*/,"");
+      qtext=cleanBulkPart(qtext);
+      const choices=[];
+      for(let j=0;j<5;j++){
+        const from=optionMatches[j].index+optionMatches[j][0].length;
+        let to=j<4?optionMatches[j+1].index:answerMatch.index;
+        choices.push(cleanBulkPart(block.slice(from,to)));
+      }
+      if(!qtext||choices.some(c=>!c)){skipped.push({label:`問${num}`,reason:"問題文または選択肢が空のためスキップ"});continue}
+      parsed.push({sourceNo:Number(num),question:`問${num}. ${qtext}`,choices,type:answers.length===2?"multi2":"single",answers,answer:answers.length===1?answers[0]:answers,hasImage:false});
+    }
+    return {parsed,skipped};
+  }
+  function bulkQuestionKey(q){return [cleanBulkPart(q.question).replace(/^問\d+\.\s*/,""),...q.choices.map(cleanBulkPart)].join("||").toLowerCase()}
+  function renderBulkPreview(){
+    const box=$("bulkPreview"),btn=$("bulkImportBtn");
+    if(!pendingBulkQuestions.length&&!pendingBulkSkipped.length){box.classList.add("hidden");btn.classList.add("hidden");box.innerHTML="";return}
+    box.classList.remove("hidden");
+    const detected=pendingBulkQuestions.length,skipped=pendingBulkSkipped.length;
+    box.innerHTML=`<div class="list-item"><div class="list-title">検出 ${detected}問 / スキップ ${skipped}問</div><div class="list-meta"><span>1つ選べ ${pendingBulkQuestions.filter(q=>q.type==="single").length}</span><span>2つ選べ ${pendingBulkQuestions.filter(q=>q.type==="multi2").length}</span></div></div>`+
+      pendingBulkQuestions.slice(0,5).map(q=>`<div class="list-item"><div class="list-title">${esc(q.question)}</div><div class="list-meta"><span>${q.type==="multi2"?"2つ選べ":"1つ選べ"}</span><span>正解 ${q.answers.join("・")}</span></div></div>`).join("")+
+      (detected>5?`<div class="list-item muted small">ほか ${detected-5}問</div>`:"")+
+      pendingBulkSkipped.slice(0,5).map(x=>`<div class="list-item"><div class="list-title">${esc(x.label)}</div><div class="list-meta"><span>${esc(x.reason)}</span></div></div>`).join("");
+    btn.classList.toggle("hidden",detected===0);
+  }
+  function onBulkTextChosen(){
+    const file=$("bulkTextInput").files?.[0];pendingBulkQuestions=[];pendingBulkSkipped=[];renderBulkPreview();if(!file)return;
+    const reader=new FileReader();reader.onload=()=>{const out=parseBulkQuestions(reader.result);pendingBulkQuestions=out.parsed;pendingBulkSkipped=out.skipped;renderBulkPreview()};reader.onerror=()=>alert("TXTを読み込めませんでした。");reader.readAsText(file,"utf-8");
+  }
+  function importBulkQuestions(){
+    if(!pendingBulkQuestions.length)return;
+    const category=$("bulkCategory").value.trim()||"一括読込",existing=new Set(questions.map(bulkQuestionKey));let added=0,duplicates=0;
+    for(const source of pendingBulkQuestions){const q={...source,id:uid(),category};const key=bulkQuestionKey(q);if(existing.has(key)){duplicates++;continue}questions.push(q);existing.add(key);added++}
+    saveQuestions();
+    alert(`${added}問を追加しました。${duplicates?`\n重複 ${duplicates}問はスキップしました。`:""}${pendingBulkSkipped.length?`\n未対応/判定不能 ${pendingBulkSkipped.length}問。`:""}`);
+    pendingBulkQuestions=[];pendingBulkSkipped=[];$("bulkTextInput").value="";renderBulkPreview();
+  }
+
   function renderAnalysis(){const total=results.length,correctN=results.filter(r=>r.correct).length,accuracy=total?Math.round(correctN/total*100):0,rt=total?Math.round(median(results.map(r=>Number(r.rtMs)||0))):0,high=results.filter(r=>!r.correct&&Number(r.confidence)>=4).length;$("analysisStats").innerHTML=`<div class="stat"><div class="label">総回答</div><div class="value">${total}</div></div><div class="stat"><div class="label">正答率</div><div class="value">${accuracy}%</div></div><div class="stat"><div class="label">RT中央値</div><div class="value">${rt?(rt/1000).toFixed(1)+"s":"-"}</div></div><div class="stat"><div class="label">自信あり誤答</div><div class="value">${high}</div></div>`;const byCat=new Map();for(const r of results){if(!byCat.has(r.category))byCat.set(r.category,{total:0,correct:0});const x=byCat.get(r.category);x.total++;if(r.correct)x.correct++}const cats=[...byCat.entries()].sort((a,b)=>b[1].total-a[1].total);$("categoryBars").innerHTML=cats.length?cats.map(([cat,x])=>{const p=Math.round(x.correct/x.total*100);return `<div class="bar-row"><div>${esc(cat)}</div><div class="bar"><div style="width:${p}%"></div></div><div style="text-align:right">${p}%</div></div>`}).join(""):'<div class="empty">まだ履歴がありません。</div>';$("confidenceAnalysis").innerHTML=[1,2,3,4,5].map(n=>{const rows=results.filter(r=>Number(r.confidence)===n),c=rows.filter(r=>r.correct).length;return `<div class="list-item"><div class="list-title">自信度 ${n}</div><div class="list-meta"><span>${rows.length}回答</span><span>正答 ${c}</span><span>正答率 ${rows.length?Math.round(c/rows.length*100):0}%</span></div></div>`}).join("");$("recentResults").innerHTML=results.length?[...results].reverse().slice(0,10).map(r=>{const q=questions.find(q=>q.id===r.questionId);return `<div class="list-item"><div class="list-title">${esc(q?q.question:"削除済み問題")}</div><div class="list-meta"><span class="tag">${esc(r.category)}</span><span>${r.correct?"○ 正解":"× 不正解"}</span><span>${((Number(r.rtMs)||0)/1000).toFixed(2)}秒</span><span>自信 ${r.confidence}</span><span>回答 ${resultSelected(r).join("・")}</span></div></div>`}).join(""):'<div class="empty">まだ履歴がありません。</div>'}
 
   function downloadBlob(filename,blob){const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
@@ -150,7 +210,7 @@
   function refreshAll(){refreshCategories();renderHome();renderQuestionList();renderAnalysis()}
 
   $$('[data-qtab]').forEach(btn=>btn.addEventListener("click",()=>{$$('[data-qtab]').forEach(b=>b.classList.remove("active"));btn.classList.add("active");["qtabAdd","qtabList","qtabImport"].forEach(id=>$(id).classList.add("hidden"));$("qtab"+btn.dataset.qtab.charAt(0).toUpperCase()+btn.dataset.qtab.slice(1)).classList.remove("hidden")}));
-  renderChoiceInputs();updateTypeUi();$("qType").addEventListener("change",updateTypeUi);$("qImage").addEventListener("change",onImageChosen);$("removeImageBtn").addEventListener("click",clearPendingImage);$("startBtn").addEventListener("click",startSession);$("multiSubmitBtn").addEventListener("click",()=>{if(session.selected.size===2)finalizeSelection([...session.selected])});$("nextBtn").addEventListener("click",nextQuestion);$("quitBtn").addEventListener("click",()=>switchView("homeView"));$("addQuestionBtn").addEventListener("click",addQuestion);$("exportJsonBtn").addEventListener("click",exportJson);$("exportCsvBtn").addEventListener("click",exportCsv);$("resetBtn").addEventListener("click",resetAll);$("importJsonInput").addEventListener("change",e=>{const f=e.target.files?.[0];if(f)importJson(f);e.target.value=""});
+  renderChoiceInputs();updateTypeUi();$("qType").addEventListener("change",updateTypeUi);$("qImage").addEventListener("change",onImageChosen);$("removeImageBtn").addEventListener("click",clearPendingImage);$("bulkTextInput").addEventListener("change",onBulkTextChosen);$("bulkImportBtn").addEventListener("click",importBulkQuestions);$("startBtn").addEventListener("click",startSession);$("multiSubmitBtn").addEventListener("click",()=>{if(session.selected.size===2)finalizeSelection([...session.selected])});$("nextBtn").addEventListener("click",nextQuestion);$("quitBtn").addEventListener("click",()=>switchView("homeView"));$("addQuestionBtn").addEventListener("click",addQuestion);$("exportJsonBtn").addEventListener("click",exportJson);$("exportCsvBtn").addEventListener("click",exportCsv);$("resetBtn").addEventListener("click",resetAll);$("importJsonInput").addEventListener("change",e=>{const f=e.target.files?.[0];if(f)importJson(f);e.target.value=""});
   $("confidenceButtons").innerHTML=[1,2,3,4,5].map(n=>`<button data-conf="${n}">${n}</button>`).join("");$$("#confidenceButtons button").forEach(btn=>btn.addEventListener("click",()=>chooseConfidence(Number(btn.dataset.conf))));
   document.addEventListener("keydown",e=>{if(!$("studyView").classList.contains("active"))return;if(/^[1-5]$/.test(e.key)&&session.rtMs===null){handleChoice(Number(e.key))}else if(/^[1-5]$/.test(e.key)&&session.rtMs!==null&&session.confidence===null){chooseConfidence(Number(e.key))}else if((e.key==="Enter"||e.key===" ")&&!$("feedbackArea").classList.contains("hidden")){e.preventDefault();nextQuestion()}});
   if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
