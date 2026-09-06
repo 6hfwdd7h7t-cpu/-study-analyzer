@@ -1,4 +1,4 @@
-const CACHE = "study-analyzer-v2-1";
+const CACHE="study-analyzer-v2-2";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg"];
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)));
