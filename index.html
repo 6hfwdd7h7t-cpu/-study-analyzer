@@ -31,7 +31,7 @@
 </head>
 <body>
 <main class="app">
-  <header><div class="title-wrap"><h1>学習・認知パフォーマンス分析</h1><p>正答 × 反応時間 × 自信度</p></div><div class="pill">Web Ver.2.2</div></header>
+  <header><div class="title-wrap"><h1>学習・認知パフォーマンス分析</h1><p>正答 × 反応時間 × 自信度</p></div><div class="pill">Web Ver.2.3</div></header>
 
   <section id="homeView" class="view active">
     <div class="card"><h2>今日の学習</h2><p class="muted small">登録問題からランダムに出題します。</p>
@@ -195,9 +195,20 @@
       pendingBulkSkipped.slice(0,5).map(x=>`<div class="list-item"><div class="list-title">${esc(x.label)}</div><div class="list-meta"><span>${esc(x.reason)}</span></div></div>`).join("");
     btn.classList.toggle("hidden",detected===0);
   }
+  function decodeJapaneseText(buffer){
+    const bytes=new Uint8Array(buffer);
+    try{
+      if(bytes.length>=3&&bytes[0]===0xEF&&bytes[1]===0xBB&&bytes[2]===0xBF)return new TextDecoder("utf-8").decode(bytes);
+      if(bytes.length>=2&&bytes[0]===0xFF&&bytes[1]===0xFE)return new TextDecoder("utf-16le").decode(bytes);
+      if(bytes.length>=2&&bytes[0]===0xFE&&bytes[1]===0xFF)return new TextDecoder("utf-16be").decode(bytes);
+      return new TextDecoder("utf-8",{fatal:true}).decode(bytes);
+    }catch(e){
+      try{return new TextDecoder("shift_jis").decode(bytes)}catch(e2){return new TextDecoder("utf-8").decode(bytes)}
+    }
+  }
   function onBulkTextChosen(){
     const file=$("bulkTextInput").files?.[0];pendingBulkQuestions=[];pendingBulkSkipped=[];renderBulkPreview();if(!file)return;
-    const reader=new FileReader();reader.onload=()=>{const out=parseBulkQuestions(reader.result);pendingBulkQuestions=out.parsed;pendingBulkSkipped=out.skipped;renderBulkPreview()};reader.onerror=()=>alert("TXTを読み込めませんでした。");reader.readAsText(file,"utf-8");
+    const reader=new FileReader();reader.onload=()=>{const text=decodeJapaneseText(reader.result);const out=parseBulkQuestions(text);pendingBulkQuestions=out.parsed;pendingBulkSkipped=out.skipped;renderBulkPreview()};reader.onerror=()=>alert("TXTを読み込めませんでした。");reader.readAsArrayBuffer(file);
   }
   function importBulkQuestions(){
     if(!pendingBulkQuestions.length)return;
