@@ -6,10 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0f172a">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Study Analyzer">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Study Analyzer">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="icon" href="icon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
   <title>学習・認知パフォーマンス分析</title>
   <style>
     :root{--bg:#f6f7fb;--card:#fff;--text:#172033;--muted:#667085;--border:#dfe3eb;--accent:#3157d5;--accent-soft:#e9eeff;--danger:#b42318;--danger-soft:#fee4e2;--success:#067647;--success-soft:#dcfae6;--shadow:0 8px 30px rgba(15,23,42,.07);--radius:18px}
@@ -31,7 +35,7 @@
 </head>
 <body>
 <main class="app">
-  <header><div class="title-wrap"><h1>学習・認知パフォーマンス分析</h1><p>正答 × 反応時間 × 自信度</p></div><div class="pill">Web Ver.2.4</div></header>
+  <header><div class="title-wrap"><h1>学習・認知パフォーマンス分析</h1><p>正答 × 反応時間 × 自信度</p></div><div class="pill">Web Ver.2.6</div></header>
 
   <section id="homeView" class="view active">
     <div class="card"><h2>今日の学習</h2><p class="muted small">登録問題からランダムに出題します。</p>
@@ -91,7 +95,32 @@
 
   <section id="analysisView" class="view"><div class="stats" id="analysisStats"></div><div class="card"><h3>分野別 正答率</h3><div id="categoryBars" class="bar-wrap"></div></div><div class="card"><h3>自信度と正誤</h3><div id="confidenceAnalysis" class="list"></div></div><div class="card"><h3>直近の学習</h3><div id="recentResults" class="list"></div></div></section>
 
-  <section id="settingsView" class="view"><div class="card"><h2>このアプリについて</h2><p class="small muted">問題・履歴はブラウザ内、画像はブラウザのIndexedDB内に保存されます。サーバー送信はしていません。</p><p class="small muted">医学的な認知機能検査ではなく、自分の学習傾向を見るための個人用ツールです。</p></div></section>
+  <section id="settingsView" class="view">
+    <div class="card">
+      <h2>このアプリについて</h2>
+      <p class="small muted">問題・履歴はブラウザ内、画像はブラウザのIndexedDB内に保存されます。サーバー送信はしていません。</p>
+      <p class="small muted">医学的な認知機能検査ではなく、自分の学習傾向を見るための個人用ツールです。</p>
+    </div>
+    <div class="card">
+      <h3>ホーム画面で使う</h3>
+      <p id="installStatus" class="small muted">起動状態を確認中…</p>
+      <p class="small muted">iPhoneではSafariの共有ボタンから「ホーム画面に追加」を選びます。追加後はアプリのように単独画面で起動できます。</p>
+      <button class="secondary" id="installAppBtn" type="button" style="width:100%">ホーム画面への追加方法</button>
+    </div>
+    <div class="card">
+      <h3>このアプリを共有</h3>
+      <p class="small muted">共有するのはこのアプリのURLだけです。あなたの問題・回答履歴・画像データは共有されません。</p>
+      <button class="secondary" id="shareAppBtn" type="button" style="width:100%">このアプリを共有</button>
+      <p id="shareAppStatus" class="small muted hidden" style="margin:10px 0 0"></p>
+    </div>
+    <div class="card">
+      <h3>出典・利用条件</h3>
+      <p class="small muted">厚生労働省の国家試験問題・正答を利用した問題セットは、学習アプリ用に整形・加工しています。</p>
+      <p class="small"><strong>出典：</strong>厚生労働省「作業療法士国家試験問題・正答」（各回）、公共データ利用規約（PDL1.0）</p>
+      <p class="small muted">新しく問題を追加する場合は、その出典元の利用条件に従ってください。第三者が権利を有する写真・図・画像等は、別途利用条件の確認が必要な場合があります。</p>
+      <div class="row"><a class="secondary" href="https://www.mhlw.go.jp/chosakuken/" target="_blank" rel="noopener noreferrer" style="text-align:center;text-decoration:none">厚労省の利用規約</a><a class="secondary" href="https://www.digital.go.jp/resources/open_data/public_data_license_v1.0" target="_blank" rel="noopener noreferrer" style="text-align:center;text-decoration:none">PDL1.0</a></div>
+    </div>
+  </section>
 </main>
 <nav class="bottom-nav"><button class="nav-btn active" data-view="homeView">ホーム</button><button class="nav-btn" data-view="questionsView">問題</button><button class="nav-btn" data-view="analysisView">分析</button><button class="nav-btn" data-view="settingsView">設定</button></nav>
 <script>
@@ -268,6 +297,16 @@
   renderChoiceInputs();updateTypeUi();$("qType").addEventListener("change",updateTypeUi);$("qImage").addEventListener("change",onImageChosen);$("removeImageBtn").addEventListener("click",clearPendingImage);$("bulkTextInput").addEventListener("change",onBulkTextChosen);$("bulkImportBtn").addEventListener("click",importBulkQuestions);$("datasetJsonInput").addEventListener("change",onDatasetChosen);$("datasetImportBtn").addEventListener("click",importDatasetQuestions);$("startBtn").addEventListener("click",startSession);$("multiSubmitBtn").addEventListener("click",()=>{if(session.selected.size===2)finalizeSelection([...session.selected])});$("nextBtn").addEventListener("click",nextQuestion);$("quitBtn").addEventListener("click",()=>switchView("homeView"));$("addQuestionBtn").addEventListener("click",addQuestion);$("exportJsonBtn").addEventListener("click",exportJson);$("exportCsvBtn").addEventListener("click",exportCsv);$("sharePreparedBtn").addEventListener("click",sharePreparedExport);$("resetBtn").addEventListener("click",resetAll);$("importJsonInput").addEventListener("change",e=>{const f=e.target.files?.[0];if(f)importJson(f);e.target.value=""});
   $("confidenceButtons").innerHTML=[1,2,3,4,5].map(n=>`<button data-conf="${n}">${n}</button>`).join("");$$("#confidenceButtons button").forEach(btn=>btn.addEventListener("click",()=>chooseConfidence(Number(btn.dataset.conf))));
   document.addEventListener("keydown",e=>{if(!$("studyView").classList.contains("active"))return;if(/^[1-5]$/.test(e.key)&&session.rtMs===null){handleChoice(Number(e.key))}else if(/^[1-5]$/.test(e.key)&&session.rtMs!==null&&session.confidence===null){chooseConfidence(Number(e.key))}else if((e.key==="Enter"||e.key===" ")&&!$("feedbackArea").classList.contains("hidden")){e.preventDefault();nextQuestion()}});
+  let deferredInstallPrompt=null;
+  function isStandaloneMode(){return window.matchMedia?.("(display-mode: standalone)")?.matches===true||window.navigator.standalone===true}
+  function updateInstallStatus(){const el=$("installStatus");if(!el)return;if(isStandaloneMode()){el.textContent="現在：ホーム画面版で起動中";$("installAppBtn").textContent="ホーム画面版で起動中";$("installAppBtn").disabled=true}else{el.textContent="現在：Safari / ブラウザで起動中";$("installAppBtn").disabled=false;$("installAppBtn").textContent=deferredInstallPrompt?"ホーム画面に追加":"ホーム画面への追加方法"}}
+  window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstallPrompt=e;updateInstallStatus()});
+  window.addEventListener("appinstalled",()=>{deferredInstallPrompt=null;updateInstallStatus()});
+  $("installAppBtn").addEventListener("click",async()=>{if(isStandaloneMode())return;if(deferredInstallPrompt){try{await deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;updateInstallStatus();return}catch{}}alert("iPhoneではWebページ側から追加画面を直接開けません。Safariの共有ボタン（□↑）→『ホーム画面に追加』→『追加』を選んでください。\n\n『ホーム画面に追加』が見えない場合は共有メニューを下へスクロールし、『アクションを編集』から追加してください。English表示の場合は『Add to Home Screen』です。")});
+  function appShareUrl(){return new URL("./",window.location.href).href}
+  async function shareApp(){const url=appShareUrl(),title="学習・認知パフォーマンス分析";const status=$("shareAppStatus");status.classList.add("hidden");try{if(navigator.share){await navigator.share({title,text:"学習・認知パフォーマンス分析",url});return}if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(url);status.textContent="URLをコピーしました。LINEなどに貼り付けて送れます。";status.classList.remove("hidden");return}}catch(e){if(e&&e.name==="AbortError")return}try{await navigator.clipboard.writeText(url);status.textContent="URLをコピーしました。LINEなどに貼り付けて送れます。";status.classList.remove("hidden")}catch{window.prompt("このURLをコピーして共有してください",url)}}
+  $("shareAppBtn").addEventListener("click",shareApp);
+  updateInstallStatus();
   if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
   refreshAll();
 })();

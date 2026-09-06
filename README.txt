@@ -1,12 +1,18 @@
-Study Analyzer Web Ver.2.4 更新ファイル
+Study Analyzer Web Ver.2.6 更新ファイル
 
-修正:
-- iPhone SafariでJSON/CSV保存時にファイル内容が画面表示される問題を回避
-- JSON/CSV作成後、「ファイルに保存 / 共有」ボタンを表示
-- iPhoneでは共有シートから「ファイルに保存」を選択して保存
-- JSONをUTF-8のFileとして共有し、文字化けしにくい方式に変更
-- PC等でWeb Shareが使えない場合は従来のダウンロードへフォールバック
+GitHubリポジトリの同名ファイルを上書きしてください。
 
-GitHubで置き換えるファイル:
-1. index.html
-2. sw.js
+更新対象:
+- index.html
+- sw.js
+- manifest.webmanifest
+- apple-touch-icon.png
+- icon-192.png
+- icon-512.png
+
+Ver.2.6:
+- 「このアプリを共有」ボタンを追加
+- Web Share API対応端末では共有シートを直接表示
+- 非対応時はURLコピーへフォールバック
+- 共有されるのはURLのみ。問題・回答履歴・画像は端末内に残ります
+- ホーム画面追加対応・出典表示はVer.2.5から継続
