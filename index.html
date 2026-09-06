@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <met<meta name="robots" content="noindex, nofollow">
+  <meta name="robots" content="noindex, nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0f172a">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -12,1101 +12,148 @@
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <title>学習・認知パフォーマンス分析</title>
   <style>
-    :root {
-      --bg: #f6f7fb;
-      --card: #ffffff;
-      --text: #172033;
-      --muted: #667085;
-      --border: #dfe3eb;
-      --accent: #3157d5;
-      --accent-soft: #e9eeff;
-      --danger: #b42318;
-      --danger-soft: #fee4e2;
-      --success: #067647;
-      --success-soft: #dcfae6;
-      --warning: #b54708;
-      --warning-soft: #fef0c7;
-      --shadow: 0 8px 30px rgba(15, 23, 42, .07);
-      --radius: 18px;
-    }
-
-    * { box-sizing: border-box; }
-    html { -webkit-text-size-adjust: 100%; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    button, input, textarea, select { font: inherit; }
-    button { -webkit-tap-highlight-color: transparent; }
-
-    .app {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: max(16px, env(safe-area-inset-top)) 14px calc(94px + env(safe-area-inset-bottom));
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .title-wrap h1 {
-      font-size: 22px;
-      margin: 0;
-      letter-spacing: -.02em;
-    }
-
-    .title-wrap p {
-      margin: 5px 0 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .pill {
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .view { display: none; }
-    .view.active { display: block; }
-
-    .card {
-      background: var(--card);
-      border: 1px solid rgba(223, 227, 235, .85);
-      border-radius: var(--radius);
-      padding: 18px;
-      box-shadow: var(--shadow);
-      margin-bottom: 14px;
-    }
-
-    .card h2, .card h3 {
-      margin: 0 0 12px;
-      letter-spacing: -.01em;
-    }
-
-    .muted { color: var(--muted); }
-    .small { font-size: 13px; }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-
-    .stat {
-      background: #f8f9fc;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
-    }
-
-    .stat .label { color: var(--muted); font-size: 12px; }
-    .stat .value {
-      margin-top: 6px;
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: -.02em;
-    }
-
-    .primary, .secondary, .danger, .ghost {
-      border: 0;
-      border-radius: 13px;
-      padding: 13px 16px;
-      min-height: 48px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .primary {
-      background: var(--accent);
-      color: #fff;
-      width: 100%;
-    }
-
-    .secondary {
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-
-    .danger {
-      background: var(--danger-soft);
-      color: var(--danger);
-    }
-
-    .ghost {
-      background: #f2f4f7;
-      color: var(--text);
-    }
-
-    .row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .row > * { flex: 1; }
-
-    label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 7px;
-    }
-
-    input, textarea, select {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: #fff;
-      padding: 12px 13px;
-      color: var(--text);
-      outline: none;
-    }
-
-    textarea { min-height: 90px; resize: vertical; }
-    input:focus, textarea:focus, select:focus {
-      border-color: #91a4ef;
-      box-shadow: 0 0 0 4px rgba(49, 87, 213, .10);
-    }
-
-    .field { margin-bottom: 14px; }
-
-    .question-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 12px;
-    }
-
-    .question-text {
-      font-size: 20px;
-      line-height: 1.55;
-      font-weight: 750;
-      margin: 6px 0 16px;
-      white-space: pre-wrap;
-    }
-
-    .choice-grid {
-      display: grid;
-      gap: 10px;
-    }
-
-    .choice {
-      width: 100%;
-      text-align: left;
-      background: #fff;
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
-      min-height: 54px;
-      cursor: pointer;
-      display: flex;
-      gap: 11px;
-      align-items: flex-start;
-    }
-
-    .choice:active { transform: scale(.997); }
-    .choice .num {
-      min-width: 28px;
-      height: 28px;
-      border-radius: 8px;
-      background: #f2f4f7;
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      font-size: 13px;
-    }
-
-    .confidence {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
-    }
-
-    .confidence button {
-      border: 1px solid var(--border);
-      background: white;
-      border-radius: 12px;
-      min-height: 48px;
-      font-weight: 800;
-    }
-
-    .feedback {
-      border-radius: 14px;
-      padding: 14px;
-      font-weight: 700;
-      margin-top: 14px;
-    }
-
-    .feedback.ok { background: var(--success-soft); color: var(--success); }
-    .feedback.ng { background: var(--danger-soft); color: var(--danger); }
-
-    .progress {
-      height: 7px;
-      border-radius: 99px;
-      background: #eceff5;
-      overflow: hidden;
-      margin-bottom: 14px;
-    }
-
-    .progress > div {
-      height: 100%;
-      background: var(--accent);
-      width: 0;
-      transition: width .25s ease;
-    }
-
-    .list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .list-item {
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 13px;
-      background: #fff;
-    }
-
-    .list-title {
-      font-weight: 750;
-      margin-bottom: 5px;
-      line-height: 1.4;
-    }
-
-    .list-meta {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .tag {
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: #f2f4f7;
-    }
-
-    .bar-wrap { margin-top: 10px; }
-    .bar-row {
-      display: grid;
-      grid-template-columns: minmax(80px, 1fr) 2fr 46px;
-      gap: 10px;
-      align-items: center;
-      margin: 9px 0;
-      font-size: 13px;
-    }
-    .bar {
-      height: 10px;
-      border-radius: 999px;
-      background: #eef1f5;
-      overflow: hidden;
-    }
-    .bar > div {
-      height: 100%;
-      background: var(--accent);
-      border-radius: 999px;
-    }
-
-    .seg {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      background: #eef1f6;
-      padding: 4px;
-      border-radius: 12px;
-      gap: 4px;
-      margin-bottom: 14px;
-    }
-
-    .seg button {
-      border: 0;
-      background: transparent;
-      min-height: 40px;
-      border-radius: 9px;
-      font-weight: 700;
-      color: var(--muted);
-    }
-
-    .seg button.active {
-      background: #fff;
-      color: var(--text);
-      box-shadow: 0 2px 8px rgba(15, 23, 42, .07);
-    }
-
-    .bottom-nav {
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 0;
-      width: min(760px, 100%);
-      padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
-      background: rgba(255,255,255,.92);
-      backdrop-filter: blur(18px);
-      border-top: 1px solid rgba(223, 227, 235, .9);
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      z-index: 30;
-    }
-
-    .nav-btn {
-      border: 0;
-      background: transparent;
-      color: var(--muted);
-      padding: 8px 4px;
-      min-height: 54px;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 12px;
-    }
-
-    .nav-btn.active {
-      color: var(--accent);
-      background: var(--accent-soft);
-    }
-
-    .empty {
-      text-align: center;
-      padding: 28px 10px;
-      color: var(--muted);
-    }
-
-    .hidden { display: none !important; }
-
-    @media (min-width: 640px) {
-      .stats { grid-template-columns: repeat(4, 1fr); }
-      .app { padding-left: 22px; padding-right: 22px; }
-    }
+    :root{--bg:#f6f7fb;--card:#fff;--text:#172033;--muted:#667085;--border:#dfe3eb;--accent:#3157d5;--accent-soft:#e9eeff;--danger:#b42318;--danger-soft:#fee4e2;--success:#067647;--success-soft:#dcfae6;--shadow:0 8px 30px rgba(15,23,42,.07);--radius:18px}
+    *{box-sizing:border-box} html{-webkit-text-size-adjust:100%} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    button,input,textarea,select{font:inherit} button{-webkit-tap-highlight-color:transparent}.app{max-width:760px;margin:0 auto;padding:max(16px,env(safe-area-inset-top)) 14px calc(94px + env(safe-area-inset-bottom))}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.title-wrap h1{font-size:22px;margin:0;letter-spacing:-.02em}.title-wrap p{margin:5px 0 0;color:var(--muted);font-size:13px}.pill{padding:7px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:700;white-space:nowrap}
+    .view{display:none}.view.active{display:block}.card{background:var(--card);border:1px solid rgba(223,227,235,.85);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}.card h2,.card h3{margin:0 0 12px;letter-spacing:-.01em}.muted{color:var(--muted)}.small{font-size:13px}.hidden{display:none!important}
+    .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:#f8f9fc;border:1px solid var(--border);border-radius:14px;padding:14px}.stat .label{color:var(--muted);font-size:12px}.stat .value{margin-top:6px;font-size:24px;font-weight:800;letter-spacing:-.02em}
+    .primary,.secondary,.danger,.ghost{border:0;border-radius:13px;padding:13px 16px;min-height:48px;font-weight:700;cursor:pointer}.primary{background:var(--accent);color:#fff;width:100%}.primary:disabled{opacity:.42;cursor:not-allowed}.secondary{background:var(--accent-soft);color:var(--accent)}.danger{background:var(--danger-soft);color:var(--danger)}.ghost{background:#f2f4f7;color:var(--text)}
+    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.field{margin-bottom:14px}label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}input,textarea,select{width:100%;border:1px solid var(--border);border-radius:12px;background:#fff;padding:12px 13px;color:var(--text);outline:none}textarea{min-height:90px;resize:vertical}input:focus,textarea:focus,select:focus{border-color:#91a4ef;box-shadow:0 0 0 4px rgba(49,87,213,.10)}
+    .question-head{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:13px;margin-bottom:12px}.question-text{font-size:20px;line-height:1.55;font-weight:750;margin:6px 0 16px;white-space:pre-wrap}.question-image{display:block;width:100%;max-height:460px;object-fit:contain;background:#f8f9fc;border:1px solid var(--border);border-radius:14px;margin:0 0 16px}.choice-grid{display:grid;gap:10px}.choice{width:100%;text-align:left;background:#fff;color:var(--text);border:1px solid var(--border);border-radius:14px;padding:14px;min-height:54px;cursor:pointer;display:flex;gap:11px;align-items:flex-start}.choice:active{transform:scale(.997)}.choice.selected{border-color:var(--accent);background:var(--accent-soft)}.choice .num{min-width:28px;height:28px;border-radius:8px;background:#f2f4f7;display:grid;place-items:center;font-weight:800;font-size:13px}.choice.selected .num{background:var(--accent);color:#fff}
+    .multi-note{font-size:13px;color:var(--muted);margin:10px 0}.confidence{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.confidence button{border:1px solid var(--border);background:#fff;border-radius:12px;min-height:48px;font-weight:800}.feedback{border-radius:14px;padding:14px;font-weight:700;margin-top:14px}.feedback.ok{background:var(--success-soft);color:var(--success)}.feedback.ng{background:var(--danger-soft);color:var(--danger)}
+    .progress{height:7px;border-radius:99px;background:#eceff5;overflow:hidden;margin-bottom:14px}.progress>div{height:100%;background:var(--accent);width:0;transition:width .25s ease}.list{display:grid;gap:10px}.list-item{border:1px solid var(--border);border-radius:14px;padding:13px;background:#fff}.list-title{font-weight:750;margin-bottom:5px;line-height:1.4}.list-meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:12px}.tag{display:inline-block;padding:4px 8px;border-radius:999px;background:#f2f4f7}.q-thumb{width:100%;max-height:180px;object-fit:contain;border:1px solid var(--border);border-radius:10px;background:#f8f9fc;margin:8px 0}
+    .bar-wrap{margin-top:10px}.bar-row{display:grid;grid-template-columns:minmax(80px,1fr) 2fr 46px;gap:10px;align-items:center;margin:9px 0;font-size:13px}.bar{height:10px;border-radius:999px;background:#eef1f5;overflow:hidden}.bar>div{height:100%;background:var(--accent);border-radius:999px}.seg{display:grid;grid-template-columns:repeat(3,1fr);background:#eef1f6;padding:4px;border-radius:12px;gap:4px;margin-bottom:14px}.seg button{border:0;background:transparent;min-height:40px;border-radius:9px;font-weight:700;color:var(--muted)}.seg button.active{background:#fff;color:var(--text);box-shadow:0 2px 8px rgba(15,23,42,.07)}
+    .answer-checks{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.answer-check{display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--border);border-radius:12px;padding:10px;background:#fff;min-height:46px}.answer-check input{width:auto;margin:0;box-shadow:none}.image-preview{width:100%;max-height:260px;object-fit:contain;border:1px solid var(--border);border-radius:12px;background:#f8f9fc;margin-top:10px}
+    .bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(760px,100%);padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(255,255,255,.92);backdrop-filter:blur(18px);border-top:1px solid rgba(223,227,235,.9);display:grid;grid-template-columns:repeat(4,1fr);z-index:30}.nav-btn{border:0;background:transparent;color:var(--muted);padding:8px 4px;min-height:54px;border-radius:12px;font-weight:700;font-size:12px}.nav-btn.active{color:var(--accent);background:var(--accent-soft)}.empty{text-align:center;padding:28px 10px;color:var(--muted)}
+    @media(min-width:640px){.stats{grid-template-columns:repeat(4,1fr)}.app{padding-left:22px;padding-right:22px}}
   </style>
 </head>
-
 <body>
-  <main class="app">
-    <header>
-      <div class="title-wrap">
-        <h1>学習・認知パフォーマンス分析</h1>
-        <p>正答 × 反応時間 × 自信度</p>
-      </div>
-      <div class="pill">Web Ver.1</div>
-    </header>
+<main class="app">
+  <header><div class="title-wrap"><h1>学習・認知パフォーマンス分析</h1><p>正答 × 反応時間 × 自信度</p></div><div class="pill">Web Ver.2</div></header>
 
-    <section id="homeView" class="view active">
-      <div class="card">
-        <h2>今日の学習</h2>
-        <p class="muted small">登録問題からランダムに出題します。</p>
+  <section id="homeView" class="view active">
+    <div class="card"><h2>今日の学習</h2><p class="muted small">登録問題からランダムに出題します。</p>
+      <div class="field"><label for="sessionCount">出題数</label><select id="sessionCount"><option value="5">5問</option><option value="10" selected>10問</option><option value="20">20問</option><option value="30">30問</option><option value="all">全問</option></select></div>
+      <div class="field"><label for="sessionCategory">分野</label><select id="sessionCategory"><option value="all">すべて</option></select></div>
+      <button class="primary" id="startBtn">学習を開始</button>
+    </div>
+    <div class="stats" id="homeStats"></div>
+    <div class="card"><h3>要注意問題</h3><p class="muted small">「自信度4〜5で誤答」を優先表示します。</p><div id="riskList" class="list"></div></div>
+  </section>
 
-        <div class="field">
-          <label for="sessionCount">出題数</label>
-          <select id="sessionCount">
-            <option value="5">5問</option>
-            <option value="10" selected>10問</option>
-            <option value="20">20問</option>
-            <option value="30">30問</option>
-            <option value="all">全問</option>
-          </select>
-        </div>
+  <section id="studyView" class="view">
+    <div class="progress"><div id="studyProgress"></div></div>
+    <div class="card">
+      <div class="question-head"><span id="studyCounter"></span><span id="studyCategory"></span></div>
+      <div id="questionText" class="question-text"></div>
+      <img id="studyImage" class="question-image hidden" alt="問題画像">
+      <div id="choices" class="choice-grid"></div>
+      <div id="multiAnswerArea" class="hidden"><div class="multi-note" id="multiNote">2つ選んでから確定してください。</div><button class="primary" id="multiSubmitBtn" disabled>この2つで回答</button></div>
+      <div id="confidenceArea" class="hidden"><div style="height:14px"></div><h3>どれくらい自信あった？</h3><p class="muted small">1 = ほぼ勘　5 = 確信</p><div class="confidence" id="confidenceButtons"></div></div>
+      <div id="feedbackArea" class="hidden"><div id="feedbackBox" class="feedback"></div><button class="primary" id="nextBtn" style="margin-top:14px">次の問題</button></div>
+    </div>
+    <button class="ghost" id="quitBtn" style="width:100%">中断してホームへ</button>
+  </section>
 
-        <div class="field">
-          <label for="sessionCategory">分野</label>
-          <select id="sessionCategory">
-            <option value="all">すべて</option>
-          </select>
-        </div>
+  <section id="questionsView" class="view">
+    <div class="seg"><button class="active" data-qtab="add">問題追加</button><button data-qtab="list">登録済み</button><button data-qtab="import">入出力</button></div>
+    <div id="qtabAdd"><div class="card"><h2>問題を追加</h2>
+      <div class="field"><label for="qCategory">分野</label><input id="qCategory" placeholder="例：精神、神経、解剖"></div>
+      <div class="field"><label for="qType">問題形式</label><select id="qType"><option value="single">1つ選べ</option><option value="multi2">2つ選べ</option></select></div>
+      <div class="field"><label for="qText">問題文</label><textarea id="qText" placeholder="問題文を入力"></textarea></div>
+      <div class="field"><label for="qImage">画像（任意）</label><input type="file" id="qImage" accept="image/*"><p class="muted small">選んだ画像は端末内に保存します。大きい画像は自動で縮小します。</p><img id="qImagePreview" class="image-preview hidden" alt="追加する問題画像のプレビュー"><button class="ghost hidden" id="removeImageBtn" type="button" style="margin-top:8px;width:100%">画像を外す</button></div>
+      <div id="choiceInputs"></div>
+      <div id="singleAnswerWrap" class="field"><label for="qAnswer">正解</label><select id="qAnswer"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div>
+      <div id="multiAnswerWrap" class="field hidden"><label>正解を2つ選択</label><div class="answer-checks" id="multiAnswerChecks"></div></div>
+      <button class="primary" id="addQuestionBtn">この問題を登録</button>
+    </div></div>
+    <div id="qtabList" class="hidden"><div class="card"><h2>登録済み問題</h2><div id="questionList" class="list"></div></div></div>
+    <div id="qtabImport" class="hidden">
+      <div class="card"><h2>バックアップ / 移行</h2><p class="muted small">JSONは問題・画像・学習履歴を丸ごと保存。CSVは分析用です。</p><div class="row"><button class="secondary" id="exportJsonBtn">JSON保存</button><button class="secondary" id="exportCsvBtn">履歴CSV</button></div><div style="height:10px"></div><label for="importJsonInput">JSONを読み込む</label><input type="file" id="importJsonInput" accept=".json,application/json"></div>
+      <div class="card"><h3>初期化</h3><p class="muted small">端末内の問題・画像・履歴をすべて削除します。</p><button class="danger" id="resetBtn">全データ削除</button></div>
+    </div>
+  </section>
 
-        <button class="primary" id="startBtn">学習を開始</button>
-      </div>
+  <section id="analysisView" class="view"><div class="stats" id="analysisStats"></div><div class="card"><h3>分野別 正答率</h3><div id="categoryBars" class="bar-wrap"></div></div><div class="card"><h3>自信度と正誤</h3><div id="confidenceAnalysis" class="list"></div></div><div class="card"><h3>直近の学習</h3><div id="recentResults" class="list"></div></div></section>
 
-      <div class="stats" id="homeStats"></div>
-
-      <div class="card">
-        <h3>要注意問題</h3>
-        <p class="muted small">「自信度4〜5で誤答」を優先表示します。</p>
-        <div id="riskList" class="list"></div>
-      </div>
-    </section>
-
-    <section id="studyView" class="view">
-      <div class="progress"><div id="studyProgress"></div></div>
-
-      <div class="card">
-        <div class="question-head">
-          <span id="studyCounter"></span>
-          <span id="studyCategory"></span>
-        </div>
-        <div id="questionText" class="question-text"></div>
-        <div id="choices" class="choice-grid"></div>
-
-        <div id="confidenceArea" class="hidden">
-          <div style="height:14px"></div>
-          <h3>どれくらい自信あった？</h3>
-          <p class="muted small">1 = ほぼ勘　5 = 確信</p>
-          <div class="confidence" id="confidenceButtons"></div>
-        </div>
-
-        <div id="feedbackArea" class="hidden">
-          <div id="feedbackBox" class="feedback"></div>
-          <button class="primary" id="nextBtn" style="margin-top:14px">次の問題</button>
-        </div>
-      </div>
-
-      <button class="ghost" id="quitBtn" style="width:100%">中断してホームへ</button>
-    </section>
-
-    <section id="questionsView" class="view">
-      <div class="seg">
-        <button class="active" data-qtab="add">問題追加</button>
-        <button data-qtab="list">登録済み</button>
-        <button data-qtab="import">入出力</button>
-      </div>
-
-      <div id="qtabAdd">
-        <div class="card">
-          <h2>問題を追加</h2>
-
-          <div class="field">
-            <label for="qCategory">分野</label>
-            <input id="qCategory" placeholder="例：精神、神経、解剖">
-          </div>
-
-          <div class="field">
-            <label for="qText">問題文</label>
-            <textarea id="qText" placeholder="問題文を入力"></textarea>
-          </div>
-
-          <div id="choiceInputs"></div>
-
-          <div class="field">
-            <label for="qAnswer">正解</label>
-            <select id="qAnswer">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-          </div>
-
-          <button class="primary" id="addQuestionBtn">この問題を登録</button>
-        </div>
-      </div>
-
-      <div id="qtabList" class="hidden">
-        <div class="card">
-          <h2>登録済み問題</h2>
-          <div id="questionList" class="list"></div>
-        </div>
-      </div>
-
-      <div id="qtabImport" class="hidden">
-        <div class="card">
-          <h2>バックアップ / 移行</h2>
-          <p class="muted small">JSONは問題＋学習履歴を丸ごと保存。CSVは分析用です。</p>
-          <div class="row">
-            <button class="secondary" id="exportJsonBtn">JSON保存</button>
-            <button class="secondary" id="exportCsvBtn">履歴CSV</button>
-          </div>
-          <div style="height:10px"></div>
-          <label for="importJsonInput">JSONを読み込む</label>
-          <input type="file" id="importJsonInput" accept=".json,application/json">
-        </div>
-
-        <div class="card">
-          <h3>初期化</h3>
-          <p class="muted small">端末内の問題と履歴をすべて削除します。</p>
-          <button class="danger" id="resetBtn">全データ削除</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="analysisView" class="view">
-      <div class="stats" id="analysisStats"></div>
-
-      <div class="card">
-        <h3>分野別 正答率</h3>
-        <div id="categoryBars" class="bar-wrap"></div>
-      </div>
-
-      <div class="card">
-        <h3>自信度と正誤</h3>
-        <div id="confidenceAnalysis" class="list"></div>
-      </div>
-
-      <div class="card">
-        <h3>直近の学習</h3>
-        <div id="recentResults" class="list"></div>
-      </div>
-    </section>
-
-    <section id="settingsView" class="view">
-      <div class="card">
-        <h2>このアプリについて</h2>
-        <p class="small muted">
-          データはこの端末のブラウザ内（localStorage）に保存されます。
-          サーバー送信はしていません。
-        </p>
-        <p class="small muted">
-          医学的な認知機能検査ではなく、自分の学習傾向を見るための個人用ツールです。
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>ホーム画面に追加</h3>
-        <p class="small muted">
-          iPhoneではSafariの共有ボタン →「ホーム画面に追加」でアプリのように起動できます。
-          HTTPSで公開した場合、より安定して使えます。
-        </p>
-      </div>
-    </section>
-  </main>
-
-  <nav class="bottom-nav">
-    <button class="nav-btn active" data-view="homeView">ホーム</button>
-    <button class="nav-btn" data-view="questionsView">問題</button>
-    <button class="nav-btn" data-view="analysisView">分析</button>
-    <button class="nav-btn" data-view="settingsView">設定</button>
-  </nav>
-
+  <section id="settingsView" class="view"><div class="card"><h2>このアプリについて</h2><p class="small muted">問題・履歴はブラウザ内、画像はブラウザのIndexedDB内に保存されます。サーバー送信はしていません。</p><p class="small muted">医学的な認知機能検査ではなく、自分の学習傾向を見るための個人用ツールです。</p></div></section>
+</main>
+<nav class="bottom-nav"><button class="nav-btn active" data-view="homeView">ホーム</button><button class="nav-btn" data-view="questionsView">問題</button><button class="nav-btn" data-view="analysisView">分析</button><button class="nav-btn" data-view="settingsView">設定</button></nav>
 <script>
 (() => {
   "use strict";
-
-  const STORAGE = {
-    questions: "studyAnalyzer.questions.v1",
-    results: "studyAnalyzer.results.v1"
-  };
-
-  const sampleQuestions = [
-    {
-      id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + "a",
-      category: "サンプル",
-      question: "作業療法士が評価で扱う情報として最も適切なのはどれ？",
-      choices: ["疾患名だけ", "筋力だけ", "作業・環境・本人の価値を含む情報", "年齢だけ", "画像所見だけ"],
-      answer: 3
-    },
-    {
-      id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + "b",
-      category: "サンプル",
-      question: "反応時間の記録から分かることとして最も近いのはどれ？",
-      choices: ["処理速度の一側面", "身長", "血圧", "視力", "利き手"],
-      answer: 1
-    },
-    {
-      id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + "c",
-      category: "サンプル",
-      question: "自信度が高いのに誤答した問題を別に見る主な目的はどれ？",
-      choices: ["誤って定着している知識候補を見つける", "回答時間を消す", "問題数を減らす", "正答率を必ず上げる", "分野を削除する"],
-      answer: 1
-    }
+  const STORAGE={questions:"studyAnalyzer.questions.v1",results:"studyAnalyzer.results.v1"};
+  const DB_NAME="studyAnalyzerDB"; const DB_VERSION=1; const IMAGE_STORE="images";
+  const sampleQuestions=[
+    {id:uid(),category:"サンプル",question:"作業療法士が評価で扱う情報として最も適切なのはどれ？",choices:["疾患名だけ","筋力だけ","作業・環境・本人の価値を含む情報","年齢だけ","画像所見だけ"],answer:3},
+    {id:uid(),category:"サンプル",question:"自信度が高いのに誤答した問題を別に見る主な目的はどれ？",choices:["誤って定着している知識候補を見つける","回答時間を消す","問題数を減らす","正答率を必ず上げる","分野を削除する"],answer:1}
   ];
-
-  let questions = loadJson(STORAGE.questions, null);
-  let results = loadJson(STORAGE.results, []);
-
-  if (!Array.isArray(questions) || questions.length === 0) {
-    questions = sampleQuestions;
-    saveQuestions();
-  }
-
-  let session = {
-    items: [],
-    index: 0,
-    shownAt: 0,
-    selected: null,
-    rtMs: null,
-    confidence: null
-  };
-
-  const $ = (id) => document.getElementById(id);
-  const $$ = (sel) => [...document.querySelectorAll(sel)];
-
-  function loadJson(key, fallback) {
-    try {
-      const raw = localStorage.getItem(key);
-      return raw ? JSON.parse(raw) : fallback;
-    } catch {
-      return fallback;
-    }
-  }
-
-  function saveQuestions() {
-    localStorage.setItem(STORAGE.questions, JSON.stringify(questions));
-    refreshAll();
-  }
-
-  function saveResults() {
-    localStorage.setItem(STORAGE.results, JSON.stringify(results));
-    refreshAll();
-  }
-
-  function uid() {
-    if (crypto.randomUUID) return crypto.randomUUID();
-    return String(Date.now()) + Math.random().toString(16).slice(2);
-  }
-
-  function esc(s) {
-    return String(s ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-  function shuffle(arr) {
-    const a = [...arr];
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  }
-
-  function median(values) {
-    if (!values.length) return 0;
-    const a = [...values].sort((x,y) => x-y);
-    const m = Math.floor(a.length / 2);
-    return a.length % 2 ? a[m] : (a[m-1] + a[m]) / 2;
-  }
-
-  function switchView(id) {
-    $$(".view").forEach(v => v.classList.remove("active"));
-    $(id).classList.add("active");
-    $$(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.view === id));
-    window.scrollTo({ top: 0, behavior: "instant" });
-    if (id === "analysisView") renderAnalysis();
-    if (id === "questionsView") renderQuestionList();
-  }
-
-  $$(".nav-btn").forEach(btn => {
-    btn.addEventListener("click", () => switchView(btn.dataset.view));
-  });
-
-  function refreshCategories() {
-    const select = $("sessionCategory");
-    const current = select.value;
-    const cats = [...new Set(questions.map(q => q.category || "未分類"))].sort();
-    select.innerHTML = `<option value="all">すべて</option>` +
-      cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
-    if ([...select.options].some(o => o.value === current)) select.value = current;
-  }
-
-  function renderHome() {
-    const total = results.length;
-    const correct = results.filter(r => r.correct).length;
-    const accuracy = total ? Math.round(correct / total * 100) : 0;
-    const rt = total ? Math.round(median(results.map(r => r.rtMs))) : 0;
-    const highConfErrors = results.filter(r => !r.correct && r.confidence >= 4).length;
-
-    $("homeStats").innerHTML = `
-      <div class="stat"><div class="label">登録問題</div><div class="value">${questions.length}</div></div>
-      <div class="stat"><div class="label">総回答</div><div class="value">${total}</div></div>
-      <div class="stat"><div class="label">正答率</div><div class="value">${accuracy}%</div></div>
-      <div class="stat"><div class="label">RT中央値</div><div class="value">${rt ? (rt/1000).toFixed(1)+"s" : "-"}</div></div>
-    `;
-
-    const riskCounts = new Map();
-    for (const r of results) {
-      if (!r.correct && r.confidence >= 4) {
-        riskCounts.set(r.questionId, (riskCounts.get(r.questionId) || 0) + 1);
-      }
-    }
-
-    const risk = [...riskCounts.entries()]
-      .map(([id, n]) => ({ q: questions.find(q => q.id === id), n }))
-      .filter(x => x.q)
-      .sort((a,b) => b.n - a.n)
-      .slice(0, 5);
-
-    $("riskList").innerHTML = risk.length ? risk.map(x => `
-      <div class="list-item">
-        <div class="list-title">${esc(x.q.question)}</div>
-        <div class="list-meta">
-          <span class="tag">${esc(x.q.category)}</span>
-          <span>自信あり誤答 ${x.n}回</span>
-        </div>
-      </div>
-    `).join("") : `<div class="empty">まだ要注意問題はありません。</div>`;
-  }
-
-  function startSession() {
-    if (!questions.length) {
-      alert("問題を1問以上登録してください。");
-      return;
-    }
-
-    const category = $("sessionCategory").value;
-    let pool = category === "all" ? questions : questions.filter(q => q.category === category);
-    if (!pool.length) {
-      alert("この分野には問題がありません。");
-      return;
-    }
-
-    const countValue = $("sessionCount").value;
-    const count = countValue === "all" ? pool.length : Math.min(Number(countValue), pool.length);
-
-    session = {
-      items: shuffle(pool).slice(0, count),
-      index: 0,
-      shownAt: 0,
-      selected: null,
-      rtMs: null,
-      confidence: null
-    };
-
-    switchView("studyView");
-    renderStudyQuestion();
-  }
-
-  function renderStudyQuestion() {
-    const q = session.items[session.index];
-    $("studyCounter").textContent = `問題 ${session.index + 1} / ${session.items.length}`;
-    $("studyCategory").textContent = q.category || "未分類";
-    $("studyProgress").style.width = `${(session.index / session.items.length) * 100}%`;
-    $("questionText").textContent = q.question;
-
-    $("choices").innerHTML = q.choices.map((c, i) => `
-      <button class="choice" data-choice="${i+1}">
-        <span class="num">${i+1}</span>
-        <span>${esc(c)}</span>
-      </button>
-    `).join("");
-
-    $$("#choices .choice").forEach(btn => {
-      btn.addEventListener("click", () => chooseAnswer(Number(btn.dataset.choice)));
-    });
-
-    $("confidenceArea").classList.add("hidden");
-    $("feedbackArea").classList.add("hidden");
-    session.selected = null;
-    session.rtMs = null;
-    session.confidence = null;
-
-    requestAnimationFrame(() => {
-      session.shownAt = performance.now();
-    });
-  }
-
-  function chooseAnswer(n) {
-    if (session.selected !== null) return;
-    session.selected = n;
-    session.rtMs = Math.round(performance.now() - session.shownAt);
-
-    $$("#choices .choice").forEach(btn => btn.disabled = true);
-    $("confidenceArea").classList.remove("hidden");
-  }
-
-  function chooseConfidence(n) {
-    if (session.selected === null || session.confidence !== null) return;
-    session.confidence = n;
-
-    const q = session.items[session.index];
-    const correct = session.selected === q.answer;
-
-    results.push({
-      id: uid(),
-      timestamp: new Date().toISOString(),
-      questionId: q.id,
-      category: q.category || "未分類",
-      selected: session.selected,
-      answer: q.answer,
-      correct,
-      rtMs: session.rtMs,
-      confidence: n
-    });
-    saveResults();
-
-    $("confidenceArea").classList.add("hidden");
-    $("feedbackArea").classList.remove("hidden");
-
-    const box = $("feedbackBox");
-    box.className = "feedback " + (correct ? "ok" : "ng");
-    box.innerHTML = correct
-      ? `○ 正解　<span class="small">反応時間 ${(session.rtMs/1000).toFixed(2)}秒 / 自信度 ${n}</span>`
-      : `× 不正解　正解は ${q.answer}　<span class="small">反応時間 ${(session.rtMs/1000).toFixed(2)}秒 / 自信度 ${n}</span>`;
-
-    $("nextBtn").textContent = session.index === session.items.length - 1 ? "結果を見る" : "次の問題";
-  }
-
-  function nextQuestion() {
-    if (session.index === session.items.length - 1) {
-      $("studyProgress").style.width = "100%";
-      const ids = new Set(session.items.map(q => q.id));
-      const sessionResults = results.slice(-session.items.length).filter(r => ids.has(r.questionId));
-      const correctN = sessionResults.filter(r => r.correct).length;
-      const accuracy = sessionResults.length ? Math.round(correctN / sessionResults.length * 100) : 0;
-      const rt = sessionResults.length ? Math.round(median(sessionResults.map(r => r.rtMs))) : 0;
-      alert(`終了\n正答率 ${accuracy}%\n反応時間中央値 ${(rt/1000).toFixed(2)}秒`);
-      switchView("analysisView");
-      return;
-    }
-    session.index += 1;
-    renderStudyQuestion();
-  }
-
-  function renderChoiceInputs() {
-    $("choiceInputs").innerHTML = Array.from({length:5}, (_, i) => `
-      <div class="field">
-        <label for="qChoice${i+1}">選択肢 ${i+1}</label>
-        <input id="qChoice${i+1}" placeholder="選択肢 ${i+1}">
-      </div>
-    `).join("");
-  }
-
-  function addQuestion() {
-    const category = $("qCategory").value.trim() || "未分類";
-    const question = $("qText").value.trim();
-    const choices = Array.from({length:5}, (_,i) => $(`qChoice${i+1}`).value.trim());
-    const answer = Number($("qAnswer").value);
-
-    if (!question || choices.some(c => !c)) {
-      alert("問題文と5つの選択肢をすべて入力してください。");
-      return;
-    }
-
-    questions.push({ id: uid(), category, question, choices, answer });
-    saveQuestions();
-
-    $("qText").value = "";
-    choices.forEach((_,i) => $(`qChoice${i+1}`).value = "");
-    alert("登録しました。");
-  }
-
-  function renderQuestionList() {
-    $("questionList").innerHTML = questions.length ? questions.map((q, i) => `
-      <div class="list-item">
-        <div class="list-title">${esc(q.question)}</div>
-        <div class="list-meta">
-          <span class="tag">${esc(q.category)}</span>
-          <span>正解 ${q.answer}</span>
-          <span>#${i+1}</span>
-        </div>
-        <div style="height:10px"></div>
-        <button class="danger small-delete" data-id="${q.id}" style="padding:8px 10px;min-height:auto">削除</button>
-      </div>
-    `).join("") : `<div class="empty">問題がありません。</div>`;
-
-    $$(".small-delete").forEach(btn => {
-      btn.addEventListener("click", () => {
-        if (!confirm("この問題を削除しますか？")) return;
-        questions = questions.filter(q => q.id !== btn.dataset.id);
-        saveQuestions();
-      });
-    });
-  }
-
-  function renderAnalysis() {
-    const total = results.length;
-    const correctN = results.filter(r => r.correct).length;
-    const accuracy = total ? Math.round(correctN / total * 100) : 0;
-    const rt = total ? Math.round(median(results.map(r => r.rtMs))) : 0;
-    const highConfErrors = results.filter(r => !r.correct && r.confidence >= 4).length;
-
-    $("analysisStats").innerHTML = `
-      <div class="stat"><div class="label">総回答</div><div class="value">${total}</div></div>
-      <div class="stat"><div class="label">正答率</div><div class="value">${accuracy}%</div></div>
-      <div class="stat"><div class="label">RT中央値</div><div class="value">${rt ? (rt/1000).toFixed(1)+"s" : "-"}</div></div>
-      <div class="stat"><div class="label">自信あり誤答</div><div class="value">${highConfErrors}</div></div>
-    `;
-
-    const byCat = new Map();
-    for (const r of results) {
-      if (!byCat.has(r.category)) byCat.set(r.category, {total:0, correct:0});
-      const x = byCat.get(r.category);
-      x.total++;
-      if (r.correct) x.correct++;
-    }
-
-    const cats = [...byCat.entries()].sort((a,b) => b[1].total - a[1].total);
-    $("categoryBars").innerHTML = cats.length ? cats.map(([cat, x]) => {
-      const p = Math.round(x.correct / x.total * 100);
-      return `
-        <div class="bar-row">
-          <div>${esc(cat)}</div>
-          <div class="bar"><div style="width:${p}%"></div></div>
-          <div style="text-align:right">${p}%</div>
-        </div>
-      `;
-    }).join("") : `<div class="empty">まだ履歴がありません。</div>`;
-
-    const conf = [1,2,3,4,5].map(n => {
-      const rows = results.filter(r => r.confidence === n);
-      const c = rows.filter(r => r.correct).length;
-      return {n, total: rows.length, correct: c};
-    });
-    $("confidenceAnalysis").innerHTML = conf.map(x => `
-      <div class="list-item">
-        <div class="list-title">自信度 ${x.n}</div>
-        <div class="list-meta">
-          <span>${x.total}回答</span>
-          <span>正答 ${x.correct}</span>
-          <span>正答率 ${x.total ? Math.round(x.correct/x.total*100) : 0}%</span>
-        </div>
-      </div>
-    `).join("");
-
-    $("recentResults").innerHTML = results.length ? [...results].reverse().slice(0, 10).map(r => {
-      const q = questions.find(q => q.id === r.questionId);
-      return `
-        <div class="list-item">
-          <div class="list-title">${esc(q ? q.question : "削除済み問題")}</div>
-          <div class="list-meta">
-            <span class="tag">${esc(r.category)}</span>
-            <span>${r.correct ? "○ 正解" : "× 不正解"}</span>
-            <span>${(r.rtMs/1000).toFixed(2)}秒</span>
-            <span>自信 ${r.confidence}</span>
-          </div>
-        </div>
-      `;
-    }).join("") : `<div class="empty">まだ履歴がありません。</div>`;
-  }
-
-  function downloadBlob(filename, blob) {
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-  }
-
-  function exportJson() {
-    const data = {
-      version: 1,
-      exportedAt: new Date().toISOString(),
-      questions,
-      results
-    };
-    downloadBlob(
-      `study-analyzer-backup-${new Date().toISOString().slice(0,10)}.json`,
-      new Blob([JSON.stringify(data, null, 2)], {type:"application/json"})
-    );
-  }
-
-  function csvCell(v) {
-    const s = String(v ?? "");
-    return `"${s.replaceAll('"','""')}"`;
-  }
-
-  function exportCsv() {
-    const headers = ["timestamp","question_id","category","selected_answer","correct_answer","is_correct","reaction_time_ms","confidence","question"];
-    const lines = [headers.map(csvCell).join(",")];
-    for (const r of results) {
-      const q = questions.find(q => q.id === r.questionId);
-      lines.push([
-        r.timestamp, r.questionId, r.category, r.selected, r.answer,
-        r.correct ? 1 : 0, r.rtMs, r.confidence, q ? q.question : ""
-      ].map(csvCell).join(","));
-    }
-    const csv = "\ufeff" + lines.join("\r\n");
-    downloadBlob(
-      `study-analyzer-results-${new Date().toISOString().slice(0,10)}.csv`,
-      new Blob([csv], {type:"text/csv;charset=utf-8"})
-    );
-  }
-
-  function importJson(file) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      try {
-        const data = JSON.parse(reader.result);
-        if (!Array.isArray(data.questions) || !Array.isArray(data.results)) throw new Error("形式");
-        if (!confirm("現在の問題・履歴を、このバックアップで置き換えますか？")) return;
-        questions = data.questions;
-        results = data.results;
-        localStorage.setItem(STORAGE.questions, JSON.stringify(questions));
-        localStorage.setItem(STORAGE.results, JSON.stringify(results));
-        refreshAll();
-        alert("読み込みました。");
-      } catch {
-        alert("読み込みに失敗しました。Study AnalyzerのJSONか確認してください。");
-      }
-    };
-    reader.readAsText(file, "utf-8");
-  }
-
-  function resetAll() {
-    if (!confirm("本当に全データを削除しますか？")) return;
-    if (!confirm("元に戻せません。削除しますか？")) return;
-    questions = [...sampleQuestions];
-    results = [];
-    localStorage.setItem(STORAGE.questions, JSON.stringify(questions));
-    localStorage.setItem(STORAGE.results, JSON.stringify(results));
-    refreshAll();
-    alert("初期化しました。サンプル問題だけ残しています。");
-  }
-
-  function refreshAll() {
-    refreshCategories();
-    renderHome();
-    renderQuestionList();
-    renderAnalysis();
-  }
-
-  // Question tabs
-  $$("[data-qtab]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      $$("[data-qtab]").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      ["qtabAdd","qtabList","qtabImport"].forEach(id => $(id).classList.add("hidden"));
-      $("qtab" + btn.dataset.qtab.charAt(0).toUpperCase() + btn.dataset.qtab.slice(1)).classList.remove("hidden");
-    });
-  });
-
-  renderChoiceInputs();
-
-  $("startBtn").addEventListener("click", startSession);
-  $("nextBtn").addEventListener("click", nextQuestion);
-  $("quitBtn").addEventListener("click", () => switchView("homeView"));
-  $("addQuestionBtn").addEventListener("click", addQuestion);
-  $("exportJsonBtn").addEventListener("click", exportJson);
-  $("exportCsvBtn").addEventListener("click", exportCsv);
-  $("resetBtn").addEventListener("click", resetAll);
-  $("importJsonInput").addEventListener("change", e => {
-    const file = e.target.files?.[0];
-    if (file) importJson(file);
-    e.target.value = "";
-  });
-
-  $("confidenceButtons").innerHTML = [1,2,3,4,5].map(n => `<button data-conf="${n}">${n}</button>`).join("");
-  $$("#confidenceButtons button").forEach(btn => {
-    btn.addEventListener("click", () => chooseConfidence(Number(btn.dataset.conf)));
-  });
-
-  document.addEventListener("keydown", e => {
-    if (!$("studyView").classList.contains("active")) return;
-    if (/^[1-5]$/.test(e.key)) {
-      if (session.selected === null) chooseAnswer(Number(e.key));
-      else if (session.confidence === null) chooseConfidence(Number(e.key));
-    } else if ((e.key === "Enter" || e.key === " ") && !$("feedbackArea").classList.contains("hidden")) {
-      e.preventDefault();
-      nextQuestion();
-    }
-  });
-
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js").catch(() => {});
-    });
-  }
-
+  let questions=loadJson(STORAGE.questions,null); let results=loadJson(STORAGE.results,[]); let pendingImageBlob=null; let previewUrl=null; let activeStudyImageUrl=null;
+  if(!Array.isArray(questions)||questions.length===0){questions=sampleQuestions;saveQuestionsRaw();}
+  if(!Array.isArray(results))results=[];
+  let session={items:[],index:0,shownAt:0,selected:new Set(),rtMs:null,confidence:null,resultIds:[]};
+  const $=id=>document.getElementById(id); const $$=sel=>[...document.querySelectorAll(sel)];
+  function uid(){return (crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random().toString(16).slice(2));}
+  function loadJson(key,fallback){try{const raw=localStorage.getItem(key);return raw?JSON.parse(raw):fallback}catch{return fallback}}
+  function saveQuestionsRaw(){localStorage.setItem(STORAGE.questions,JSON.stringify(questions))}
+  function saveResultsRaw(){localStorage.setItem(STORAGE.results,JSON.stringify(results))}
+  function saveQuestions(){saveQuestionsRaw();refreshAll()}
+  function saveResults(){saveResultsRaw();refreshAll()}
+  function esc(s){return String(s??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+  function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+  function median(values){if(!values.length)return 0;const a=[...values].sort((x,y)=>x-y),m=Math.floor(a.length/2);return a.length%2?a[m]:(a[m-1]+a[m])/2}
+  function answersOf(q){let a;if(Array.isArray(q.answers))a=q.answers;else if(Array.isArray(q.answer))a=q.answer;else a=[q.answer];return a.map(Number).filter(n=>n>=1&&n<=5).sort((x,y)=>x-y)}
+  function isMulti(q){return q.type==="multi2"||answersOf(q).length===2}
+  function sameAnswers(a,b){const x=[...a].map(Number).sort((m,n)=>m-n),y=[...b].map(Number).sort((m,n)=>m-n);return x.length===y.length&&x.every((v,i)=>v===y[i])}
+  function resultSelected(r){if(Array.isArray(r.selectedAnswers))return r.selectedAnswers;if(Array.isArray(r.selected))return r.selected;return [r.selected].filter(v=>v!==undefined&&v!==null)}
+  function resultAnswers(r){if(Array.isArray(r.correctAnswers))return r.correctAnswers;if(Array.isArray(r.answer))return r.answer;return [r.answer].filter(v=>v!==undefined&&v!==null)}
+
+  function openDb(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,DB_VERSION);req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(IMAGE_STORE))db.createObjectStore(IMAGE_STORE,{keyPath:"id"})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+  async function saveImage(id,blob){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(IMAGE_STORE,"readwrite");tx.objectStore(IMAGE_STORE).put({id,blob});tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
+  async function getImageBlob(id){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(IMAGE_STORE,"readonly");const req=tx.objectStore(IMAGE_STORE).get(id);req.onsuccess=()=>{db.close();resolve(req.result?.blob||null)};req.onerror=()=>{db.close();reject(req.error)}})}
+  async function deleteImage(id){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(IMAGE_STORE,"readwrite");tx.objectStore(IMAGE_STORE).delete(id);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
+  async function clearImages(){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(IMAGE_STORE,"readwrite");tx.objectStore(IMAGE_STORE).clear();tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
+  function blobToDataURL(blob){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(r.error);r.readAsDataURL(blob)})}
+  function dataURLToBlob(dataURL){const [head,data]=dataURL.split(",");const mime=(head.match(/data:([^;]+)/)||[])[1]||"application/octet-stream";const bin=atob(data);const bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);return new Blob([bytes],{type:mime})}
+  function prepareImage(file){return new Promise((resolve,reject)=>{if(!file||!file.type.startsWith("image/")){reject(new Error("画像ファイルではありません"));return}const reader=new FileReader();reader.onerror=()=>reject(reader.error);reader.onload=()=>{const img=new Image();img.onerror=()=>reject(new Error("画像を読み込めません"));img.onload=()=>{const max=1800,scale=Math.min(1,max/Math.max(img.width,img.height));const w=Math.max(1,Math.round(img.width*scale)),h=Math.max(1,Math.round(img.height*scale));const canvas=document.createElement("canvas");canvas.width=w;canvas.height=h;const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,w,h);ctx.drawImage(img,0,0,w,h);canvas.toBlob(blob=>resolve(blob||file),"image/jpeg",.92)};img.src=reader.result};reader.readAsDataURL(file)})}
+  async function showImageForQuestion(qid,imgEl){try{const blob=await getImageBlob(qid);if(!blob){imgEl.classList.add("hidden");imgEl.removeAttribute("src");return null}const url=URL.createObjectURL(blob);imgEl.src=url;imgEl.classList.remove("hidden");return url}catch{imgEl.classList.add("hidden");return null}}
+
+  function switchView(id){$$('.view').forEach(v=>v.classList.remove("active"));$(id).classList.add("active");$$('.nav-btn').forEach(b=>b.classList.toggle("active",b.dataset.view===id));window.scrollTo({top:0,behavior:"instant"});if(id==="analysisView")renderAnalysis();if(id==="questionsView")renderQuestionList()}
+  $$('.nav-btn').forEach(btn=>btn.addEventListener("click",()=>switchView(btn.dataset.view)));
+  function refreshCategories(){const s=$("sessionCategory"),current=s.value,cats=[...new Set(questions.map(q=>q.category||"未分類"))].sort();s.innerHTML='<option value="all">すべて</option>'+cats.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");if([...s.options].some(o=>o.value===current))s.value=current}
+  function renderHome(){const total=results.length,correct=results.filter(r=>r.correct).length,accuracy=total?Math.round(correct/total*100):0,rt=total?Math.round(median(results.map(r=>Number(r.rtMs)||0))):0,high=results.filter(r=>!r.correct&&Number(r.confidence)>=4).length;$("homeStats").innerHTML=`<div class="stat"><div class="label">登録問題</div><div class="value">${questions.length}</div></div><div class="stat"><div class="label">総回答</div><div class="value">${total}</div></div><div class="stat"><div class="label">正答率</div><div class="value">${accuracy}%</div></div><div class="stat"><div class="label">RT中央値</div><div class="value">${rt?(rt/1000).toFixed(1)+"s":"-"}</div></div>`;const riskCounts=new Map();for(const r of results)if(!r.correct&&Number(r.confidence)>=4)riskCounts.set(r.questionId,(riskCounts.get(r.questionId)||0)+1);const risk=[...riskCounts.entries()].map(([id,n])=>({q:questions.find(q=>q.id===id),n})).filter(x=>x.q).sort((a,b)=>b.n-a.n).slice(0,5);$("riskList").innerHTML=risk.length?risk.map(x=>`<div class="list-item"><div class="list-title">${esc(x.q.question)}</div><div class="list-meta"><span class="tag">${esc(x.q.category)}</span><span>自信あり誤答 ${x.n}回</span></div></div>`).join(""):'<div class="empty">まだ要注意問題はありません。</div>'}
+
+  function startSession(){if(!questions.length){alert("問題を1問以上登録してください。");return}const cat=$("sessionCategory").value;let pool=cat==="all"?questions:questions.filter(q=>q.category===cat);if(!pool.length){alert("この分野には問題がありません。");return}const cv=$("sessionCount").value,count=cv==="all"?pool.length:Math.min(Number(cv),pool.length);session={items:shuffle(pool).slice(0,count),index:0,shownAt:0,selected:new Set(),rtMs:null,confidence:null,resultIds:[]};switchView("studyView");renderStudyQuestion()}
+  async function renderStudyQuestion(){const q=session.items[session.index];$("studyCounter").textContent=`問題 ${session.index+1} / ${session.items.length}`;$("studyCategory").textContent=(q.category||"未分類")+(isMulti(q)?"・2つ選べ":"");$("studyProgress").style.width=`${session.index/session.items.length*100}%`;$("questionText").textContent=q.question;if(activeStudyImageUrl){URL.revokeObjectURL(activeStudyImageUrl);activeStudyImageUrl=null}$("studyImage").classList.add("hidden");if(q.hasImage)activeStudyImageUrl=await showImageForQuestion(q.id,$("studyImage"));$("choices").innerHTML=q.choices.map((c,i)=>`<button class="choice" data-choice="${i+1}"><span class="num">${i+1}</span><span>${esc(c)}</span></button>`).join("");$$("#choices .choice").forEach(btn=>btn.addEventListener("click",()=>handleChoice(Number(btn.dataset.choice))));session.selected=new Set();session.rtMs=null;session.confidence=null;$("confidenceArea").classList.add("hidden");$("feedbackArea").classList.add("hidden");if(isMulti(q)){$("multiAnswerArea").classList.remove("hidden");$("multiSubmitBtn").disabled=true;$("multiNote").textContent="2つ選んでから確定してください。"}else $("multiAnswerArea").classList.add("hidden");requestAnimationFrame(()=>session.shownAt=performance.now())}
+  function handleChoice(n){const q=session.items[session.index];if(session.rtMs!==null)return;if(!isMulti(q)){finalizeSelection([n]);return}if(session.selected.has(n))session.selected.delete(n);else{if(session.selected.size>=2)return;session.selected.add(n)}$$("#choices .choice").forEach(btn=>btn.classList.toggle("selected",session.selected.has(Number(btn.dataset.choice))));$("multiSubmitBtn").disabled=session.selected.size!==2;$("multiNote").textContent=`${session.selected.size}/2 選択中`}
+  function finalizeSelection(arr){if(session.rtMs!==null)return;session.selected=new Set(arr);session.rtMs=Math.round(performance.now()-session.shownAt);$$("#choices .choice").forEach(btn=>{btn.disabled=true;btn.classList.toggle("selected",session.selected.has(Number(btn.dataset.choice)))});$("multiAnswerArea").classList.add("hidden");$("confidenceArea").classList.remove("hidden")}
+  function chooseConfidence(n){if(session.rtMs===null||session.confidence!==null)return;session.confidence=n;const q=session.items[session.index],selected=[...session.selected].sort((a,b)=>a-b),correctAnswers=answersOf(q),correct=sameAnswers(selected,correctAnswers),id=uid();results.push({id,timestamp:new Date().toISOString(),questionId:q.id,category:q.category||"未分類",selectedAnswers:selected,correctAnswers,selected:selected.length===1?selected[0]:selected,answer:correctAnswers.length===1?correctAnswers[0]:correctAnswers,correct,rtMs:session.rtMs,confidence:n});session.resultIds.push(id);saveResults();$("confidenceArea").classList.add("hidden");$("feedbackArea").classList.remove("hidden");const box=$("feedbackBox");box.className="feedback "+(correct?"ok":"ng");box.innerHTML=correct?`○ 正解　<span class="small">反応時間 ${(session.rtMs/1000).toFixed(2)}秒 / 自信度 ${n}</span>`:`× 不正解　正解は ${correctAnswers.join("・")}　<span class="small">反応時間 ${(session.rtMs/1000).toFixed(2)}秒 / 自信度 ${n}</span>`;$("nextBtn").textContent=session.index===session.items.length-1?"結果を見る":"次の問題"}
+  function nextQuestion(){if(session.index===session.items.length-1){$("studyProgress").style.width="100%";const set=new Set(session.resultIds),sr=results.filter(r=>set.has(r.id)),c=sr.filter(r=>r.correct).length,acc=sr.length?Math.round(c/sr.length*100):0,rt=sr.length?Math.round(median(sr.map(r=>Number(r.rtMs)||0))):0;alert(`終了\n正答率 ${acc}%\n反応時間中央値 ${(rt/1000).toFixed(2)}秒`);switchView("analysisView");return}session.index++;renderStudyQuestion()}
+
+  function renderChoiceInputs(){$("choiceInputs").innerHTML=Array.from({length:5},(_,i)=>`<div class="field"><label for="qChoice${i+1}">選択肢 ${i+1}</label><input id="qChoice${i+1}" placeholder="選択肢 ${i+1}"></div>`).join("");$("multiAnswerChecks").innerHTML=[1,2,3,4,5].map(n=>`<label class="answer-check"><input type="checkbox" value="${n}"><span>${n}</span></label>`).join("")}
+  function updateTypeUi(){const multi=$("qType").value==="multi2";$("singleAnswerWrap").classList.toggle("hidden",multi);$("multiAnswerWrap").classList.toggle("hidden",!multi)}
+  async function addQuestion(){const category=$("qCategory").value.trim()||"未分類",question=$("qText").value.trim(),choices=Array.from({length:5},(_,i)=>$("qChoice"+(i+1)).value.trim()),type=$("qType").value;if(!question||choices.some(c=>!c)){alert("問題文と5つの選択肢をすべて入力してください。");return}let answers;if(type==="multi2"){answers=$$("#multiAnswerChecks input:checked").map(x=>Number(x.value));if(answers.length!==2){alert("正解を2つ選択してください。");return}}else answers=[Number($("qAnswer").value)];const q={id:uid(),category,question,choices,type,answers,answer:answers.length===1?answers[0]:answers,hasImage:!!pendingImageBlob};questions.push(q);if(pendingImageBlob){try{await saveImage(q.id,pendingImageBlob)}catch(e){q.hasImage=false;alert("問題は登録しましたが、画像保存に失敗しました。")}}saveQuestions();$("qText").value="";choices.forEach((_,i)=>$("qChoice"+(i+1)).value="");$("qType").value="single";updateTypeUi();$$("#multiAnswerChecks input").forEach(x=>x.checked=false);clearPendingImage();alert("登録しました。")}
+  function clearPendingImage(){pendingImageBlob=null;$("qImage").value="";$("qImagePreview").classList.add("hidden");$("qImagePreview").removeAttribute("src");$("removeImageBtn").classList.add("hidden");if(previewUrl){URL.revokeObjectURL(previewUrl);previewUrl=null}}
+  async function onImageChosen(){const file=$("qImage").files?.[0];if(!file){clearPendingImage();return}try{pendingImageBlob=await prepareImage(file);if(previewUrl)URL.revokeObjectURL(previewUrl);previewUrl=URL.createObjectURL(pendingImageBlob);$("qImagePreview").src=previewUrl;$("qImagePreview").classList.remove("hidden");$("removeImageBtn").classList.remove("hidden")}catch(e){clearPendingImage();alert(e.message||"画像を読み込めませんでした。")}}
+  async function renderQuestionList(){$("questionList").innerHTML=questions.length?questions.map((q,i)=>`<div class="list-item"><div class="list-title">${esc(q.question)}</div>${q.hasImage?`<img class="q-thumb hidden" data-img-id="${q.id}" alt="問題画像">`:""}<div class="list-meta"><span class="tag">${esc(q.category)}</span><span>${isMulti(q)?"2つ選べ":"1つ選べ"}</span><span>正解 ${answersOf(q).join("・")}</span>${q.hasImage?'<span>画像あり</span>':""}<span>#${i+1}</span></div><div style="height:10px"></div><button class="danger small-delete" data-id="${q.id}" style="padding:8px 10px;min-height:auto">削除</button></div>`).join(""):'<div class="empty">問題がありません。</div>';$$(".small-delete").forEach(btn=>btn.addEventListener("click",async()=>{if(!confirm("この問題を削除しますか？"))return;const q=questions.find(q=>q.id===btn.dataset.id);questions=questions.filter(q=>q.id!==btn.dataset.id);if(q?.hasImage)try{await deleteImage(q.id)}catch{}saveQuestions()}));for(const img of $$(".q-thumb")){const url=await showImageForQuestion(img.dataset.imgId,img);if(url)img.addEventListener("load",()=>URL.revokeObjectURL(url),{once:true})}}
+
+  function renderAnalysis(){const total=results.length,correctN=results.filter(r=>r.correct).length,accuracy=total?Math.round(correctN/total*100):0,rt=total?Math.round(median(results.map(r=>Number(r.rtMs)||0))):0,high=results.filter(r=>!r.correct&&Number(r.confidence)>=4).length;$("analysisStats").innerHTML=`<div class="stat"><div class="label">総回答</div><div class="value">${total}</div></div><div class="stat"><div class="label">正答率</div><div class="value">${accuracy}%</div></div><div class="stat"><div class="label">RT中央値</div><div class="value">${rt?(rt/1000).toFixed(1)+"s":"-"}</div></div><div class="stat"><div class="label">自信あり誤答</div><div class="value">${high}</div></div>`;const byCat=new Map();for(const r of results){if(!byCat.has(r.category))byCat.set(r.category,{total:0,correct:0});const x=byCat.get(r.category);x.total++;if(r.correct)x.correct++}const cats=[...byCat.entries()].sort((a,b)=>b[1].total-a[1].total);$("categoryBars").innerHTML=cats.length?cats.map(([cat,x])=>{const p=Math.round(x.correct/x.total*100);return `<div class="bar-row"><div>${esc(cat)}</div><div class="bar"><div style="width:${p}%"></div></div><div style="text-align:right">${p}%</div></div>`}).join(""):'<div class="empty">まだ履歴がありません。</div>';$("confidenceAnalysis").innerHTML=[1,2,3,4,5].map(n=>{const rows=results.filter(r=>Number(r.confidence)===n),c=rows.filter(r=>r.correct).length;return `<div class="list-item"><div class="list-title">自信度 ${n}</div><div class="list-meta"><span>${rows.length}回答</span><span>正答 ${c}</span><span>正答率 ${rows.length?Math.round(c/rows.length*100):0}%</span></div></div>`}).join("");$("recentResults").innerHTML=results.length?[...results].reverse().slice(0,10).map(r=>{const q=questions.find(q=>q.id===r.questionId);return `<div class="list-item"><div class="list-title">${esc(q?q.question:"削除済み問題")}</div><div class="list-meta"><span class="tag">${esc(r.category)}</span><span>${r.correct?"○ 正解":"× 不正解"}</span><span>${((Number(r.rtMs)||0)/1000).toFixed(2)}秒</span><span>自信 ${r.confidence}</span><span>回答 ${resultSelected(r).join("・")}</span></div></div>`}).join(""):'<div class="empty">まだ履歴がありません。</div>'}
+
+  function downloadBlob(filename,blob){const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+  async function exportJson(){try{const images={};for(const q of questions.filter(q=>q.hasImage)){const blob=await getImageBlob(q.id);if(blob)images[q.id]=await blobToDataURL(blob)}const data={version:2,exportedAt:new Date().toISOString(),questions,results,images};downloadBlob(`study-analyzer-backup-${new Date().toISOString().slice(0,10)}.json`,new Blob([JSON.stringify(data,null,2)],{type:"application/json"}))}catch{alert("バックアップ作成に失敗しました。")}}
+  function csvCell(v){const s=String(v??"");return `"${s.replaceAll('"','""')}"`}
+  function exportCsv(){const headers=["timestamp","question_id","category","selected_answers","correct_answers","is_correct","reaction_time_ms","confidence","question"],lines=[headers.map(csvCell).join(",")];for(const r of results){const q=questions.find(q=>q.id===r.questionId);lines.push([r.timestamp,r.questionId,r.category,resultSelected(r).join("|"),resultAnswers(r).join("|"),r.correct?1:0,r.rtMs,r.confidence,q?q.question:""].map(csvCell).join(","))}downloadBlob(`study-analyzer-results-${new Date().toISOString().slice(0,10)}.csv`,new Blob(["\ufeff"+lines.join("\r\n")],{type:"text/csv;charset=utf-8"}))}
+  function importJson(file){const reader=new FileReader();reader.onload=async()=>{try{const data=JSON.parse(reader.result);if(!Array.isArray(data.questions)||!Array.isArray(data.results))throw new Error("形式");if(!confirm("現在の問題・画像・履歴を、このバックアップで置き換えますか？"))return;questions=data.questions;results=data.results;await clearImages();if(data.images&&typeof data.images==="object")for(const [id,url] of Object.entries(data.images))await saveImage(id,dataURLToBlob(url));saveQuestionsRaw();saveResultsRaw();refreshAll();alert("読み込みました。") }catch(e){alert("読み込みに失敗しました。Study AnalyzerのJSONか確認してください。")}};reader.readAsText(file,"utf-8")}
+  async function resetAll(){if(!confirm("本当に全データを削除しますか？"))return;if(!confirm("元に戻せません。削除しますか？"))return;questions=[...sampleQuestions];results=[];await clearImages();saveQuestionsRaw();saveResultsRaw();refreshAll();alert("初期化しました。サンプル問題だけ残しています。")}
+  function refreshAll(){refreshCategories();renderHome();renderQuestionList();renderAnalysis()}
+
+  $$('[data-qtab]').forEach(btn=>btn.addEventListener("click",()=>{$$('[data-qtab]').forEach(b=>b.classList.remove("active"));btn.classList.add("active");["qtabAdd","qtabList","qtabImport"].forEach(id=>$(id).classList.add("hidden"));$("qtab"+btn.dataset.qtab.charAt(0).toUpperCase()+btn.dataset.qtab.slice(1)).classList.remove("hidden")}));
+  renderChoiceInputs();updateTypeUi();$("qType").addEventListener("change",updateTypeUi);$("qImage").addEventListener("change",onImageChosen);$("removeImageBtn").addEventListener("click",clearPendingImage);$("startBtn").addEventListener("click",startSession);$("multiSubmitBtn").addEventListener("click",()=>{if(session.selected.size===2)finalizeSelection([...session.selected])});$("nextBtn").addEventListener("click",nextQuestion);$("quitBtn").addEventListener("click",()=>switchView("homeView"));$("addQuestionBtn").addEventListener("click",addQuestion);$("exportJsonBtn").addEventListener("click",exportJson);$("exportCsvBtn").addEventListener("click",exportCsv);$("resetBtn").addEventListener("click",resetAll);$("importJsonInput").addEventListener("change",e=>{const f=e.target.files?.[0];if(f)importJson(f);e.target.value=""});
+  $("confidenceButtons").innerHTML=[1,2,3,4,5].map(n=>`<button data-conf="${n}">${n}</button>`).join("");$$("#confidenceButtons button").forEach(btn=>btn.addEventListener("click",()=>chooseConfidence(Number(btn.dataset.conf))));
+  document.addEventListener("keydown",e=>{if(!$("studyView").classList.contains("active"))return;if(/^[1-5]$/.test(e.key)&&session.rtMs===null){handleChoice(Number(e.key))}else if(/^[1-5]$/.test(e.key)&&session.rtMs!==null&&session.confidence===null){chooseConfidence(Number(e.key))}else if((e.key==="Enter"||e.key===" ")&&!$("feedbackArea").classList.contains("hidden")){e.preventDefault();nextQuestion()}});
+  if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
   refreshAll();
 })();
 </script>
