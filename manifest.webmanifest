@@ -2,7 +2,7 @@
   "id": "./",
   "name": "学習・認知パフォーマンス分析",
   "short_name": "Study Analyzer",
-  "description": "学習分析＋iPhone内ローカル会話解析。内部文字起こしを画面に出さず、ChatGPT理解用JSONとして共有できます。",
+  "description": "録音を端末内で解析し、内部文字起こし・話者判定・会話構造をChatGPT理解用JSONとして共有する個人用アプリ。",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
