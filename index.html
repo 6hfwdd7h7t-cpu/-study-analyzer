@@ -48,7 +48,7 @@
 </head>
 <body>
 <main class="app">
-  <header><div class="title-wrap"><h1>学習・認知パフォーマンス分析</h1><p>正答 × 反応時間 × 自信度</p></div><div class="pill">Web Ver.3.4</div></header>
+  <header><div class="title-wrap"><h1>学習・認知パフォーマンス分析</h1><p>正答 × 反応時間 × 自信度</p></div><div class="pill">Web Ver.3.5</div></header>
 
   <section id="homeView" class="view active">
     <div class="card"><h2>今日の学習</h2><p class="muted small">登録問題からランダムに出題します。</p>
@@ -151,9 +151,9 @@
 
   <section id="conversationView" class="view">
     <div class="card">
-      <h2>iPhoneだけで会話音声＋判定式の話者学習＋内容メモ</h2>
-      <p class="muted small">WAVを選ぶと、音声をサーバーへ送らず、このiPhone内で音量・無音・発話区間・F0と2人の話者候補を解析します。原音そのものは保存しません。</p>
-      <div class="local-audio-note small"><strong>Ver.3.4：</strong>精度の悪かった端末内Whisper Tinyは使いません。代わりに、アプリが「ここだけ教えて」と候補を出し、あなたは <strong>自分 / 相手 / 不明</strong> を判定するだけ。必要な区間だけ会話機能や要点を残せます。<br><strong>内容優先：</strong>将来ボイスメモを使う場合は、文字起こし全文をコピーして貼るだけで参考全文として保存できます。一言一句の手修正は前提にしません。</div>
+      <h2>iPhoneだけで会話音声＋話者判定＋相槌/笑い/同時発話</h2>
+      <p class="muted small">WAVを選ぶと、音声をサーバーへ送らず、このiPhone内で音量・無音・発話区間・F0と2人の話者候補を解析します。原音そのものは保存しません。音声だけでは頷き・視線・表情は分からないため、動画確認時の手動ラベルに対応します。</p>
+      <div class="local-audio-note small"><strong>Ver.3.4：</strong>精度の悪かった端末内Whisper Tinyは使いません。代わりに、アプリが「ここだけ教えて」と候補を出し、あなたは <strong>自分 / 相手 / 不明</strong> を判定するだけ。必要な区間だけ会話機能や要点を残せます。<br><strong>内容優先：</strong>全文文字起こしは必須にしません。内容は重要区間の要点・会話機能・非言語イベントを残し、一言一句の手修正は前提にしません。</div>
       <div style="height:12px"></div>
       <div class="field"><label for="conversationAudioInput">音声ファイル（WAV）</label><input type="file" id="conversationAudioInput" accept=".wav,audio/wav,audio/x-wav"></div>
       <div class="row">
@@ -219,10 +219,10 @@
       <div id="conversationContentCard" class="card hidden">
         <h3>内容を残す <span class="content-badge">訂正作業なし</span></h3>
         <p class="muted small">全文を一言一句直す方式はやめます。使える方法だけ選んでください。</p>
-        <div class="warning-box small"><strong>おすすめ：</strong>ボイスメモで録った回は「文字起こしをコピー」で全文をここへ貼る。話者・時刻は未確定の参考全文として扱います。PCM録音の回は、重要区間だけ「★重要」「要点」「会話機能」を付ければOKです。</div>
+        <div class="warning-box small"><strong>運用：</strong>全文文字起こしがなくても使えます。重要な区間だけ「★重要」「要点」「会話機能」「相槌・笑い・同時発話」などを判定します。外部のTXTがある時だけ参考全文として任意で読み込めます。</div>
         <div style="height:10px"></div>
         <div class="field"><label for="referenceTranscriptFile">参考全文TXT（任意）</label><input type="file" id="referenceTranscriptFile" accept=".txt,text/plain"></div>
-        <div class="field"><label for="referenceTranscriptText">参考全文を貼り付け（任意）</label><textarea id="referenceTranscriptText" rows="9" placeholder="ボイスメモ → 文字起こしをコピー → ここへ貼る。誤字があってもそのままでOK。"></textarea></div>
+        <div class="field"><label for="referenceTranscriptText">参考全文を貼り付け（任意）</label><textarea id="referenceTranscriptText" rows="9" placeholder="任意。外部で作った文字起こしTXTなどがある場合だけ貼る。誤字があってもそのままでOK。"></textarea></div>
         <div class="field"><label for="referenceTranscriptQuality">この全文の信頼度</label><select id="referenceTranscriptQuality"><option value="unknown">未評価</option><option value="good">だいたい合っている</option><option value="partial">一部かなり怪しい</option><option value="bad">内容分析には使わない</option></select></div>
         <div class="row"><button class="secondary" id="saveReferenceTranscriptBtn" type="button">参考全文を保存</button><button class="ghost" id="clearReferenceTranscriptBtn" type="button">参考全文を削除</button></div>
         <p id="referenceTranscriptStatus" class="muted small"></p>
@@ -240,8 +240,8 @@
 
       <div class="card">
         <h3>会話タイムライン</h3>
-        <div class="field"><label for="conversationTurnFilter">表示</label><select id="conversationTurnFilter"><option value="all">すべて</option><option value="fast">0.5秒以内の推定応答</option><option value="overlap">被せ・重なりだけ（PC解析）</option><option value="longpause">2秒以上のポーズ後（iPhone解析）</option><option value="training">話者学習候補</option><option value="starred">★重要だけ</option><option value="noted">要点メモあり</option></select></div>
-        <p class="muted small">普段は上の「判定だけで育てる」を使えば十分です。タイムラインでは、必要な場所だけ★重要・要点・会話機能を残せます。</p>
+        <div class="field"><label for="conversationTurnFilter">表示</label><select id="conversationTurnFilter"><option value="all">すべて</option><option value="fast">0.5秒以内の推定応答</option><option value="overlap">被せ・重なりだけ（PC解析）</option><option value="longpause">2秒以上のポーズ後（iPhone解析）</option><option value="training">話者学習候補</option><option value="starred">★重要だけ</option><option value="noted">要点メモあり</option><option value="overlap_manual">同時発話</option><option value="backchannel">相槌</option><option value="laughter">笑い</option></select></div>
+        <p class="muted small">普段は上の「判定だけで育てる」を使えば十分です。タイムラインでは、必要な場所だけ★重要・要点・会話機能を残せます。</p><div class="warning-box small" style="margin-top:8px"><strong>追加：</strong>2人が同時に話したら「両方」＋「同時発話」、笑いは「笑い」、短い「うん・そうそう」等は「相槌」。声のない頷きは音声だけでは検出できないため、動画で確認できた時だけ「非言語反応」として手動記録します。</div>
         <div id="conversationTimeline" class="timeline"></div>
       </div>
 
@@ -565,10 +565,14 @@
     question:"質問",
     self_disclosure:"自己開示",
     hypothesis:"分析・仮説",
-    agreement:"同意・相槌",
+    agreement:"同意",
+    backchannel:"相槌",
     correction:"修正・反論",
     topic_shift:"話題転換",
     humor:"冗談・雑談",
+    laughter:"笑い",
+    overlap:"同時発話",
+    nonverbal:"非言語反応",
     other:"その他"
   };
   function activeJudgeCandidateIndex(row){
@@ -599,8 +603,8 @@
       <div class="list-meta"><span>${secText(t.start)}–${secText(t.end)}</span><span>現在 ${esc(who)}</span><span>自動信頼 ${conf}%</span></div>
       <div class="turn-actions" style="margin-top:10px"><button type="button" id="activeJudgePlay">▶︎ 約${Math.max(3,Math.round(Number(t.duration)+2))}秒聞く</button></div>
       <div class="small" style="font-weight:800;margin-top:10px">誰？</div>
-      <div class="trainer-row"><button type="button" data-active-speaker="SELF">自分</button><button type="button" data-active-speaker="OTHER">相手</button><button type="button" data-active-speaker="UNKNOWN">わからん</button></div>
-      <div class="small" style="font-weight:800;margin-top:10px">この発話の役割（分かる時だけ）</div>
+      <div class="trainer-row"><button type="button" data-active-speaker="SELF">自分</button><button type="button" data-active-speaker="OTHER">相手</button><button type="button" data-active-speaker="BOTH">両方</button><button type="button" data-active-speaker="NONVERBAL">話者なし</button><button type="button" data-active-speaker="UNKNOWN">わからん</button></div>
+      <div class="small" style="font-weight:800;margin-top:10px">この区間の役割・非言語イベント（分かる時だけ）</div>
       <div class="trainer-row" id="activeActButtons">${Object.entries(TURN_ACTS).map(([k,v])=>`<button type="button" data-active-act="${k}">${v}</button>`).join('')}</div>
       <div class="field" style="margin-top:10px"><label for="activeJudgeNote">要点（任意・一言でOK）</label><input id="activeJudgeNote" placeholder="例：恋愛の定義を明見が修正 / 俺が仮説を出す"></div>
       <div class="row"><button class="primary" type="button" id="activeJudgeSave">保存して次へ</button><button class="ghost" type="button" id="activeJudgeSkip">今回は保留</button></div>
@@ -611,7 +615,7 @@
     $$('[data-active-act]',box).forEach(b=>b.addEventListener('click',()=>{selectedAct=b.dataset.activeAct;$$('[data-active-act]',box).forEach(x=>x.classList.toggle('active-self',x===b))}));
     $('activeJudgeSave')?.addEventListener('click',async()=>{
       const row2=await getConversationRow(activeConversationId);const tt=row2?.analysis?.turns?.[i];if(!tt)return;
-      if(selectedSpeaker==='SELF'||selectedSpeaker==='OTHER'){tt.manual_speaker=selectedSpeaker;tt.speaker=selectedSpeaker;tt.speaker_confidence=1}
+      if(['SELF','OTHER','BOTH','NONVERBAL'].includes(selectedSpeaker)){tt.manual_speaker=selectedSpeaker;tt.speaker=selectedSpeaker;tt.speaker_confidence=1}
       else if(selectedSpeaker==='UNKNOWN'){tt.judge_skip=true}
       if(selectedAct)tt.manual_act=selectedAct;
       const note=String($('activeJudgeNote')?.value||'').trim();if(note)tt.content_note=note;
@@ -687,7 +691,7 @@
 
   let activeConversationId=null;
   function secText(sec){sec=Math.max(0,Number(sec)||0);const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=Math.round(sec%60);return h?`${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`:`${m}:${String(s).padStart(2,"0")}`}
-  function conversationSpeakerName(row,spk){return row?.speakerNames?.[spk]||spk||"不明"}
+  function conversationSpeakerName(row,spk){if(spk==="BOTH")return "両方";if(spk==="NONVERBAL")return "話者なし";return row?.speakerNames?.[spk]||spk||"不明"}
   function compactConversationAnalysis(data,filename=""){
     if(!data||typeof data!=="object"||!data.summary||!Array.isArray(data.turns))throw new Error("Conversation Audio AnalyzerのJSONではありません。");
     const turns=data.turns.map(t=>{const x={...t};delete x.words;return x});
@@ -729,17 +733,17 @@
     if(filter==="longpause")pairs=pairs.filter(x=>Number(x.t.gap_before_sec)>=2);
     if(filter==="training")pairs=pairs.filter(x=>Number(x.t.duration)>=.9&&Array.isArray(x.t.voice_feature)).sort((a,b)=>(Number(a.t.speaker_confidence||0)-Number(b.t.speaker_confidence||0))||Number(b.t.duration)-Number(a.t.duration));
     if(filter==="starred")pairs=pairs.filter(x=>x.t.starred);
-    if(filter==="noted")pairs=pairs.filter(x=>String(x.t.content_note||'').trim());
+    if(filter==="noted")pairs=pairs.filter(x=>String(x.t.content_note||'').trim());if(filter==="overlap_manual")pairs=pairs.filter(x=>x.t.manual_speaker==="BOTH"||x.t.manual_act==="overlap");if(filter==="backchannel")pairs=pairs.filter(x=>x.t.manual_act==="backchannel");if(filter==="laughter")pairs=pairs.filter(x=>x.t.manual_act==="laughter");
     const limited=pairs.slice(0,300);
     $("conversationTimeline").innerHTML=limited.length?limited.map(({t,i})=>{
       const meta=[];if(t.response_latency_sec!==null&&t.response_latency_sec!==undefined)meta.push(`${isLocal?"推定応答":"応答"} ${Number(t.response_latency_sec).toFixed(3)}s`);if(Number(t.overlaps_previous_sec)>0)meta.push(`重なり ${Number(t.overlaps_previous_sec).toFixed(3)}s`);if(t.gap_before_sec!==null&&t.gap_before_sec!==undefined)meta.push(`前区間から ${Number(t.gap_before_sec).toFixed(2)}s`);if(t.avg_rms_db!==null&&t.avg_rms_db!==undefined)meta.push(`平均 ${Number(t.avg_rms_db).toFixed(1)}dB`);if(t.f0_hz)meta.push(`F0 ${Number(t.f0_hz).toFixed(1)}Hz`);if(t.speaker_confidence!==undefined)meta.push(`話者信頼 ${Math.round(Number(t.speaker_confidence||0)*100)}%`);
       const who=isLocal?(t.speaker?conversationSpeakerName(row,t.speaker):"未分類"):conversationSpeakerName(row,t.speaker),act=t.manual_act?TURN_ACTS[t.manual_act]||t.manual_act:null;
-      return `<div class="turn ${t.starred?'starred':''}"><div class="turn-head"><span class="turn-speaker">${t.starred?'★ ':''}${esc(who)}</span><span class="turn-time">${secText(t.start)}–${secText(t.end)}</span></div>${meta.length?`<div class="turn-meta">${esc(meta.join(" / "))}</div>`:""}${act?`<div class="turn-meta">会話機能：${esc(act)}</div>`:""}${t.content_note?`<div class="turn-text"><strong>要点：</strong>${esc(t.content_note)}</div>`:""}${t.text?`<div class="turn-text">${esc(t.text)}</div>`:""}${isLocal?`<div class="turn-actions"><button type="button" data-local-play-start="${Math.max(0,Number(t.start)-.8)}" data-local-play-end="${Math.max(Number(t.end)+1.2,Number(t.start)+3)}">▶︎ 原音</button><button type="button" data-turn-star="${i}">${t.starred?'★ 重要':'☆ 重要'}</button><button type="button" data-turn-note="${i}">要点</button></div><div class="trainer-row"><button type="button" data-train-self="${i}" class="${t.manual_speaker==='SELF'?'active-self':''}">自分</button><button type="button" data-train-other="${i}" class="${t.manual_speaker==='OTHER'?'active-other':''}">相手</button><button type="button" data-train-clear="${i}">解除</button><select data-turn-act="${i}" style="min-width:120px"><option value="">機能未指定</option>${Object.entries(TURN_ACTS).map(([k,v])=>`<option value="${k}" ${t.manual_act===k?'selected':''}>${v}</option>`).join('')}</select></div>`:""}</div>`
+      return `<div class="turn ${t.starred?'starred':''}"><div class="turn-head"><span class="turn-speaker">${t.starred?'★ ':''}${esc(who)}</span><span class="turn-time">${secText(t.start)}–${secText(t.end)}</span></div>${meta.length?`<div class="turn-meta">${esc(meta.join(" / "))}</div>`:""}${act?`<div class="turn-meta">会話機能：${esc(act)}</div>`:""}${t.content_note?`<div class="turn-text"><strong>要点：</strong>${esc(t.content_note)}</div>`:""}${t.text?`<div class="turn-text">${esc(t.text)}</div>`:""}${isLocal?`<div class="turn-actions"><button type="button" data-local-play-start="${Math.max(0,Number(t.start)-.8)}" data-local-play-end="${Math.max(Number(t.end)+1.2,Number(t.start)+3)}">▶︎ 原音</button><button type="button" data-turn-star="${i}">${t.starred?'★ 重要':'☆ 重要'}</button><button type="button" data-turn-note="${i}">要点</button></div><div class="trainer-row"><button type="button" data-train-self="${i}" class="${t.manual_speaker==='SELF'?'active-self':''}">自分</button><button type="button" data-train-other="${i}" class="${t.manual_speaker==='OTHER'?'active-other':''}">相手</button><button type="button" data-train-both="${i}">両方</button><button type="button" data-train-nonverbal="${i}">話者なし</button><button type="button" data-train-clear="${i}">解除</button><select data-turn-act="${i}" style="min-width:120px"><option value="">機能未指定</option>${Object.entries(TURN_ACTS).map(([k,v])=>`<option value="${k}" ${t.manual_act===k?'selected':''}>${v}</option>`).join('')}</select></div>`:""}</div>`
     }).join(""):'<div class="empty">該当する区間がありません。</div>';
     if(pairs.length>limited.length)$("conversationTimeline").insertAdjacentHTML("beforeend",`<div class="empty">表示は先頭300区間までです（全${pairs.length}区間）。</div>`);
     $$('[data-local-play-start]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>playLocalTurn(Number(b.dataset.localPlayStart),Number(b.dataset.localPlayEnd))));
     $$('[data-train-self]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>labelTurn(Number(b.dataset.trainSelf),'SELF')));
-    $$('[data-train-other]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>labelTurn(Number(b.dataset.trainOther),'OTHER')));
+    $$('[data-train-other]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>labelTurn(Number(b.dataset.trainOther),'OTHER')));$$('[data-train-both]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>labelTurn(Number(b.dataset.trainBoth),'BOTH')));$$('[data-train-nonverbal]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>labelTurn(Number(b.dataset.trainNonverbal),'NONVERBAL')));
     $$('[data-train-clear]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>labelTurn(Number(b.dataset.trainClear),null)));
     $$('[data-turn-star]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>toggleTurnStar(Number(b.dataset.turnStar))));
     $$('[data-turn-note]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>editTurnNote(Number(b.dataset.turnNote))));
@@ -763,7 +767,7 @@
     }
     lines.push("","## 全会話タイムライン（音響・話者推定）");
     for(const t of a.turns||[]){const meta=[];if(t.response_latency_sec!==null&&t.response_latency_sec!==undefined)meta.push(`推定応答=${Number(t.response_latency_sec).toFixed(3)}s`);if(t.gap_before_sec!==null&&t.gap_before_sec!==undefined)meta.push(`前区間から=${Number(t.gap_before_sec).toFixed(3)}s`);if(t.avg_rms_db!==undefined)meta.push(`平均RMS=${t.avg_rms_db}dB`);if(t.f0_hz)meta.push(`F0=${t.f0_hz}Hz`);if(t.speaker_confidence!==undefined)meta.push(`自動話者信頼=${Math.round(Number(t.speaker_confidence||0)*100)}%`);lines.push(`${secText(t.start)}-${secText(t.end)} ${t.speaker?conversationSpeakerName(row,t.speaker):"未分類"}${meta.length?" ["+meta.join(", ")+"]":""}`)}
-    lines.push("","## 分析依頼","参考全文がある場合はまず内容・論点・話題の流れを読む。次に、人間判定した話者・会話機能・要点メモをアンカーとして、発話量、応答間隔、ポーズ、F0等を重ねる。①直接観察できる事実 ②会話機能 ③関係性・心理の仮説を分ける。自動話者の低信頼区間は断定に使わない。特に、質問、自己開示、仮説提示、相手の修正を受ける流れ、話題主導、相手に余白を残す場面、先読みしすぎの候補を検討する。");return lines.join("\n")
+    lines.push("","## 分析依頼","参考全文がある場合はまず内容・論点・話題の流れを読む。次に、人間判定した話者・会話機能・要点メモをアンカーとして、発話量、応答間隔、ポーズ、F0等を重ねる。①直接観察できる事実 ②会話機能 ③関係性・心理の仮説を分ける。自動話者の低信頼区間は断定に使わない。特に、質問、自己開示、仮説提示、相手の修正を受ける流れ、話題主導、相手に余白を残す場面、先読みしすぎの候補を検討する。両方/同時発話、相槌、笑い、非言語反応は独立イベントとして扱い、発話時間や応答潜時を単純に混ぜない。");return lines.join("\n")
   }
   async function exportConversationPack(){const row=await getConversationRow(activeConversationId);if(!row)return;const file=new File([conversationAnalysisPack(row)],`conversation-analysis-${new Date().toISOString().slice(0,10)}.txt`,{type:"text/plain;charset=utf-8"});showPreparedExport(file);switchView("questionsView");$$('[data-qtab]').forEach(b=>b.classList.remove("active"));const importTab=$('[data-qtab="import"]');if(importTab)importTab.classList.add("active");["qtabAdd","qtabList","qtabImport"].forEach(id=>$(id).classList.add("hidden"));$("qtabImport").classList.remove("hidden");}
   async function exportAllConversations(){return await getAllConversationRows()}
