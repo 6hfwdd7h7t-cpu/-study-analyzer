@@ -2,7 +2,7 @@
   "id": "./",
   "name": "学習・認知パフォーマンス分析",
   "short_name": "Study Analyzer",
-  "description": "学習分析と、iPhone内ローカルWAV会話解析・教師あり話者学習・ブラウザ内Whisper Tiny文字起こしに対応する個人用アプリ",
+  "description": "学習分析と、iPhone内ローカルWAV会話解析・判定式話者学習・重要区間メモ・参考全文取り込みに対応する個人用アプリ",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

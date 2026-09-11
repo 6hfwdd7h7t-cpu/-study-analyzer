@@ -48,7 +48,7 @@
 </head>
 <body>
 <main class="app">
-  <header><div class="title-wrap"><h1>学習・認知パフォーマンス分析</h1><p>正答 × 反応時間 × 自信度</p></div><div class="pill">Web Ver.3.3</div></header>
+  <header><div class="title-wrap"><h1>学習・認知パフォーマンス分析</h1><p>正答 × 反応時間 × 自信度</p></div><div class="pill">Web Ver.3.4</div></header>
 
   <section id="homeView" class="view active">
     <div class="card"><h2>今日の学習</h2><p class="muted small">登録問題からランダムに出題します。</p>
@@ -151,9 +151,9 @@
 
   <section id="conversationView" class="view">
     <div class="card">
-      <h2>iPhoneだけで会話音声＋話者学習＋内容文字起こし</h2>
-      <p class="muted small">WAVを選ぶと、音声をサーバーへ送らず、このiPhone内で音量・無音・発話区間・F0に加え、2人の声を音響特徴から分ける「話者候補A/B」を試験的に推定します。原音そのものは保存しません。</p>
-      <div class="local-audio-note small"><strong>Ver.3.3：</strong>最初の自動2群推定に加えて、タイムラインで数区間を「自分 / 相手」と教えると、その録音専用の話者モデルで再分類できます。さらにWhisper Tinyをブラウザ内で動かす軽量文字起こしを追加しました。<br><strong>内容優先：</strong>文字起こしは12秒前後の小分け処理＋逐次保存。Safariが落ちても保存済み区間から再開できます。誤変換はあとから編集できます。</div>
+      <h2>iPhoneだけで会話音声＋判定式の話者学習＋内容メモ</h2>
+      <p class="muted small">WAVを選ぶと、音声をサーバーへ送らず、このiPhone内で音量・無音・発話区間・F0と2人の話者候補を解析します。原音そのものは保存しません。</p>
+      <div class="local-audio-note small"><strong>Ver.3.4：</strong>精度の悪かった端末内Whisper Tinyは使いません。代わりに、アプリが「ここだけ教えて」と候補を出し、あなたは <strong>自分 / 相手 / 不明</strong> を判定するだけ。必要な区間だけ会話機能や要点を残せます。<br><strong>内容優先：</strong>将来ボイスメモを使う場合は、文字起こし全文をコピーして貼るだけで参考全文として保存できます。一言一句の手修正は前提にしません。</div>
       <div style="height:12px"></div>
       <div class="field"><label for="conversationAudioInput">音声ファイル（WAV）</label><input type="file" id="conversationAudioInput" accept=".wav,audio/wav,audio/x-wav"></div>
       <div class="row">
@@ -208,27 +208,24 @@
       </div>
 
       <div id="conversationTrainerCard" class="card hidden">
-        <h3>話者学習（推奨）</h3>
-        <p class="muted small">自動A/Bだけに任せず、原音を聞いて数区間だけ「自分」「相手」を教えます。各3区間以上、合計5秒以上ずつあると再分類が安定しやすくなります。</p>
+        <h3>話者学習：判定だけで育てる</h3>
+        <p class="muted small">アプリが、話者モデルにとって情報量が大きい区間を1つずつ出します。原音を聞いて「自分 / 相手 / 不明」を選ぶだけでOKです。文章の訂正は不要です。</p>
         <div id="conversationTrainerSummary" class="trainer-summary"></div>
-        <div class="row"><button class="secondary" id="retrainSpeakersBtn" type="button">教師ラベルで再分類</button><button class="ghost" id="clearSpeakerTrainingBtn" type="button">教師ラベルを全解除</button></div>
+        <div id="activeJudgeBox" class="notice" style="margin-top:12px"></div>
+        <div class="row" style="margin-top:10px"><button class="secondary" id="retrainSpeakersBtn" type="button">教師ラベルで再分類</button><button class="ghost" id="clearSpeakerTrainingBtn" type="button">教師ラベルを全解除</button></div>
         <p id="conversationTrainerStatus" class="muted small"></p>
       </div>
 
-      <div id="conversationTranscriptCard" class="card hidden">
-        <h3>内容文字起こし <span class="content-badge">端末内・試験版</span></h3>
-        <p class="muted small">Whisper TinyをSafari内で実行します。初回だけAIモデルをネットから取得しますが、WAVそのものを文字起こしサーバーへ送る設計ではありません。iPhoneでは重いので、小分けで逐次保存します。</p>
-        <div class="warning-box small">iOS Safariでは端末・空きメモリによってWhisperが落ちることがあります。まず「最初の3分」で試すのがおすすめです。失敗しても音響解析データは消えません。</div>
+      <div id="conversationContentCard" class="card hidden">
+        <h3>内容を残す <span class="content-badge">訂正作業なし</span></h3>
+        <p class="muted small">全文を一言一句直す方式はやめます。使える方法だけ選んでください。</p>
+        <div class="warning-box small"><strong>おすすめ：</strong>ボイスメモで録った回は「文字起こしをコピー」で全文をここへ貼る。話者・時刻は未確定の参考全文として扱います。PCM録音の回は、重要区間だけ「★重要」「要点」「会話機能」を付ければOKです。</div>
         <div style="height:10px"></div>
-        <div class="row">
-          <div class="field"><label for="transcribeScope">対象</label><select id="transcribeScope"><option value="test3">最初の3分（テスト）</option><option value="next5">次の未処理5分</option><option value="all">全体（かなり時間がかかる）</option></select></div>
-          <div class="field"><label for="transcribeLanguage">言語</label><select id="transcribeLanguage"><option value="ja" selected>日本語</option><option value="auto">自動判定</option></select></div>
-        </div>
-        <button class="primary" id="startTranscriptionBtn" type="button">内容を文字起こし / 再開</button>
-        <div id="transcriptionProgressWrap" class="hidden" style="margin-top:10px"><div class="asr-progress"><div id="transcriptionProgress"></div></div><p id="transcriptionStatus" class="muted small"></p></div>
-        <div id="transcriptCoverage" class="muted small" style="margin-top:8px"></div>
-        <div id="conversationTranscriptBlocks"></div>
-        <button class="secondary hidden" id="saveTranscriptEditsBtn" type="button" style="width:100%;margin-top:8px">文字起こしの訂正を保存</button>
+        <div class="field"><label for="referenceTranscriptFile">参考全文TXT（任意）</label><input type="file" id="referenceTranscriptFile" accept=".txt,text/plain"></div>
+        <div class="field"><label for="referenceTranscriptText">参考全文を貼り付け（任意）</label><textarea id="referenceTranscriptText" rows="9" placeholder="ボイスメモ → 文字起こしをコピー → ここへ貼る。誤字があってもそのままでOK。"></textarea></div>
+        <div class="field"><label for="referenceTranscriptQuality">この全文の信頼度</label><select id="referenceTranscriptQuality"><option value="unknown">未評価</option><option value="good">だいたい合っている</option><option value="partial">一部かなり怪しい</option><option value="bad">内容分析には使わない</option></select></div>
+        <div class="row"><button class="secondary" id="saveReferenceTranscriptBtn" type="button">参考全文を保存</button><button class="ghost" id="clearReferenceTranscriptBtn" type="button">参考全文を削除</button></div>
+        <p id="referenceTranscriptStatus" class="muted small"></p>
       </div>
 
       <div class="card">
@@ -243,14 +240,14 @@
 
       <div class="card">
         <h3>会話タイムライン</h3>
-        <div class="field"><label for="conversationTurnFilter">表示</label><select id="conversationTurnFilter"><option value="all">すべて</option><option value="fast">0.5秒以内の推定応答</option><option value="overlap">被せ・重なりだけ（PC解析）</option><option value="longpause">2秒以上のポーズ後（iPhone解析）</option><option value="training">話者学習候補（長め区間）</option><option value="starred">重要マーク付き</option></select></div>
-        <p class="muted small">iPhoneローカル解析では発話区間候補を表示します。▶︎で聞き、必要なら「自分 / 相手」を数区間だけ教えてください。文字起こし後は内容も同じ時間軸に表示します。</p>
+        <div class="field"><label for="conversationTurnFilter">表示</label><select id="conversationTurnFilter"><option value="all">すべて</option><option value="fast">0.5秒以内の推定応答</option><option value="overlap">被せ・重なりだけ（PC解析）</option><option value="longpause">2秒以上のポーズ後（iPhone解析）</option><option value="training">話者学習候補</option><option value="starred">★重要だけ</option><option value="noted">要点メモあり</option></select></div>
+        <p class="muted small">普段は上の「判定だけで育てる」を使えば十分です。タイムラインでは、必要な場所だけ★重要・要点・会話機能を残せます。</p>
         <div id="conversationTimeline" class="timeline"></div>
       </div>
 
       <div class="card">
         <h3>ChatGPTへ渡す</h3>
-        <p class="muted small">測定値・教師ラベル・文字起こし内容・重要マークをTXTにまとめます。文字起こしを訂正した場合は訂正版を優先します。</p>
+        <p class="muted small">測定値・教師ラベル・重要区間・会話機能・要点メモ・参考全文をTXTにまとめます。低信頼の自動判定は断定材料にしません。</p>
         <button class="secondary" id="exportConversationPackBtn" type="button" style="width:100%">分析パックTXTを作成</button>
         <div style="height:10px"></div>
         <button class="danger" id="deleteConversationBtn" type="button" style="width:100%">この会話分析を削除</button>
@@ -563,6 +560,90 @@
   function speakerTrainingCounts(row){const ts=row?.analysis?.turns||[],self=ts.filter(t=>t.manual_speaker==='SELF'),other=ts.filter(t=>t.manual_speaker==='OTHER');return {selfN:self.length,otherN:other.length,selfSec:self.reduce((a,t)=>a+(Number(t.duration)||0),0),otherSec:other.reduce((a,t)=>a+(Number(t.duration)||0),0)}}
   async function labelTurn(turnIndex,label){const row=await getConversationRow(activeConversationId);if(!row)return;const t=row.analysis?.turns?.[turnIndex];if(!t)return;t.manual_speaker=label||null;if(label){t.speaker=label;t.speaker_confidence=1}await saveConversationRow(row);await renderConversationDetail()}
   async function clearSpeakerTraining(){const row=await getConversationRow(activeConversationId);if(!row)return;if(!confirm('自分/相手として付けた教師ラベルをすべて解除しますか？'))return;for(const t of row.analysis?.turns||[])delete t.manual_speaker;await saveConversationRow(row);await renderConversationDetail()}
+
+  const TURN_ACTS={
+    question:"質問",
+    self_disclosure:"自己開示",
+    hypothesis:"分析・仮説",
+    agreement:"同意・相槌",
+    correction:"修正・反論",
+    topic_shift:"話題転換",
+    humor:"冗談・雑談",
+    other:"その他"
+  };
+  function activeJudgeCandidateIndex(row){
+    const turns=row?.analysis?.turns||[],manual=turns.map((t,i)=>t.manual_speaker?i:null).filter(i=>i!==null);
+    const labelledTimes=manual.map(i=>(Number(turns[i].start)+Number(turns[i].end))/2);
+    const c=speakerTrainingCounts(row),needOther=c.otherSec<c.selfSec*.65,needSelf=c.selfSec<c.otherSec*.65;
+    let best=-1,bestScore=-1e9;
+    for(let i=0;i<turns.length;i++){
+      const t=turns[i]; if(t.manual_speaker||t.judge_skip||!Array.isArray(t.voice_feature)||t.duration<.9||t.duration>8)continue;
+      const conf=Number(t.speaker_confidence); const uncertainty=Number.isFinite(conf)?1-Math.min(1,conf):.85;
+      const mid=(Number(t.start)+Number(t.end))/2;
+      let distance=120;if(labelledTimes.length)distance=Math.min(...labelledTimes.map(x=>Math.abs(x-mid)));
+      const spread=Math.min(1,distance/90),dur=Math.min(1,Number(t.duration)/4);
+      let balance=0;
+      if(needOther&&t.speaker==='OTHER')balance=.7;
+      if(needSelf&&t.speaker==='SELF')balance=.7;
+      const score=uncertainty*1.8+spread*.8+dur*.45+balance;
+      if(score>bestScore){bestScore=score;best=i}
+    }
+    return best;
+  }
+  function renderActiveJudge(row){
+    const box=$('activeJudgeBox');if(!box)return;
+    const i=activeJudgeCandidateIndex(row),turns=row?.analysis?.turns||[],c=speakerTrainingCounts(row);
+    if(i<0){box.innerHTML='<strong>判定候補は十分です。</strong><div class="muted small">必要ならタイムラインから追加で教えられます。</div>';return}
+    const t=turns[i],who=t.speaker?conversationSpeakerName(row,t.speaker):'未分類',conf=Math.round(Number(t.speaker_confidence||0)*100);
+    box.innerHTML=`<div class="list-title">次に判定してほしい区間</div>
+      <div class="list-meta"><span>${secText(t.start)}–${secText(t.end)}</span><span>現在 ${esc(who)}</span><span>自動信頼 ${conf}%</span></div>
+      <div class="turn-actions" style="margin-top:10px"><button type="button" id="activeJudgePlay">▶︎ 約${Math.max(3,Math.round(Number(t.duration)+2))}秒聞く</button></div>
+      <div class="small" style="font-weight:800;margin-top:10px">誰？</div>
+      <div class="trainer-row"><button type="button" data-active-speaker="SELF">自分</button><button type="button" data-active-speaker="OTHER">相手</button><button type="button" data-active-speaker="UNKNOWN">わからん</button></div>
+      <div class="small" style="font-weight:800;margin-top:10px">この発話の役割（分かる時だけ）</div>
+      <div class="trainer-row" id="activeActButtons">${Object.entries(TURN_ACTS).map(([k,v])=>`<button type="button" data-active-act="${k}">${v}</button>`).join('')}</div>
+      <div class="field" style="margin-top:10px"><label for="activeJudgeNote">要点（任意・一言でOK）</label><input id="activeJudgeNote" placeholder="例：恋愛の定義を明見が修正 / 俺が仮説を出す"></div>
+      <div class="row"><button class="primary" type="button" id="activeJudgeSave">保存して次へ</button><button class="ghost" type="button" id="activeJudgeSkip">今回は保留</button></div>
+      <div class="muted small" style="margin-top:8px">教師データ：自分 ${c.selfN}区間 / 相手 ${c.otherN}区間。判定数を増やすより、確実な区間を少数入れる方を優先します。</div>`;
+    let selectedSpeaker=null,selectedAct=t.manual_act||null;
+    $('activeJudgePlay')?.addEventListener('click',()=>playLocalTurn(Math.max(0,Number(t.start)-1),Math.max(Number(t.end)+1.5,Number(t.start)+3)));
+    $$('[data-active-speaker]',box).forEach(b=>b.addEventListener('click',()=>{selectedSpeaker=b.dataset.activeSpeaker;$$('[data-active-speaker]',box).forEach(x=>x.classList.toggle('active-self',x===b&&selectedSpeaker==='SELF'));$$('[data-active-speaker]',box).forEach(x=>x.classList.toggle('active-other',x===b&&selectedSpeaker==='OTHER'))}));
+    $$('[data-active-act]',box).forEach(b=>b.addEventListener('click',()=>{selectedAct=b.dataset.activeAct;$$('[data-active-act]',box).forEach(x=>x.classList.toggle('active-self',x===b))}));
+    $('activeJudgeSave')?.addEventListener('click',async()=>{
+      const row2=await getConversationRow(activeConversationId);const tt=row2?.analysis?.turns?.[i];if(!tt)return;
+      if(selectedSpeaker==='SELF'||selectedSpeaker==='OTHER'){tt.manual_speaker=selectedSpeaker;tt.speaker=selectedSpeaker;tt.speaker_confidence=1}
+      else if(selectedSpeaker==='UNKNOWN'){tt.judge_skip=true}
+      if(selectedAct)tt.manual_act=selectedAct;
+      const note=String($('activeJudgeNote')?.value||'').trim();if(note)tt.content_note=note;
+      await saveConversationRow(row2);
+      const cc=speakerTrainingCounts(row2);
+      if(cc.selfN>=2&&cc.otherN>=2){await retrainSpeakers()}else{await renderConversationDetail()}
+    });
+    $('activeJudgeSkip')?.addEventListener('click',async()=>{const row2=await getConversationRow(activeConversationId);const tt=row2?.analysis?.turns?.[i];if(!tt)return;tt.judge_skip=true;await saveConversationRow(row2);await renderConversationDetail()});
+  }
+  async function toggleTurnStar(i){
+    const row=await getConversationRow(activeConversationId);const t=row?.analysis?.turns?.[i];if(!t)return;t.starred=!t.starred;await saveConversationRow(row);await renderConversationTimeline(row)
+  }
+  async function editTurnNote(i){
+    const row=await getConversationRow(activeConversationId);const t=row?.analysis?.turns?.[i];if(!t)return;
+    const v=window.prompt('この区間の要点を一言で（空欄で削除）',t.content_note||'');if(v===null)return;t.content_note=String(v).trim();await saveConversationRow(row);await renderConversationTimeline(row)
+  }
+  async function setTurnAct(i,act){
+    const row=await getConversationRow(activeConversationId);const t=row?.analysis?.turns?.[i];if(!t)return;t.manual_act=act||null;await saveConversationRow(row);await renderConversationTimeline(row)
+  }
+  async function saveReferenceTranscript(){
+    const row=await getConversationRow(activeConversationId);if(!row)return;
+    const text=String($('referenceTranscriptText')?.value||'').trim(),quality=$('referenceTranscriptQuality')?.value||'unknown';
+    row.analysis.reference_transcript={text,quality,savedAt:new Date().toISOString(),source:'pasted_or_txt'};
+    await saveConversationRow(row);renderTranscript(row)
+  }
+  async function clearReferenceTranscript(){
+    const row=await getConversationRow(activeConversationId);if(!row)return;if(!confirm('参考全文を削除しますか？'))return;
+    delete row.analysis.reference_transcript;await saveConversationRow(row);renderTranscript(row)
+  }
+  function importReferenceTranscriptFile(file){
+    const r=new FileReader();r.onload=()=>{if($('referenceTranscriptText'))$('referenceTranscriptText').value=String(r.result||'')};r.readAsText(file,'utf-8')
+  }
   async function retrainSpeakers(){const row=await getConversationRow(activeConversationId);if(!row)return;const turns=row.analysis?.turns||[],usable=turns.filter(t=>Array.isArray(t.voice_feature)&&t.voice_feature.length),self=usable.filter(t=>t.manual_speaker==='SELF'),other=usable.filter(t=>t.manual_speaker==='OTHER');if(self.length<2||other.length<2){alert('自分・相手を最低2区間ずつ教えてください。できれば各3〜5区間以上がおすすめです。');return}const raw=usable.map(t=>t.voice_feature.map(v=>v===null?NaN:Number(v))),scaled=robustScaleMatrix(raw),z=scaled.z,idx=new Map(usable.map((t,i)=>[t,i])),cSelf=meanVec(self.map(t=>z[idx.get(t)])),cOther=meanVec(other.map(t=>z[idx.get(t)]));let classified=0;for(const t of usable){if(t.manual_speaker){t.speaker=t.manual_speaker;t.speaker_confidence=1;classified++;continue}const zz=z[idx.get(t)],dS=vecDist(zz,cSelf),dO=vecDist(zz,cOther),best=Math.min(dS,dO),otherD=Math.max(dS,dO),margin=(otherD-best)/(otherD+best+1e-9);if(margin>=.055){t.speaker=dS<dO?'SELF':'OTHER';t.speaker_confidence=roundN(margin,3);classified++}else{t.speaker=null;t.speaker_confidence=roundN(margin,3)}}for(let i=1;i<turns.length-1;i++){const t=turns[i],a=turns[i-1],b=turns[i+1];if(!t.manual_speaker&&!t.speaker&&a.speaker&&a.speaker===b.speaker&&Number(t.gap_before_sec||9)<.7&&Number(b.gap_before_sec||9)<.7){t.speaker=a.speaker;t.speaker_confidence=.05}}updateResponseLatencies(turns);if(Array.isArray(row.analysis?.transcript_blocks)){for(const b of row.analysis.transcript_blocks){const tally={};for(const i of b.turn_indexes||[]){const sp=turns[i]?.speaker;if(sp)tally[sp]=(tally[sp]||0)+(Number(turns[i]?.duration)||0)}b.speaker=Object.keys(tally).sort((a,c)=>(tally[c]||0)-(tally[a]||0))[0]||null}}row.speakerNames={...(row.speakerNames||{}),SELF:row.speakerNames?.SELF||'自分',OTHER:row.speakerNames?.OTHER||'相手'};row.analysis.speaker_metrics=buildLocalSpeakerMetrics(turns);row.analysis.meta={...(row.analysis.meta||{}),speaker_supervised:true};row.analysis.local_metrics=row.analysis.local_metrics||{};row.analysis.local_metrics.supervised_speaker={self_examples:self.length,other_examples:other.length,classified_pct:roundN(100*classified/Math.max(1,usable.length),1)};await saveConversationRow(row);$('conversationTrainerStatus').textContent=`再分類しました。自分 ${self.length}区間 / 相手 ${other.length}区間を教師データに使用。`;await renderConversationDetail()}
 
   // ---- v3.3 browser-local Whisper Tiny transcription ----
@@ -591,7 +672,18 @@
   async function startTranscription(){const row=await getConversationRow(activeConversationId);if(!row)return;if(!localConversationAudioFile){alert('文字起こしには元WAVが必要です。上の「原音を再生する場合」から同じWAVを選び直してください。');return}let h;try{h=await parseWavHeader(localConversationAudioFile)}catch(e){alert(e.message);return}const scope=$('transcribeScope').value,lang=$('transcribeLanguage').value;let blocks=Array.isArray(row.analysis.transcript_blocks)&&row.analysis.transcript_blocks.length?row.analysis.transcript_blocks:makeTranscriptBlocks(row);row.analysis.transcript_blocks=blocks;let pending=blocks.filter(b=>b.status!=='done');if(scope==='test3')pending=pending.filter(b=>b.start<180);else if(scope==='next5'){const first=pending[0]?.start??0;pending=pending.filter(b=>b.start<first+300)}if(!pending.length){alert('この範囲は文字起こし済みです。');return}$('startTranscriptionBtn').disabled=true;try{setTranscriptionProgress(.01,'Whisper Tinyを準備中… 初回はモデル取得に時間がかかります');await ensureAsr();let done=0;for(const b of pending){setTranscriptionProgress(done/pending.length,`内容を文字起こし中… ${done+1}/${pending.length}  ${secText(b.start)}–${secText(b.end)}`);try{const audio=await readWavRange16k(localConversationAudioFile,h,Math.max(0,b.start-.2),Math.min(h.durationSec,b.end+.25)),result=await workerTranscribe(audio,lang,`${row.id}-${b.id}-${Date.now()}`);b.text=String(result?.text||'').trim();b.status='done';b.error=null}catch(err){b.status='error';b.error=String(err?.message||err)}done++;row.analysis.transcript_blocks=blocks;row.analysis.meta={...(row.analysis.meta||{}),browser_asr:'whisper-tiny-wasm',browser_asr_language:lang};await saveConversationRow(row);if(done%2===0)await new Promise(r=>setTimeout(r,50))}setTranscriptionProgress(1,'文字起こし区間を保存しました。誤変換は下で直せます。');await renderConversationDetail()}catch(err){console.error(err);setTranscriptionProgress(0,`文字起こしに失敗: ${err.message||err}`);alert('iPhoneでWhisperを実行できませんでした。端末メモリ不足の可能性があります。音響解析はそのまま残っています。')}finally{$('startTranscriptionBtn').disabled=false}}
   async function saveTranscriptEdits(){const row=await getConversationRow(activeConversationId);if(!row)return;$$('[data-transcript-edit]').forEach(el=>{const b=row.analysis?.transcript_blocks?.find(x=>x.id===el.dataset.transcriptEdit);if(b)b.edited_text=el.value});await saveConversationRow(row);$('transcriptionStatus').textContent='訂正を保存しました。';await renderConversationDetail()}
   async function toggleTranscriptStar(id){const row=await getConversationRow(activeConversationId);if(!row)return;const b=row.analysis?.transcript_blocks?.find(x=>x.id===id);if(!b)return;b.starred=!b.starred;await saveConversationRow(row);await renderConversationDetail()}
-  function renderTranscript(row){const card=$('conversationTranscriptCard'),dst=$('conversationTranscriptBlocks'),blocks=row?.analysis?.transcript_blocks||[],isLocal=String(row?.analysis?.meta?.source_type||'').startsWith('iphone_local_wav');if(!card||!isLocal){card?.classList.add('hidden');return}card.classList.remove('hidden');const done=blocks.filter(b=>b.status==='done').length,err=blocks.filter(b=>b.status==='error').length,total=blocks.length;$('transcriptCoverage').textContent=total?`文字起こし済み ${done}/${total}区間${err?` / 失敗 ${err}`:''}`:'まだ文字起こししていません。';if(!blocks.length){dst.innerHTML='';$('saveTranscriptEditsBtn').classList.add('hidden');return}const shown=blocks.filter(b=>b.status==='done'||b.status==='error').slice(0,140);dst.innerHTML=shown.map(b=>`<div class="transcript-block ${b.starred?'starred':''}"><div class="transcript-head"><strong>${esc(b.speaker?conversationSpeakerName(row,b.speaker):'話者未確定')}</strong><span class="turn-time">${secText(b.start)}–${secText(b.end)}</span></div>${b.error?`<div class="muted small">失敗: ${esc(b.error)}</div>`:`<textarea data-transcript-edit="${esc(b.id)}">${esc(b.edited_text||b.text||'')}</textarea>`}<div class="transcript-actions"><button type="button" data-transcript-play="${esc(b.id)}">▶︎ 原音</button><button type="button" data-transcript-star="${esc(b.id)}">${b.starred?'★ 重要':'☆ 重要'}</button></div></div>`).join('');$$('[data-transcript-play]',dst).forEach(btn=>btn.addEventListener('click',()=>{const b=blocks.find(x=>x.id===btn.dataset.transcriptPlay);if(b)playLocalTurn(Math.max(0,b.start-.3),b.end+.35)}));$$('[data-transcript-star]',dst).forEach(btn=>btn.addEventListener('click',()=>toggleTranscriptStar(btn.dataset.transcriptStar)));$('saveTranscriptEditsBtn').classList.toggle('hidden',done===0)}
+  function renderTranscript(row){
+    const card=$('conversationContentCard');
+    if(!card)return;
+    const isLocal=String(row?.analysis?.meta?.source_type||'').startsWith('iphone_local_wav');
+    card.classList.toggle('hidden',!isLocal);
+    if(!isLocal)return;
+    const ref=row.analysis?.reference_transcript||{};
+    const ta=$('referenceTranscriptText'),q=$('referenceTranscriptQuality'),st=$('referenceTranscriptStatus');
+    if(ta && document.activeElement!==ta)ta.value=String(ref.text||'');
+    if(q)q.value=ref.quality||'unknown';
+    if(st)st.textContent=ref.text?`参考全文を保存済み（${ref.text.length.toLocaleString()}文字）。時刻・話者は未確定として扱います。`:'参考全文は未登録です。PCM録音の回は空欄のままでも使えます。';
+  }
 
   let activeConversationId=null;
   function secText(sec){sec=Math.max(0,Number(sec)||0);const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=Math.round(sec%60);return h?`${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`:`${m}:${String(s).padStart(2,"0")}`}
@@ -616,7 +708,7 @@
   }
   function renderSpeakerSamples(row){const card=$("conversationSpeakerSamplesCard"),dst=$("conversationSpeakerSamples"),samples=row?.analysis?.speaker_samples||row?.analysis?.local_metrics?.speaker_clustering?.samples||{},isLocal=String(row?.analysis?.meta?.source_type||"").startsWith("iphone_local_wav");if(!card||!dst||!isLocal||!samples||(!samples.VOICE_A&&!samples.VOICE_B)){card?.classList.add("hidden");return}card.classList.remove("hidden");dst.innerHTML=['VOICE_A','VOICE_B'].map(spk=>{const x=samples[spk];if(!x)return `<div class="list-item"><div class="list-title">${spk}</div><div class="list-meta"><span>代表区間なし</span></div></div>`;return `<div class="list-item"><div class="list-title">${esc(conversationSpeakerName(row,spk))} <span class="tag">${spk}</span></div><div class="list-meta"><span>代表 ${secText(x.start)}–${secText(x.end)}</span>${x.f0_hz?`<span>F0 ${Number(x.f0_hz).toFixed(1)}Hz</span>`:""}<span>信頼 ${Math.round(Number(x.confidence||0)*100)}%</span></div><div class="turn-actions" style="margin-top:8px"><button type="button" data-local-play-start="${Math.max(0,Number(x.start)-.5)}" data-local-play-end="${Math.max(Number(x.end)+.5,Number(x.start)+3)}">▶︎ 原音</button></div></div>`}).join('');$$('[data-local-play-start]',dst).forEach(b=>b.addEventListener('click',()=>playLocalTurn(Number(b.dataset.localPlayStart),Number(b.dataset.localPlayEnd))))}
 
-  function renderTrainer(row){const card=$("conversationTrainerCard"),sum=$("conversationTrainerSummary"),isLocal=String(row?.analysis?.meta?.source_type||"").startsWith("iphone_local_wav");if(!card||!isLocal){card?.classList.add("hidden");return}card.classList.remove("hidden");const c=speakerTrainingCounts(row);sum.innerHTML=`<div><div class="muted small">自分の教師データ</div><strong>${c.selfN}区間 / ${c.selfSec.toFixed(1)}秒</strong></div><div><div class="muted small">相手の教師データ</div><strong>${c.otherN}区間 / ${c.otherSec.toFixed(1)}秒</strong></div>`}
+  function renderTrainer(row){const card=$("conversationTrainerCard"),sum=$("conversationTrainerSummary"),isLocal=String(row?.analysis?.meta?.source_type||"").startsWith("iphone_local_wav");if(!card||!isLocal){card?.classList.add("hidden");return}card.classList.remove("hidden");const c=speakerTrainingCounts(row);sum.innerHTML=`<div><div class="muted small">自分の教師データ</div><strong>${c.selfN}区間 / ${c.selfSec.toFixed(1)}秒</strong></div><div><div class="muted small">相手の教師データ</div><strong>${c.otherN}区間 / ${c.otherSec.toFixed(1)}秒</strong></div>`;const status=$("conversationTrainerStatus");if(status&&Math.max(c.selfSec,c.otherSec)>Math.max(5,Math.min(c.selfSec,c.otherSec)*2.5))status.textContent="片方の教師データがかなり多いです。次は少ない側を確実に聞き分けられる区間で教えると改善しやすいです。";renderActiveJudge(row)}
   async function renderConversationDetail(){
     const row=await getConversationRow(activeConversationId);if(!row){$("conversationDetail").classList.add("hidden");return}
     const a=row.analysis||{},s=a.summary||{},metrics=Array.isArray(a.speaker_metrics)?a.speaker_metrics:[],turns=Array.isArray(a.turns)?a.turns:[],isLocal=String(a.meta?.source_type||"").startsWith("iphone_local_wav");
@@ -630,20 +722,48 @@
     drawLocalWave(row);renderLocalMetrics(row);renderSpeakerSamples(row);renderTrainer(row);renderTranscript(row);renderConversationTimeline(row)
   }
   async function renderConversationTimeline(rowArg=null){
-    const row=rowArg||await getConversationRow(activeConversationId);if(!row)return;const turns=Array.isArray(row.analysis?.turns)?row.analysis.turns:[],filter=$("conversationTurnFilter")?.value||"all",isLocal=String(row.analysis?.meta?.source_type||"").startsWith("iphone_local_wav"),blocks=row.analysis?.transcript_blocks||[];
-    let pairs=turns.map((t,i)=>({t,i}));if(filter==="fast")pairs=pairs.filter(x=>x.t.fast_response===true||(x.t.response_latency_sec!==null&&Number(x.t.response_latency_sec)<=Number(row.analysis?.meta?.fast_response_sec??.5)));if(filter==="overlap")pairs=pairs.filter(x=>Number(x.t.overlaps_previous_sec)>0);if(filter==="longpause")pairs=pairs.filter(x=>Number(x.t.gap_before_sec)>=2);if(filter==="training")pairs=pairs.filter(x=>Number(x.t.duration)>=.8&&Array.isArray(x.t.voice_feature)).sort((a,b)=>Number(b.t.duration)-Number(a.t.duration));if(filter==="starred"){const starRanges=blocks.filter(b=>b.starred);pairs=pairs.filter(x=>starRanges.some(b=>x.t.start<b.end&&x.t.end>b.start))}
-    const limited=pairs.slice(0,300);$("conversationTimeline").innerHTML=limited.length?limited.map(({t,i})=>{const meta=[];if(t.response_latency_sec!==null&&t.response_latency_sec!==undefined)meta.push(`${isLocal?"推定応答":"応答"} ${Number(t.response_latency_sec).toFixed(3)}s`);if(Number(t.overlaps_previous_sec)>0)meta.push(`重なり ${Number(t.overlaps_previous_sec).toFixed(3)}s`);if(t.gap_before_sec!==null&&t.gap_before_sec!==undefined)meta.push(`前区間から ${Number(t.gap_before_sec).toFixed(2)}s`);if(t.avg_rms_db!==null&&t.avg_rms_db!==undefined)meta.push(`平均 ${Number(t.avg_rms_db).toFixed(1)}dB`);if(t.f0_hz)meta.push(`F0 ${Number(t.f0_hz).toFixed(1)}Hz`);if(t.speaker_confidence!==undefined)meta.push(`話者信頼 ${Math.round(Number(t.speaker_confidence||0)*100)}%`);const who=isLocal?(t.speaker?conversationSpeakerName(row,t.speaker):"未分類"):conversationSpeakerName(row,t.speaker),tb=blocks.find(b=>Array.isArray(b.turn_indexes)&&b.turn_indexes.includes(i)&&transcriptText(b));return `<div class="turn"><div class="turn-head"><span class="turn-speaker">${esc(who)}</span><span class="turn-time">${secText(t.start)}–${secText(t.end)}</span></div>${meta.length?`<div class="turn-meta">${esc(meta.join(" / "))}</div>`:""}${tb?`<div class="turn-text">${esc(transcriptText(tb))}</div>`:(t.text?`<div class="turn-text">${esc(t.text)}</div>`:"")}${isLocal?`<div class="turn-actions"><button type="button" data-local-play-start="${Math.max(0,Number(t.start)-.8)}" data-local-play-end="${Number(t.end)+1.2}">▶︎ 原音</button></div><div class="trainer-row"><button type="button" data-train-self="${i}" class="${t.manual_speaker==='SELF'?'active-self':''}">自分</button><button type="button" data-train-other="${i}" class="${t.manual_speaker==='OTHER'?'active-other':''}">相手</button><button type="button" data-train-clear="${i}">解除</button></div>`:""}</div>`}).join(""):'<div class="empty">該当する区間がありません。</div>';
-    if(pairs.length>limited.length)$("conversationTimeline").insertAdjacentHTML("beforeend",`<div class="empty">表示は先頭300区間までです（全${pairs.length}区間）。</div>`);$$('[data-local-play-start]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>playLocalTurn(Number(b.dataset.localPlayStart),Number(b.dataset.localPlayEnd))));$$('[data-train-self]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>labelTurn(Number(b.dataset.trainSelf),'SELF')));$$('[data-train-other]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>labelTurn(Number(b.dataset.trainOther),'OTHER')));$$('[data-train-clear]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>labelTurn(Number(b.dataset.trainClear),null)));
+    const row=rowArg||await getConversationRow(activeConversationId);if(!row)return;const turns=Array.isArray(row.analysis?.turns)?row.analysis.turns:[],filter=$("conversationTurnFilter")?.value||"all",isLocal=String(row.analysis?.meta?.source_type||"").startsWith("iphone_local_wav");
+    let pairs=turns.map((t,i)=>({t,i}));
+    if(filter==="fast")pairs=pairs.filter(x=>x.t.fast_response===true||(x.t.response_latency_sec!==null&&Number(x.t.response_latency_sec)<=Number(row.analysis?.meta?.fast_response_sec??.5)));
+    if(filter==="overlap")pairs=pairs.filter(x=>Number(x.t.overlaps_previous_sec)>0);
+    if(filter==="longpause")pairs=pairs.filter(x=>Number(x.t.gap_before_sec)>=2);
+    if(filter==="training")pairs=pairs.filter(x=>Number(x.t.duration)>=.9&&Array.isArray(x.t.voice_feature)).sort((a,b)=>(Number(a.t.speaker_confidence||0)-Number(b.t.speaker_confidence||0))||Number(b.t.duration)-Number(a.t.duration));
+    if(filter==="starred")pairs=pairs.filter(x=>x.t.starred);
+    if(filter==="noted")pairs=pairs.filter(x=>String(x.t.content_note||'').trim());
+    const limited=pairs.slice(0,300);
+    $("conversationTimeline").innerHTML=limited.length?limited.map(({t,i})=>{
+      const meta=[];if(t.response_latency_sec!==null&&t.response_latency_sec!==undefined)meta.push(`${isLocal?"推定応答":"応答"} ${Number(t.response_latency_sec).toFixed(3)}s`);if(Number(t.overlaps_previous_sec)>0)meta.push(`重なり ${Number(t.overlaps_previous_sec).toFixed(3)}s`);if(t.gap_before_sec!==null&&t.gap_before_sec!==undefined)meta.push(`前区間から ${Number(t.gap_before_sec).toFixed(2)}s`);if(t.avg_rms_db!==null&&t.avg_rms_db!==undefined)meta.push(`平均 ${Number(t.avg_rms_db).toFixed(1)}dB`);if(t.f0_hz)meta.push(`F0 ${Number(t.f0_hz).toFixed(1)}Hz`);if(t.speaker_confidence!==undefined)meta.push(`話者信頼 ${Math.round(Number(t.speaker_confidence||0)*100)}%`);
+      const who=isLocal?(t.speaker?conversationSpeakerName(row,t.speaker):"未分類"):conversationSpeakerName(row,t.speaker),act=t.manual_act?TURN_ACTS[t.manual_act]||t.manual_act:null;
+      return `<div class="turn ${t.starred?'starred':''}"><div class="turn-head"><span class="turn-speaker">${t.starred?'★ ':''}${esc(who)}</span><span class="turn-time">${secText(t.start)}–${secText(t.end)}</span></div>${meta.length?`<div class="turn-meta">${esc(meta.join(" / "))}</div>`:""}${act?`<div class="turn-meta">会話機能：${esc(act)}</div>`:""}${t.content_note?`<div class="turn-text"><strong>要点：</strong>${esc(t.content_note)}</div>`:""}${t.text?`<div class="turn-text">${esc(t.text)}</div>`:""}${isLocal?`<div class="turn-actions"><button type="button" data-local-play-start="${Math.max(0,Number(t.start)-.8)}" data-local-play-end="${Math.max(Number(t.end)+1.2,Number(t.start)+3)}">▶︎ 原音</button><button type="button" data-turn-star="${i}">${t.starred?'★ 重要':'☆ 重要'}</button><button type="button" data-turn-note="${i}">要点</button></div><div class="trainer-row"><button type="button" data-train-self="${i}" class="${t.manual_speaker==='SELF'?'active-self':''}">自分</button><button type="button" data-train-other="${i}" class="${t.manual_speaker==='OTHER'?'active-other':''}">相手</button><button type="button" data-train-clear="${i}">解除</button><select data-turn-act="${i}" style="min-width:120px"><option value="">機能未指定</option>${Object.entries(TURN_ACTS).map(([k,v])=>`<option value="${k}" ${t.manual_act===k?'selected':''}>${v}</option>`).join('')}</select></div>`:""}</div>`
+    }).join(""):'<div class="empty">該当する区間がありません。</div>';
+    if(pairs.length>limited.length)$("conversationTimeline").insertAdjacentHTML("beforeend",`<div class="empty">表示は先頭300区間までです（全${pairs.length}区間）。</div>`);
+    $$('[data-local-play-start]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>playLocalTurn(Number(b.dataset.localPlayStart),Number(b.dataset.localPlayEnd))));
+    $$('[data-train-self]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>labelTurn(Number(b.dataset.trainSelf),'SELF')));
+    $$('[data-train-other]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>labelTurn(Number(b.dataset.trainOther),'OTHER')));
+    $$('[data-train-clear]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>labelTurn(Number(b.dataset.trainClear),null)));
+    $$('[data-turn-star]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>toggleTurnStar(Number(b.dataset.turnStar))));
+    $$('[data-turn-note]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>editTurnNote(Number(b.dataset.turnNote))));
+    $$('[data-turn-act]',$("conversationTimeline")).forEach(s=>s.addEventListener('change',()=>setTurnAct(Number(s.dataset.turnAct),s.value||null)));
   }
 
   async function saveConversationSpeakerNames(){const row=await getConversationRow(activeConversationId);if(!row)return;const names={};$$(".conversation-speaker-name").forEach(inp=>{if(inp.value.trim())names[inp.dataset.speaker]=inp.value.trim()});row.speakerNames=names;await saveConversationRow(row);await renderConversationDetail();$("conversationImportStatus").textContent="話者名を保存しました。"}
   function conversationAnalysisPack(row){
-    const a=row.analysis||{},isLocal=String(a.meta?.source_type||"").startsWith("iphone_local_wav"),lines=["# Study Analyzer 会話分析パック","",`タイトル: ${row.title}`,`読み込み日時: ${row.importedAt}`,`解析方式: ${isLocal?"iPhoneローカル音響解析":"PC/外部解析JSON"}`,"","## 前提","- 数値は観察指標であり、感情・性格・診断を直接示すものではありません。","- 短い間や声の高さだけから心理を断定しません。"];
-    if(isLocal)lines.push("- iPhoneローカル解析。自動話者推定は本人確認ではなく、教師ラベル（自分/相手）がある場合はそちらを優先します。","- response_latency_secは推定話者ラベルが切り替わった連続区間の間隔で、完全な応答潜時ではありません。","- Whisper Tiny文字起こしは誤変換の可能性があり、訂正版がある場合は訂正版を優先します。");
-    lines.push("","## 概要");Object.entries(a.summary||{}).forEach(([k,v])=>lines.push(`- ${k}: ${v}`));if(a.local_metrics){lines.push("","## iPhoneローカル音響指標",JSON.stringify(a.local_metrics,null,2))}lines.push("","## 話者別指標");for(const m of a.speaker_metrics||[]){lines.push(`- ${conversationSpeakerName(row,m.speaker)}: ${JSON.stringify(m)}`)}lines.push("","## 観察ポイント");for(const x of a.observations||[])lines.push(`- ${x}`);lines.push("","## 全会話タイムライン");
-    for(const t of a.turns||[]){const meta=[];if(t.response_latency_sec!==null&&t.response_latency_sec!==undefined)meta.push(`応答潜時=${Number(t.response_latency_sec).toFixed(3)}s`);if(Number(t.overlaps_previous_sec)>0)meta.push(`重なり=${Number(t.overlaps_previous_sec).toFixed(3)}s`);if(t.gap_before_sec!==null&&t.gap_before_sec!==undefined)meta.push(`前区間から=${Number(t.gap_before_sec).toFixed(3)}s`);if(t.avg_rms_db!==undefined)meta.push(`平均RMS=${t.avg_rms_db}dB`);if(t.f0_hz)meta.push(`F0=${t.f0_hz}Hz`);if(t.manual_speaker)meta.push(`教師ラベル=${t.manual_speaker}`);lines.push(`${secText(t.start)}-${secText(t.end)} ${isLocal?(t.speaker?conversationSpeakerName(row,t.speaker):"未分類"):conversationSpeakerName(row,t.speaker)}${meta.length?" ["+meta.join(", ")+"]":""}${t.text?": "+t.text:""}`)}
-    if(Array.isArray(a.transcript_blocks)&&a.transcript_blocks.length){lines.push("","## 内容文字起こし（訂正版優先）");for(const b of a.transcript_blocks){const tx=transcriptText(b);if(!tx)continue;lines.push(`${b.starred?"★ ":""}${secText(b.start)}-${secText(b.end)} ${b.speaker?conversationSpeakerName(row,b.speaker):"話者未確定"}: ${tx}`)}}
-    lines.push("","## 分析依頼",isLocal?"まず内容文字起こしを中心に、何を話しているか／質問・自己開示・仮説提示・同意・修正・話題転換を整理する。その上で、話者学習済みラベル・応答間隔・ポーズ・発話量・F0等を重ね、①測定事実 ②会話機能 ③心理・関係性の仮説を分けて分析する。教師ラベルは優先し、自動話者推定の低信頼区間は断定に使わない。文字起こしの誤変換可能性を残し、内容と原音が矛盾する場合は原音確認候補として時刻を示す。":"事実として測定されたこと／会話機能としての解釈／心理的意味の仮説を分けて分析する。特に、応答潜時、被せ、相手に発話余地を残す場面、質問、主導権、仮説提示→相手の修正の循環、『先読みしすぎ』の可能性を見る。音響値だけから心理を断定しない。");return lines.join("\n")
+    const a=row.analysis||{},isLocal=String(a.meta?.source_type||"").startsWith("iphone_local_wav"),lines=["# Study Analyzer 会話分析パック","",`タイトル: ${row.title}`,`読み込み日時: ${row.importedAt}`,`解析方式: ${isLocal?"iPhoneローカル音響解析＋人間の判定":"PC/外部解析JSON"}`,"","## 前提","- 数値は観察指標であり、感情・性格・診断を直接示すものではありません。","- 短い間や声の高さだけから心理を断定しません。"];
+    if(isLocal)lines.push("- 自動話者推定は本人確認ではありません。manual_speaker（自分/相手の人間判定）を最優先してください。","- response_latency_secは推定話者ラベルが切り替わった連続区間の間隔で、完全な応答潜時ではありません。","- 端末内Whisper Tinyは使用していません。内容は重要区間の人間メモと、任意で貼った参考全文を使います。");
+    const ref=a.reference_transcript||{};
+    if(ref.text&&ref.quality!=="bad"){lines.push("","## 参考全文（話者・時刻未確定）",`信頼度: ${ref.quality||"unknown"}`,"※ 一言一句の正確性は保証せず、全体の話題・表現・論点を読むための参考資料。",ref.text)}
+    lines.push("","## 概要");Object.entries(a.summary||{}).forEach(([k,v])=>lines.push(`- ${k}: ${v}`));
+    if(a.local_metrics){lines.push("","## iPhoneローカル音響指標",JSON.stringify(a.local_metrics,null,2))}
+    lines.push("","## 話者別指標");for(const m of a.speaker_metrics||[]){lines.push(`- ${conversationSpeakerName(row,m.speaker)}: ${JSON.stringify(m)}`)}
+    lines.push("","## 人間が判定・注記した区間");
+    const marked=(a.turns||[]).filter(t=>t.manual_speaker||t.manual_act||t.starred||String(t.content_note||"").trim());
+    if(!marked.length)lines.push("- なし");
+    for(const t of marked){
+      const meta=[];if(t.manual_speaker)meta.push(`話者判定=${conversationSpeakerName(row,t.manual_speaker)}`);if(t.manual_act)meta.push(`会話機能=${TURN_ACTS[t.manual_act]||t.manual_act}`);if(t.starred)meta.push("重要");if(t.content_note)meta.push(`要点=${t.content_note}`);if(t.response_latency_sec!==null&&t.response_latency_sec!==undefined)meta.push(`推定応答=${Number(t.response_latency_sec).toFixed(3)}s`);lines.push(`${secText(t.start)}-${secText(t.end)} [${meta.join(", ")}]`)
+    }
+    lines.push("","## 全会話タイムライン（音響・話者推定）");
+    for(const t of a.turns||[]){const meta=[];if(t.response_latency_sec!==null&&t.response_latency_sec!==undefined)meta.push(`推定応答=${Number(t.response_latency_sec).toFixed(3)}s`);if(t.gap_before_sec!==null&&t.gap_before_sec!==undefined)meta.push(`前区間から=${Number(t.gap_before_sec).toFixed(3)}s`);if(t.avg_rms_db!==undefined)meta.push(`平均RMS=${t.avg_rms_db}dB`);if(t.f0_hz)meta.push(`F0=${t.f0_hz}Hz`);if(t.speaker_confidence!==undefined)meta.push(`自動話者信頼=${Math.round(Number(t.speaker_confidence||0)*100)}%`);lines.push(`${secText(t.start)}-${secText(t.end)} ${t.speaker?conversationSpeakerName(row,t.speaker):"未分類"}${meta.length?" ["+meta.join(", ")+"]":""}`)}
+    lines.push("","## 分析依頼","参考全文がある場合はまず内容・論点・話題の流れを読む。次に、人間判定した話者・会話機能・要点メモをアンカーとして、発話量、応答間隔、ポーズ、F0等を重ねる。①直接観察できる事実 ②会話機能 ③関係性・心理の仮説を分ける。自動話者の低信頼区間は断定に使わない。特に、質問、自己開示、仮説提示、相手の修正を受ける流れ、話題主導、相手に余白を残す場面、先読みしすぎの候補を検討する。");return lines.join("\n")
   }
   async function exportConversationPack(){const row=await getConversationRow(activeConversationId);if(!row)return;const file=new File([conversationAnalysisPack(row)],`conversation-analysis-${new Date().toISOString().slice(0,10)}.txt`,{type:"text/plain;charset=utf-8"});showPreparedExport(file);switchView("questionsView");$$('[data-qtab]').forEach(b=>b.classList.remove("active"));const importTab=$('[data-qtab="import"]');if(importTab)importTab.classList.add("active");["qtabAdd","qtabList","qtabImport"].forEach(id=>$(id).classList.add("hidden"));$("qtabImport").classList.remove("hidden");}
   async function exportAllConversations(){return await getAllConversationRows()}
@@ -671,8 +791,9 @@
   $("conversationTurnFilter").addEventListener("change",()=>renderConversationTimeline());
   $("retrainSpeakersBtn").addEventListener("click",retrainSpeakers);
   $("clearSpeakerTrainingBtn").addEventListener("click",clearSpeakerTraining);
-  $("startTranscriptionBtn").addEventListener("click",startTranscription);
-  $("saveTranscriptEditsBtn").addEventListener("click",saveTranscriptEdits);
+  $("saveReferenceTranscriptBtn").addEventListener("click",saveReferenceTranscript);
+  $("clearReferenceTranscriptBtn").addEventListener("click",clearReferenceTranscript);
+  $("referenceTranscriptFile").addEventListener("change",e=>{const f=e.target.files?.[0];if(f)importReferenceTranscriptFile(f);e.target.value=""});
   $("saveConversationSpeakerNamesBtn").addEventListener("click",saveConversationSpeakerNames);
   $("exportConversationPackBtn").addEventListener("click",exportConversationPack);
   $("deleteConversationBtn").addEventListener("click",async()=>{if(!activeConversationId)return;const row=await getConversationRow(activeConversationId);if(!row)return;if(!confirm(`「${row.title}」の会話分析を削除しますか？`))return;await deleteConversationRow(activeConversationId);activeConversationId=null;await renderConversationView();$("conversationImportStatus").textContent="削除しました。"});
