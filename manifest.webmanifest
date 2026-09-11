@@ -2,7 +2,7 @@
   "id": "./",
   "name": "学習・認知パフォーマンス分析",
   "short_name": "Study Analyzer",
-  "description": "正答・反応時間・自信度の学習分析と、iPhone内ローカルWAV会話音響解析に対応する個人用アプリ",
+  "description": "正答・反応時間・自信度の学習分析と、iPhone内ローカルWAV会話音響解析と試験的2人話者クラスタリングに対応する個人用アプリ",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
