@@ -2,7 +2,7 @@
   "id": "./",
   "name": "学習・認知パフォーマンス分析",
   "short_name": "Study Analyzer",
-  "description": "iPhone内ローカル会話解析。話者判定、同時発話、相槌、笑い、非言語イベントの手動ラベルと重要区間メモに対応。",
+  "description": "学習分析＋iPhone内ローカル会話解析。内部文字起こしを画面に出さず、ChatGPT理解用JSONとして共有できます。",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

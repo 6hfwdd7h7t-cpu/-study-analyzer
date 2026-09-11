@@ -48,7 +48,7 @@
 </head>
 <body>
 <main class="app">
-  <header><div class="title-wrap"><h1>学習・認知パフォーマンス分析</h1><p>正答 × 反応時間 × 自信度</p></div><div class="pill">Web Ver.3.5</div></header>
+  <header><div class="title-wrap"><h1>学習・認知パフォーマンス分析</h1><p>正答 × 反応時間 × 自信度</p></div><div class="pill">Web Ver.4.0</div></header>
 
   <section id="homeView" class="view active">
     <div class="card"><h2>今日の学習</h2><p class="muted small">登録問題からランダムに出題します。</p>
@@ -151,9 +151,9 @@
 
   <section id="conversationView" class="view">
     <div class="card">
-      <h2>iPhoneだけで会話音声＋話者判定＋相槌/笑い/同時発話</h2>
+      <h2>録音 → 内部で内容理解用データ作成 → ChatGPTで会話分析</h2>
       <p class="muted small">WAVを選ぶと、音声をサーバーへ送らず、このiPhone内で音量・無音・発話区間・F0と2人の話者候補を解析します。原音そのものは保存しません。音声だけでは頷き・視線・表情は分からないため、動画確認時の手動ラベルに対応します。</p>
-      <div class="local-audio-note small"><strong>Ver.3.4：</strong>精度の悪かった端末内Whisper Tinyは使いません。代わりに、アプリが「ここだけ教えて」と候補を出し、あなたは <strong>自分 / 相手 / 不明</strong> を判定するだけ。必要な区間だけ会話機能や要点を残せます。<br><strong>内容優先：</strong>全文文字起こしは必須にしません。内容は重要区間の要点・会話機能・非言語イベントを残し、一言一句の手修正は前提にしません。</div>
+      <div class="local-audio-note small"><strong>Ver.4.0：</strong>ユーザーに逐語録を見せることを目的にせず、ChatGPTが会話内容・話題の流れ・意味を理解するための内部データを作ります。<br><strong>流れ：</strong>①WAVを端末内で解析 → ②数区間だけ話者判定 → ③Whisper Base/Smallで内部内容解析 → ④ChatGPT用パックを共有。内部文字起こし本文は画面には出しません。</div>
       <div style="height:12px"></div>
       <div class="field"><label for="conversationAudioInput">音声ファイル（WAV）</label><input type="file" id="conversationAudioInput" accept=".wav,audio/wav,audio/x-wav"></div>
       <div class="row">
@@ -209,23 +209,35 @@
 
       <div id="conversationTrainerCard" class="card hidden">
         <h3>話者学習：判定だけで育てる</h3>
-        <p class="muted small">アプリが、話者モデルにとって情報量が大きい区間を1つずつ出します。原音を聞いて「自分 / 相手 / 不明」を選ぶだけでOKです。文章の訂正は不要です。</p>
+        <p class="muted small">アプリが、話者モデルにとって情報量が大きい区間を1つずつ出します。原音を聞いて「自分 / 相手 / 両方 / 話者なし / 不明」を選ぶだけでOKです。文章の訂正は不要です。</p>
         <div id="conversationTrainerSummary" class="trainer-summary"></div>
         <div id="activeJudgeBox" class="notice" style="margin-top:12px"></div>
         <div class="row" style="margin-top:10px"><button class="secondary" id="retrainSpeakersBtn" type="button">教師ラベルで再分類</button><button class="ghost" id="clearSpeakerTrainingBtn" type="button">教師ラベルを全解除</button></div>
         <p id="conversationTrainerStatus" class="muted small"></p>
       </div>
 
-      <div id="conversationContentCard" class="card hidden">
-        <h3>内容を残す <span class="content-badge">訂正作業なし</span></h3>
-        <p class="muted small">全文を一言一句直す方式はやめます。使える方法だけ選んでください。</p>
-        <div class="warning-box small"><strong>運用：</strong>全文文字起こしがなくても使えます。重要な区間だけ「★重要」「要点」「会話機能」「相槌・笑い・同時発話」などを判定します。外部のTXTがある時だけ参考全文として任意で読み込めます。</div>
+      <div id="conversationInternalAiCard" class="card hidden">
+        <h3>ChatGPT内部理解用・内容解析</h3>
+        <p class="muted small">内部文字起こしは画面に表示しません。25秒前後の長め区間で端末内認識し、話者・時間・相槌・笑い・同時発話・音響指標とまとめてChatGPT用JSONにします。</p>
+        <div class="field">
+          <label for="internalAsrQuality">内部認識の精度</label>
+          <select id="internalAsrQuality">
+            <option value="accurate" selected>高精度（Whisper Small・推奨）</option>
+            <option value="standard">標準（Whisper Base・軽め）</option>
+          </select>
+        </div>
+        <div class="row">
+          <button class="primary" id="startInternalAsrBtn" type="button">内部内容解析を開始 / 再開</button>
+          <button class="ghost" id="clearInternalAsrBtn" type="button">内部内容を削除</button>
+        </div>
+        <div id="internalAsrProgressWrap" class="hidden">
+          <div class="local-progress"><div id="internalAsrProgress"></div></div>
+          <p id="internalAsrStatus" class="muted small"></p>
+        </div>
+        <div id="internalAsrSummary" class="notice" style="margin-top:12px"></div>
         <div style="height:10px"></div>
-        <div class="field"><label for="referenceTranscriptFile">参考全文TXT（任意）</label><input type="file" id="referenceTranscriptFile" accept=".txt,text/plain"></div>
-        <div class="field"><label for="referenceTranscriptText">参考全文を貼り付け（任意）</label><textarea id="referenceTranscriptText" rows="9" placeholder="任意。外部で作った文字起こしTXTなどがある場合だけ貼る。誤字があってもそのままでOK。"></textarea></div>
-        <div class="field"><label for="referenceTranscriptQuality">この全文の信頼度</label><select id="referenceTranscriptQuality"><option value="unknown">未評価</option><option value="good">だいたい合っている</option><option value="partial">一部かなり怪しい</option><option value="bad">内容分析には使わない</option></select></div>
-        <div class="row"><button class="secondary" id="saveReferenceTranscriptBtn" type="button">参考全文を保存</button><button class="ghost" id="clearReferenceTranscriptBtn" type="button">参考全文を削除</button></div>
-        <p id="referenceTranscriptStatus" class="muted small"></p>
+        <button class="secondary" id="shareChatGPTInternalPackBtn" type="button" style="width:100%">ChatGPTに内部理解パックを共有</button>
+        <p class="muted small" style="margin-bottom:0"><strong>プライバシー：</strong>AIモデル取得の通信はありますが、WAVは文字起こしサーバーへ送らない設計です。内部文字起こしは端末内に保存され、「ChatGPTに共有」を押して共有先を選んだ時だけJSONとして端末外へ出ます。生のWAVはJSONに含めません。</p>
       </div>
 
       <div class="card">
@@ -246,9 +258,9 @@
       </div>
 
       <div class="card">
-        <h3>ChatGPTへ渡す</h3>
-        <p class="muted small">測定値・教師ラベル・重要区間・会話機能・要点メモ・参考全文をTXTにまとめます。低信頼の自動判定は断定材料にしません。</p>
-        <button class="secondary" id="exportConversationPackBtn" type="button" style="width:100%">分析パックTXTを作成</button>
+        <h3>構造だけの予備パック</h3>
+        <p class="muted small">内部内容解析を使わない時の予備です。測定値・教師ラベル・重要区間・会話機能・要点メモだけをTXTにまとめます。</p>
+        <button class="secondary" id="exportConversationPackBtn" type="button" style="width:100%">構造パックTXTを作成</button>
         <div style="height:10px"></div>
         <button class="danger" id="deleteConversationBtn" type="button" style="width:100%">この会話分析を削除</button>
       </div>
@@ -258,7 +270,7 @@
   <section id="settingsView" class="view">
     <div class="card">
       <h2>このアプリについて</h2>
-      <p class="small muted">問題・履歴はブラウザ内、画像・登録した選択肢別メモ・会話分析結果はブラウザのIndexedDB内に保存されます。iPhoneローカル音声解析で選んだWAV原音は保存せず、解析中だけ読み取ります。ページを閉じると原音との接続も切れます。文字起こしAIのモデルは初回に外部CDN/Hugging Faceから取得しますが、文字起こし処理はブラウザ内で行う設計です。</p>
+      <p class="small muted">問題・履歴はブラウザ内、画像・登録した選択肢別メモ・会話分析結果はブラウザのIndexedDB内に保存されます。iPhoneローカル音声解析で選んだWAV原音は保存せず、解析中だけ読み取ります。ページを閉じると原音との接続も切れます。内部内容解析AIのモデルは初回に外部CDN/Hugging Faceから取得しますが、WAVの認識処理はブラウザ内で行う設計です。内部文字起こしは画面表示せず、ChatGPT共有時だけJSONに含めます。</p>
       <p class="small muted">医学的な認知機能検査ではなく、自分の学習傾向を見るための個人用ツールです。</p>
     </div>
     <div class="card">
@@ -566,7 +578,7 @@
     self_disclosure:"自己開示",
     hypothesis:"分析・仮説",
     agreement:"同意",
-    backchannel:"相槌",
+    backchannel:"相槌（うん/うんうん/そうそう等）",
     correction:"修正・反論",
     topic_shift:"話題転換",
     humor:"冗談・雑談",
@@ -635,19 +647,6 @@
   async function setTurnAct(i,act){
     const row=await getConversationRow(activeConversationId);const t=row?.analysis?.turns?.[i];if(!t)return;t.manual_act=act||null;await saveConversationRow(row);await renderConversationTimeline(row)
   }
-  async function saveReferenceTranscript(){
-    const row=await getConversationRow(activeConversationId);if(!row)return;
-    const text=String($('referenceTranscriptText')?.value||'').trim(),quality=$('referenceTranscriptQuality')?.value||'unknown';
-    row.analysis.reference_transcript={text,quality,savedAt:new Date().toISOString(),source:'pasted_or_txt'};
-    await saveConversationRow(row);renderTranscript(row)
-  }
-  async function clearReferenceTranscript(){
-    const row=await getConversationRow(activeConversationId);if(!row)return;if(!confirm('参考全文を削除しますか？'))return;
-    delete row.analysis.reference_transcript;await saveConversationRow(row);renderTranscript(row)
-  }
-  function importReferenceTranscriptFile(file){
-    const r=new FileReader();r.onload=()=>{if($('referenceTranscriptText'))$('referenceTranscriptText').value=String(r.result||'')};r.readAsText(file,'utf-8')
-  }
   async function retrainSpeakers(){const row=await getConversationRow(activeConversationId);if(!row)return;const turns=row.analysis?.turns||[],usable=turns.filter(t=>Array.isArray(t.voice_feature)&&t.voice_feature.length),self=usable.filter(t=>t.manual_speaker==='SELF'),other=usable.filter(t=>t.manual_speaker==='OTHER');if(self.length<2||other.length<2){alert('自分・相手を最低2区間ずつ教えてください。できれば各3〜5区間以上がおすすめです。');return}const raw=usable.map(t=>t.voice_feature.map(v=>v===null?NaN:Number(v))),scaled=robustScaleMatrix(raw),z=scaled.z,idx=new Map(usable.map((t,i)=>[t,i])),cSelf=meanVec(self.map(t=>z[idx.get(t)])),cOther=meanVec(other.map(t=>z[idx.get(t)]));let classified=0;for(const t of usable){if(t.manual_speaker){t.speaker=t.manual_speaker;t.speaker_confidence=1;classified++;continue}const zz=z[idx.get(t)],dS=vecDist(zz,cSelf),dO=vecDist(zz,cOther),best=Math.min(dS,dO),otherD=Math.max(dS,dO),margin=(otherD-best)/(otherD+best+1e-9);if(margin>=.055){t.speaker=dS<dO?'SELF':'OTHER';t.speaker_confidence=roundN(margin,3);classified++}else{t.speaker=null;t.speaker_confidence=roundN(margin,3)}}for(let i=1;i<turns.length-1;i++){const t=turns[i],a=turns[i-1],b=turns[i+1];if(!t.manual_speaker&&!t.speaker&&a.speaker&&a.speaker===b.speaker&&Number(t.gap_before_sec||9)<.7&&Number(b.gap_before_sec||9)<.7){t.speaker=a.speaker;t.speaker_confidence=.05}}updateResponseLatencies(turns);if(Array.isArray(row.analysis?.transcript_blocks)){for(const b of row.analysis.transcript_blocks){const tally={};for(const i of b.turn_indexes||[]){const sp=turns[i]?.speaker;if(sp)tally[sp]=(tally[sp]||0)+(Number(turns[i]?.duration)||0)}b.speaker=Object.keys(tally).sort((a,c)=>(tally[c]||0)-(tally[a]||0))[0]||null}}row.speakerNames={...(row.speakerNames||{}),SELF:row.speakerNames?.SELF||'自分',OTHER:row.speakerNames?.OTHER||'相手'};row.analysis.speaker_metrics=buildLocalSpeakerMetrics(turns);row.analysis.meta={...(row.analysis.meta||{}),speaker_supervised:true};row.analysis.local_metrics=row.analysis.local_metrics||{};row.analysis.local_metrics.supervised_speaker={self_examples:self.length,other_examples:other.length,classified_pct:roundN(100*classified/Math.max(1,usable.length),1)};await saveConversationRow(row);$('conversationTrainerStatus').textContent=`再分類しました。自分 ${self.length}区間 / 相手 ${other.length}区間を教師データに使用。`;await renderConversationDetail()}
 
   // ---- v3.3 browser-local Whisper Tiny transcription ----
@@ -676,17 +675,243 @@
   async function startTranscription(){const row=await getConversationRow(activeConversationId);if(!row)return;if(!localConversationAudioFile){alert('文字起こしには元WAVが必要です。上の「原音を再生する場合」から同じWAVを選び直してください。');return}let h;try{h=await parseWavHeader(localConversationAudioFile)}catch(e){alert(e.message);return}const scope=$('transcribeScope').value,lang=$('transcribeLanguage').value;let blocks=Array.isArray(row.analysis.transcript_blocks)&&row.analysis.transcript_blocks.length?row.analysis.transcript_blocks:makeTranscriptBlocks(row);row.analysis.transcript_blocks=blocks;let pending=blocks.filter(b=>b.status!=='done');if(scope==='test3')pending=pending.filter(b=>b.start<180);else if(scope==='next5'){const first=pending[0]?.start??0;pending=pending.filter(b=>b.start<first+300)}if(!pending.length){alert('この範囲は文字起こし済みです。');return}$('startTranscriptionBtn').disabled=true;try{setTranscriptionProgress(.01,'Whisper Tinyを準備中… 初回はモデル取得に時間がかかります');await ensureAsr();let done=0;for(const b of pending){setTranscriptionProgress(done/pending.length,`内容を文字起こし中… ${done+1}/${pending.length}  ${secText(b.start)}–${secText(b.end)}`);try{const audio=await readWavRange16k(localConversationAudioFile,h,Math.max(0,b.start-.2),Math.min(h.durationSec,b.end+.25)),result=await workerTranscribe(audio,lang,`${row.id}-${b.id}-${Date.now()}`);b.text=String(result?.text||'').trim();b.status='done';b.error=null}catch(err){b.status='error';b.error=String(err?.message||err)}done++;row.analysis.transcript_blocks=blocks;row.analysis.meta={...(row.analysis.meta||{}),browser_asr:'whisper-tiny-wasm',browser_asr_language:lang};await saveConversationRow(row);if(done%2===0)await new Promise(r=>setTimeout(r,50))}setTranscriptionProgress(1,'文字起こし区間を保存しました。誤変換は下で直せます。');await renderConversationDetail()}catch(err){console.error(err);setTranscriptionProgress(0,`文字起こしに失敗: ${err.message||err}`);alert('iPhoneでWhisperを実行できませんでした。端末メモリ不足の可能性があります。音響解析はそのまま残っています。')}finally{$('startTranscriptionBtn').disabled=false}}
   async function saveTranscriptEdits(){const row=await getConversationRow(activeConversationId);if(!row)return;$$('[data-transcript-edit]').forEach(el=>{const b=row.analysis?.transcript_blocks?.find(x=>x.id===el.dataset.transcriptEdit);if(b)b.edited_text=el.value});await saveConversationRow(row);$('transcriptionStatus').textContent='訂正を保存しました。';await renderConversationDetail()}
   async function toggleTranscriptStar(id){const row=await getConversationRow(activeConversationId);if(!row)return;const b=row.analysis?.transcript_blocks?.find(x=>x.id===id);if(!b)return;b.starred=!b.starred;await saveConversationRow(row);await renderConversationDetail()}
-  function renderTranscript(row){
-    const card=$('conversationContentCard');
-    if(!card)return;
-    const isLocal=String(row?.analysis?.meta?.source_type||'').startsWith('iphone_local_wav');
-    card.classList.toggle('hidden',!isLocal);
-    if(!isLocal)return;
-    const ref=row.analysis?.reference_transcript||{};
-    const ta=$('referenceTranscriptText'),q=$('referenceTranscriptQuality'),st=$('referenceTranscriptStatus');
-    if(ta && document.activeElement!==ta)ta.value=String(ref.text||'');
-    if(q)q.value=ref.quality||'unknown';
-    if(st)st.textContent=ref.text?`参考全文を保存済み（${ref.text.length.toLocaleString()}文字）。時刻・話者は未確定として扱います。`:'参考全文は未登録です。PCM録音の回は空欄のままでも使えます。';
+
+  // ---- v4.0 hidden on-device ASR for ChatGPT understanding ----
+  let hiddenAsrWorker=null,hiddenAsrWorkerKey="",hiddenAsrPending=new Map(),hiddenAsrReady=false,hiddenAsrInit=null;
+
+  function internalAsrSetProgress(frac,msg){
+    const w=$("internalAsrProgressWrap"),b=$("internalAsrProgress"),s=$("internalAsrStatus");
+    if(w)w.classList.remove("hidden");
+    if(b)b.style.width=`${Math.max(0,Math.min(1,Number(frac)||0))*100}%`;
+    if(s)s.textContent=msg||"";
+  }
+
+  function internalAsrModelConfig(quality){
+    const gpu=!!navigator.gpu;
+    if(quality==="accurate")return {model:"onnx-community/whisper-small",device:gpu?"webgpu":"wasm",dtype:"q4",label:"Whisper Small"};
+    return {model:"onnx-community/whisper-base",device:gpu?"webgpu":"wasm",dtype:"q4",label:"Whisper Base"};
+  }
+
+  function disposeHiddenAsrWorker(){
+    try{hiddenAsrWorker?.terminate()}catch{}
+    hiddenAsrWorker=null;hiddenAsrWorkerKey="";hiddenAsrReady=false;hiddenAsrInit=null;hiddenAsrPending.clear();
+  }
+
+  function makeHiddenAsrWorker(cfg){
+    const key=`${cfg.model}|${cfg.device}|${cfg.dtype}`;
+    if(hiddenAsrWorker&&hiddenAsrWorkerKey===key)return hiddenAsrWorker;
+    disposeHiddenAsrWorker();hiddenAsrWorkerKey=key;
+    const code=`
+      import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/dist/transformers.min.js';
+      env.allowRemoteModels=true;env.allowLocalModels=false;
+      try{if(env.backends?.onnx?.wasm)env.backends.onnx.wasm.numThreads=1}catch(e){}
+      let transcriber=null;
+      self.onmessage=async(e)=>{
+        const m=e.data||{};
+        try{
+          if(m.type==='init'){
+            if(!transcriber){
+              transcriber=await pipeline('automatic-speech-recognition',m.model,{
+                device:m.device,dtype:m.dtype,
+                progress_callback:(p)=>{if(p&&p.status)self.postMessage({type:'model-progress',status:p.status,file:p.file,progress:p.progress||0})}
+              });
+            }
+            self.postMessage({type:'ready'});return;
+          }
+          if(m.type==='transcribe'){
+            if(!transcriber)throw new Error('model not initialized');
+            const audio=new Float32Array(m.audio);
+            const result=await transcriber(audio,{task:'transcribe',language:'japanese',return_timestamps:true});
+            self.postMessage({type:'result',id:m.id,result});return;
+          }
+        }catch(err){self.postMessage({type:'error',id:m.id,message:String(err?.message||err)})}
+      };
+    `;
+    const url=URL.createObjectURL(new Blob([code],{type:"text/javascript"}));
+    hiddenAsrWorker=new Worker(url,{type:"module"});
+    hiddenAsrWorker.onmessage=(e)=>{
+      const m=e.data||{};
+      if(m.type==="ready"){hiddenAsrReady=true;hiddenAsrInit?.resolve?.(true)}
+      else if(m.type==="model-progress"){internalAsrSetProgress(.01,`内部AIモデル準備中… ${m.file||m.status||""}${m.progress?` ${Math.round(m.progress)}%`:""}`)}
+      else if(m.type==="result"||m.type==="error"){
+        const p=hiddenAsrPending.get(m.id);
+        if(p){hiddenAsrPending.delete(m.id);m.type==="result"?p.resolve(m.result):p.reject(new Error(m.message||"内部認識失敗"))}
+      }
+    };
+    hiddenAsrWorker.onerror=()=>hiddenAsrInit?.reject?.(new Error("内部音声認識モデルを読み込めませんでした。"));
+    return hiddenAsrWorker;
+  }
+
+  async function ensureHiddenAsr(cfg){
+    const key=`${cfg.model}|${cfg.device}|${cfg.dtype}`;
+    if(hiddenAsrReady&&hiddenAsrWorker&&hiddenAsrWorkerKey===key)return true;
+    if(hiddenAsrWorkerKey!==key)disposeHiddenAsrWorker();
+    if(hiddenAsrInit)return hiddenAsrInit.promise;
+    let resolve,reject;const promise=new Promise((res,rej)=>{resolve=res;reject=rej});
+    hiddenAsrInit={promise,resolve,reject};
+    makeHiddenAsrWorker(cfg).postMessage({type:"init",...cfg});
+    return promise;
+  }
+
+  function hiddenWorkerTranscribe(audio,id){
+    return new Promise((resolve,reject)=>{
+      hiddenAsrPending.set(id,{resolve,reject});
+      hiddenAsrWorker.postMessage({type:"transcribe",id,audio:audio.buffer},[audio.buffer]);
+    });
+  }
+
+  function localOverlapSec(a0,a1,b0,b1){return Math.max(0,Math.min(a1,b1)-Math.max(a0,b0))}
+
+  function hiddenSpeakerMix(row,start,end){
+    const totals={SELF:0,OTHER:0,BOTH:0,NONVERBAL:0,UNKNOWN:0},manual=[];
+    for(const t of row.analysis?.turns||[]){
+      const ov=localOverlapSec(start,end,Number(t.start),Number(t.end));if(ov<=0)continue;
+      const sp=t.manual_speaker||t.speaker||"UNKNOWN";totals[sp]=(totals[sp]||0)+ov;
+      if(t.manual_speaker)manual.push({start:t.start,end:t.end,speaker:t.manual_speaker,event:t.manual_act||null,note:t.content_note||null});
+    }
+    const denom=Math.max(.001,Object.values(totals).reduce((a,b)=>a+b,0)),percent={};
+    for(const [k,v] of Object.entries(totals))percent[k]=Math.round(v/denom*1000)/10;
+    const ranked=Object.entries(totals).filter(([k])=>!["UNKNOWN","NONVERBAL"].includes(k)).sort((a,b)=>b[1]-a[1]);
+    const likely=ranked[0]&&ranked[0][1]/denom>=.72?ranked[0][0]:null;
+    return {percent,likely,manual};
+  }
+
+  function makeHiddenAsrBlocks(row){
+    const duration=Number(row.analysis?.summary?.duration_sec||0),turns=row.analysis?.turns||[],chunk=26,overlap=2,step=24,blocks=[];
+    for(let start=0,idx=0;start<duration;start+=step,idx++){
+      const end=Math.min(duration,start+chunk);let speechSec=0;
+      for(const t of turns)speechSec+=localOverlapSec(start,end,Number(t.start),Number(t.end));
+      const mix=hiddenSpeakerMix(row,start,end);
+      blocks.push({id:`h-${idx}-${Math.round(start*1000)}`,start:roundN(start),end:roundN(end),speech_sec:roundN(speechSec,2),speaker_mix:mix.percent,likely_speaker:mix.likely,manual_anchors:mix.manual,text:"",status:speechSec>=1.4?"pending":"skip",error:null});
+      if(end>=duration)break;
+    }
+    return blocks;
+  }
+
+  function cleanInternalText(s){return String(s||"").replace(/\s+/g," ").trim()}
+
+  async function startInternalAsr(){
+    const row=await getConversationRow(activeConversationId);if(!row)return;
+    if(!localConversationAudioFile){alert("内部内容解析には元WAVが必要です。上の「原音を再生する場合」から同じWAVを選び直してください。");return}
+    let h;try{h=await parseWavHeader(localConversationAudioFile)}catch(e){alert(e.message);return}
+    const quality=$("internalAsrQuality")?.value||"accurate";let cfg=internalAsrModelConfig(quality);
+    let state=row.analysis.hidden_internal_asr;
+    if(!state||state.version!=="4.0"||state.quality!==quality){
+      state={version:"4.0",quality,model:cfg.model,device:cfg.device,createdAt:new Date().toISOString(),blocks:makeHiddenAsrBlocks(row),complete:false};
+      row.analysis.hidden_internal_asr=state;await saveConversationRow(row);
+    }
+    if(!state.blocks.some(b=>["pending","error"].includes(b.status))){
+      state.complete=true;await saveConversationRow(row);renderInternalAsr(row);return
+    }
+    $("startInternalAsrBtn").disabled=true;
+    try{
+      internalAsrSetProgress(.01,`${cfg.label} を準備中… 初回はモデル取得に時間がかかります`);
+      try{await ensureHiddenAsr(cfg)}
+      catch(err){
+        if(quality==="accurate"){
+          disposeHiddenAsrWorker();cfg=internalAsrModelConfig("standard");
+          state.fallback_model=cfg.model;state.fallback_reason=String(err?.message||err);
+          internalAsrSetProgress(.01,"高精度モデルが使えなかったため Whisper Base に切り替えます…");
+          await ensureHiddenAsr(cfg);
+        }else throw err;
+      }
+      let done=state.blocks.filter(b=>["done","skip"].includes(b.status)).length,total=state.blocks.length;
+      for(const b of state.blocks){
+        if(!["pending","error"].includes(b.status))continue;
+        internalAsrSetProgress(done/total,`内部内容解析中… ${done+1}/${total}  ${secText(b.start)}–${secText(b.end)}（本文は表示しません）`);
+        try{
+          const audio=await readWavRange16k(localConversationAudioFile,h,Math.max(0,b.start-.4),Math.min(h.durationSec,b.end+.4));
+          const result=await hiddenWorkerTranscribe(audio,`${row.id}-${b.id}-${Date.now()}`);
+          b.text=cleanInternalText(result?.text);b.status="done";b.error=null;b.engine=cfg.model;
+        }catch(err){b.status="error";b.error=String(err?.message||err)}
+        done++;state.model=cfg.model;state.device=cfg.device;state.updatedAt=new Date().toISOString();
+        state.complete=state.blocks.every(x=>["done","skip"].includes(x.status));
+        row.analysis.hidden_internal_asr=state;await saveConversationRow(row);
+        if(done%2===0)await new Promise(r=>setTimeout(r,60));
+      }
+      state.complete=state.blocks.every(x=>["done","skip"].includes(x.status));await saveConversationRow(row);
+      internalAsrSetProgress(1,state.complete?"内部内容解析が完了しました。本文は非表示のまま保存されています。":"一部区間で失敗しました。もう一度押すと再開します。");
+      await renderConversationDetail();
+    }catch(err){
+      console.error(err);internalAsrSetProgress(0,`内部内容解析に失敗: ${err.message||err}`);
+      alert("端末内の高精度文字起こしを実行できませんでした。端末メモリ不足の可能性があります。話者・音響解析は残っています。");
+    }finally{$("startInternalAsrBtn").disabled=false}
+  }
+
+  async function clearInternalAsr(){
+    const row=await getConversationRow(activeConversationId);if(!row)return;
+    if(!row.analysis?.hidden_internal_asr)return;
+    if(!confirm("端末内に保存した内部内容データを削除しますか？話者・音響解析は残ります。"))return;
+    delete row.analysis.hidden_internal_asr;await saveConversationRow(row);disposeHiddenAsrWorker();await renderConversationDetail();
+  }
+
+  function compactTurnForChatGPT(row,t){
+    return {
+      start:t.start,end:t.end,duration:t.duration,
+      speaker:t.speaker?conversationSpeakerName(row,t.speaker):null,speaker_code:t.speaker||null,
+      manual_speaker:t.manual_speaker?conversationSpeakerName(row,t.manual_speaker):null,manual_speaker_code:t.manual_speaker||null,
+      speaker_confidence:t.speaker_confidence??null,gap_before_sec:t.gap_before_sec??null,response_latency_sec:t.response_latency_sec??null,
+      overlaps_previous_sec:t.overlaps_previous_sec??0,avg_rms_db:t.avg_rms_db??null,peak_db:t.peak_db??null,f0_hz:t.f0_hz??null,
+      event:t.manual_act?TURN_ACTS[t.manual_act]||t.manual_act:null,starred:!!t.starred,note:t.content_note||null
+    };
+  }
+
+  function buildChatGPTInternalPack(row){
+    const a=row.analysis||{},h=a.hidden_internal_asr||{},blocks=Array.isArray(h.blocks)?h.blocks:[];
+    return {
+      schema:"study-analyzer-chatgpt-conversation-v1",
+      created_at:new Date().toISOString(),
+      purpose:"Read the hidden transcript internally. The user does not need a verbatim transcript. Understand the actual topics, semantic flow, intentions, questions, self-disclosures, hypotheses, corrections and responses. Then analyze the user's speaking style, the other speaker's style, and the interaction. Separate direct evidence, conversational-function interpretation, and relational/psychological hypotheses. Prioritize manual_speaker/manual_anchors over low-confidence automatic speaker labels. Treat backchannels, laughter, overlap and nonverbal labels as separate events. Do not reproduce the full hidden transcript unless explicitly asked.",
+      conversation:{title:row.title,imported_at:row.importedAt,duration_sec:a.summary?.duration_sec??null,speaker_names:row.speakerNames||{},summary:a.summary||{},local_metrics:a.local_metrics||{},speaker_metrics:a.speaker_metrics||[]},
+      internal_content:{
+        engine:h.model||null,device:h.device||null,quality:h.quality||null,complete:!!h.complete,
+        transcript_blocks:blocks.filter(b=>b.status==="done"&&String(b.text||"").trim()).map(b=>({
+          start:b.start,end:b.end,text:b.text,
+          likely_speaker:b.likely_speaker?conversationSpeakerName(row,b.likely_speaker):null,
+          speaker_mix:b.speaker_mix||{},manual_anchors:b.manual_anchors||[]
+        }))
+      },
+      interaction_timeline:(a.turns||[]).map(t=>compactTurnForChatGPT(row,t)),
+      observations:a.observations||[]
+    };
+  }
+
+  function renderInternalAsr(row){
+    const card=$("conversationInternalAiCard"),sum=$("internalAsrSummary"),btn=$("shareChatGPTInternalPackBtn");
+    const isLocal=String(row?.analysis?.meta?.source_type||"").startsWith("iphone_local_wav");
+    if(!card||!isLocal){card?.classList.add("hidden");return}
+    card.classList.remove("hidden");
+    const h=row.analysis?.hidden_internal_asr,counts={done:0,skip:0,error:0,pending:0};
+    for(const b of h?.blocks||[])counts[b.status]=(counts[b.status]||0)+1;
+    if(!h){
+      sum.innerHTML="<strong>内部内容はまだ未解析です。</strong><div class='muted small'>先に自分/相手を数区間だけ教えると、ChatGPT側で誰の発言かを推定しやすくなります。</div>";
+      btn.disabled=true;
+    }else{
+      const total=(h.blocks||[]).length,processed=counts.done+counts.skip;
+      sum.innerHTML=`<strong>${h.complete?"内部内容解析 完了":"内部内容解析 途中"}</strong><div class="muted small">処理 ${processed}/${total}区間 / エラー ${counts.error} / 本文は画面非表示 / ${esc(h.model||"")}</div>`;
+      btn.disabled=counts.done===0;
+    }
+  }
+
+  async function shareChatGPTInternalPack(){
+    const row=await getConversationRow(activeConversationId);if(!row)return;
+    const h=row.analysis?.hidden_internal_asr;
+    if(!h||!(h.blocks||[]).some(b=>b.status==="done")){alert("先に「内部内容解析を開始 / 再開」を実行してください。");return}
+    const c=speakerTrainingCounts(row);
+    if((c.selfN<2||c.otherN<2)&&!confirm("自分/相手の確定例が少ないため、誰が話したかの精度は低めです。このまま共有しますか？"))return;
+    const pack=buildChatGPTInternalPack(row),safe=(row.title||"conversation").replace(/[\\/:*?"<>|]+/g,"_").slice(0,60);
+    const file=new File([JSON.stringify(pack,null,2)],`chatgpt-internal-${safe}.json`,{type:"application/json"});
+    try{
+      if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){
+        await navigator.share({
+          files:[file],title:"ChatGPT 会話分析",
+          text:"このJSONのhidden transcriptを内部で読んで話の内容と流れを理解したうえで、私と相手それぞれの話し方の特徴、2人の相互作用、主導権、相槌、被せ、先読み、質問、自己開示、修正の受け方などを分析してください。逐語録の再掲は不要です。"
+        });
+      }else{
+        downloadBlob(file.name,file);
+        alert("ChatGPT用JSONを保存しました。このファイルをChatGPTに添付してください。");
+      }
+    }catch(e){if(e?.name!=="AbortError"){console.error(e);alert("共有画面を開けませんでした。")}}
   }
 
   let activeConversationId=null;
@@ -723,7 +948,7 @@
     $("conversationSpeakerNames").innerHTML=speakers.map(spk=>`<div class="field"><label>${esc(spk)}</label><input class="conversation-speaker-name" data-speaker="${esc(spk)}" value="${esc(row.speakerNames?.[spk]||"")}" placeholder="例：鳥越、明見"></div>`).join("")||(isLocal?'<div class="empty">2人話者推定を使わなかったか、十分な話者候補が得られませんでした。</div>':'<div class="empty">話者情報がありません。</div>');
     $("conversationSpeakerMetrics").innerHTML=metrics.length?metrics.map(m=>`<div class="speaker-card"><div class="list-title">${esc(conversationSpeakerName(row,m.speaker))}</div><div class="metric-line"><span>発話時間</span><strong>${secText(m.speech_sec)}</strong></div><div class="metric-line"><span>${isLocal?"分類済み内割合":"発話割合"}</span><strong>${m.speech_share_pct??"-"}%</strong></div><div class="metric-line"><span>区間</span><strong>${m.turns??"-"}</strong></div><div class="metric-line"><span>平均区間</span><strong>${m.mean_turn_sec??"-"}s</strong></div><div class="metric-line"><span>${isLocal?"推定応答中央値":"応答中央値"}</span><strong>${m.median_response_sec??"-"}s</strong></div><div class="metric-line"><span>0.5秒以内</span><strong>${m.fast_response_rate_pct??"-"}%</strong></div><div class="metric-line"><span>F0中央値</span><strong>${m.median_f0_hz??"-"}Hz</strong></div>${m.mean_speaker_confidence!==undefined?`<div class="metric-line"><span>平均分類信頼</span><strong>${Math.round(Number(m.mean_speaker_confidence||0)*100)}%</strong></div>`:""}</div>`).join(""):(isLocal?'<div class="empty">2人話者推定を使わなかったか、十分に分離できませんでした。</div>':'<div class="empty">話者別指標がありません。</div>');
     $("conversationObservations").innerHTML=(a.observations||[]).length?a.observations.map(x=>`<div class="list-item"><div class="list-title">${esc(x)}</div></div>`).join(""):'<div class="empty">観察ポイントはありません。</div>';
-    drawLocalWave(row);renderLocalMetrics(row);renderSpeakerSamples(row);renderTrainer(row);renderTranscript(row);renderConversationTimeline(row)
+    drawLocalWave(row);renderLocalMetrics(row);renderSpeakerSamples(row);renderTrainer(row);renderInternalAsr(row);renderConversationTimeline(row)
   }
   async function renderConversationTimeline(rowArg=null){
     const row=rowArg||await getConversationRow(activeConversationId);if(!row)return;const turns=Array.isArray(row.analysis?.turns)?row.analysis.turns:[],filter=$("conversationTurnFilter")?.value||"all",isLocal=String(row.analysis?.meta?.source_type||"").startsWith("iphone_local_wav");
@@ -752,22 +977,48 @@
 
   async function saveConversationSpeakerNames(){const row=await getConversationRow(activeConversationId);if(!row)return;const names={};$$(".conversation-speaker-name").forEach(inp=>{if(inp.value.trim())names[inp.dataset.speaker]=inp.value.trim()});row.speakerNames=names;await saveConversationRow(row);await renderConversationDetail();$("conversationImportStatus").textContent="話者名を保存しました。"}
   function conversationAnalysisPack(row){
-    const a=row.analysis||{},isLocal=String(a.meta?.source_type||"").startsWith("iphone_local_wav"),lines=["# Study Analyzer 会話分析パック","",`タイトル: ${row.title}`,`読み込み日時: ${row.importedAt}`,`解析方式: ${isLocal?"iPhoneローカル音響解析＋人間の判定":"PC/外部解析JSON"}`,"","## 前提","- 数値は観察指標であり、感情・性格・診断を直接示すものではありません。","- 短い間や声の高さだけから心理を断定しません。"];
-    if(isLocal)lines.push("- 自動話者推定は本人確認ではありません。manual_speaker（自分/相手の人間判定）を最優先してください。","- response_latency_secは推定話者ラベルが切り替わった連続区間の間隔で、完全な応答潜時ではありません。","- 端末内Whisper Tinyは使用していません。内容は重要区間の人間メモと、任意で貼った参考全文を使います。");
-    const ref=a.reference_transcript||{};
-    if(ref.text&&ref.quality!=="bad"){lines.push("","## 参考全文（話者・時刻未確定）",`信頼度: ${ref.quality||"unknown"}`,"※ 一言一句の正確性は保証せず、全体の話題・表現・論点を読むための参考資料。",ref.text)}
-    lines.push("","## 概要");Object.entries(a.summary||{}).forEach(([k,v])=>lines.push(`- ${k}: ${v}`));
-    if(a.local_metrics){lines.push("","## iPhoneローカル音響指標",JSON.stringify(a.local_metrics,null,2))}
-    lines.push("","## 話者別指標");for(const m of a.speaker_metrics||[]){lines.push(`- ${conversationSpeakerName(row,m.speaker)}: ${JSON.stringify(m)}`)}
+    const a=row.analysis||{},isLocal=String(a.meta?.source_type||"").startsWith("iphone_local_wav"),lines=[
+      "# Study Analyzer 会話構造パック","",
+      `タイトル: ${row.title}`,`読み込み日時: ${row.importedAt}`,
+      `解析方式: ${isLocal?"iPhoneローカル音響解析＋人間の判定":"PC/外部解析JSON"}`,"",
+      "## 前提",
+      "- 数値は観察指標であり、感情・性格・診断を直接示すものではありません。",
+      "- 短い間や声の高さだけから心理を断定しません。"
+    ];
+    if(isLocal)lines.push(
+      "- 自動話者推定は本人確認ではありません。manual_speaker（自分/相手/両方等の人間判定）を最優先してください。",
+      "- response_latency_secは推定話者ラベルが切り替わった連続区間の間隔で、完全な応答潜時ではありません。",
+      "- この予備パックには内部文字起こし本文を含めません。"
+    );
+    lines.push("","## 概要");
+    Object.entries(a.summary||{}).forEach(([k,v])=>lines.push(`- ${k}: ${v}`));
+    if(a.local_metrics)lines.push("","## iPhoneローカル音響指標",JSON.stringify(a.local_metrics,null,2));
+    lines.push("","## 話者別指標");
+    for(const m of a.speaker_metrics||[])lines.push(`- ${conversationSpeakerName(row,m.speaker)}: ${JSON.stringify(m)}`);
     lines.push("","## 人間が判定・注記した区間");
     const marked=(a.turns||[]).filter(t=>t.manual_speaker||t.manual_act||t.starred||String(t.content_note||"").trim());
     if(!marked.length)lines.push("- なし");
     for(const t of marked){
-      const meta=[];if(t.manual_speaker)meta.push(`話者判定=${conversationSpeakerName(row,t.manual_speaker)}`);if(t.manual_act)meta.push(`会話機能=${TURN_ACTS[t.manual_act]||t.manual_act}`);if(t.starred)meta.push("重要");if(t.content_note)meta.push(`要点=${t.content_note}`);if(t.response_latency_sec!==null&&t.response_latency_sec!==undefined)meta.push(`推定応答=${Number(t.response_latency_sec).toFixed(3)}s`);lines.push(`${secText(t.start)}-${secText(t.end)} [${meta.join(", ")}]`)
+      const meta=[];
+      if(t.manual_speaker)meta.push(`話者判定=${conversationSpeakerName(row,t.manual_speaker)}`);
+      if(t.manual_act)meta.push(`会話機能=${TURN_ACTS[t.manual_act]||t.manual_act}`);
+      if(t.starred)meta.push("重要");
+      if(t.content_note)meta.push(`要点=${t.content_note}`);
+      if(t.response_latency_sec!==null&&t.response_latency_sec!==undefined)meta.push(`推定応答=${Number(t.response_latency_sec).toFixed(3)}s`);
+      lines.push(`${secText(t.start)}-${secText(t.end)} [${meta.join(", ")}]`);
     }
     lines.push("","## 全会話タイムライン（音響・話者推定）");
-    for(const t of a.turns||[]){const meta=[];if(t.response_latency_sec!==null&&t.response_latency_sec!==undefined)meta.push(`推定応答=${Number(t.response_latency_sec).toFixed(3)}s`);if(t.gap_before_sec!==null&&t.gap_before_sec!==undefined)meta.push(`前区間から=${Number(t.gap_before_sec).toFixed(3)}s`);if(t.avg_rms_db!==undefined)meta.push(`平均RMS=${t.avg_rms_db}dB`);if(t.f0_hz)meta.push(`F0=${t.f0_hz}Hz`);if(t.speaker_confidence!==undefined)meta.push(`自動話者信頼=${Math.round(Number(t.speaker_confidence||0)*100)}%`);lines.push(`${secText(t.start)}-${secText(t.end)} ${t.speaker?conversationSpeakerName(row,t.speaker):"未分類"}${meta.length?" ["+meta.join(", ")+"]":""}`)}
-    lines.push("","## 分析依頼","参考全文がある場合はまず内容・論点・話題の流れを読む。次に、人間判定した話者・会話機能・要点メモをアンカーとして、発話量、応答間隔、ポーズ、F0等を重ねる。①直接観察できる事実 ②会話機能 ③関係性・心理の仮説を分ける。自動話者の低信頼区間は断定に使わない。特に、質問、自己開示、仮説提示、相手の修正を受ける流れ、話題主導、相手に余白を残す場面、先読みしすぎの候補を検討する。両方/同時発話、相槌、笑い、非言語反応は独立イベントとして扱い、発話時間や応答潜時を単純に混ぜない。");return lines.join("\n")
+    for(const t of a.turns||[]){
+      const meta=[];
+      if(t.response_latency_sec!==null&&t.response_latency_sec!==undefined)meta.push(`推定応答=${Number(t.response_latency_sec).toFixed(3)}s`);
+      if(t.gap_before_sec!==null&&t.gap_before_sec!==undefined)meta.push(`前区間から=${Number(t.gap_before_sec).toFixed(3)}s`);
+      if(t.avg_rms_db!==undefined)meta.push(`平均RMS=${t.avg_rms_db}dB`);
+      if(t.f0_hz)meta.push(`F0=${t.f0_hz}Hz`);
+      if(t.speaker_confidence!==undefined)meta.push(`自動話者信頼=${Math.round(Number(t.speaker_confidence||0)*100)}%`);
+      lines.push(`${secText(t.start)}-${secText(t.end)} ${t.speaker?conversationSpeakerName(row,t.speaker):"未分類"}${meta.length?" ["+meta.join(", ")+"]":""}`);
+    }
+    lines.push("","## 分析依頼","人間判定を優先し、発話量・応答間隔・ポーズ・F0・相槌・笑い・同時発話を、①観察事実 ②会話機能 ③関係性/心理の仮説に分けて分析する。");
+    return lines.join("\n");
   }
   async function exportConversationPack(){const row=await getConversationRow(activeConversationId);if(!row)return;const file=new File([conversationAnalysisPack(row)],`conversation-analysis-${new Date().toISOString().slice(0,10)}.txt`,{type:"text/plain;charset=utf-8"});showPreparedExport(file);switchView("questionsView");$$('[data-qtab]').forEach(b=>b.classList.remove("active"));const importTab=$('[data-qtab="import"]');if(importTab)importTab.classList.add("active");["qtabAdd","qtabList","qtabImport"].forEach(id=>$(id).classList.add("hidden"));$("qtabImport").classList.remove("hidden");}
   async function exportAllConversations(){return await getAllConversationRows()}
@@ -795,9 +1046,9 @@
   $("conversationTurnFilter").addEventListener("change",()=>renderConversationTimeline());
   $("retrainSpeakersBtn").addEventListener("click",retrainSpeakers);
   $("clearSpeakerTrainingBtn").addEventListener("click",clearSpeakerTraining);
-  $("saveReferenceTranscriptBtn").addEventListener("click",saveReferenceTranscript);
-  $("clearReferenceTranscriptBtn").addEventListener("click",clearReferenceTranscript);
-  $("referenceTranscriptFile").addEventListener("change",e=>{const f=e.target.files?.[0];if(f)importReferenceTranscriptFile(f);e.target.value=""});
+  $("startInternalAsrBtn").addEventListener("click",startInternalAsr);
+  $("clearInternalAsrBtn").addEventListener("click",clearInternalAsr);
+  $("shareChatGPTInternalPackBtn").addEventListener("click",shareChatGPTInternalPack);
   $("saveConversationSpeakerNamesBtn").addEventListener("click",saveConversationSpeakerNames);
   $("exportConversationPackBtn").addEventListener("click",exportConversationPack);
   $("deleteConversationBtn").addEventListener("click",async()=>{if(!activeConversationId)return;const row=await getConversationRow(activeConversationId);if(!row)return;if(!confirm(`「${row.title}」の会話分析を削除しますか？`))return;await deleteConversationRow(activeConversationId);activeConversationId=null;await renderConversationView();$("conversationImportStatus").textContent="削除しました。"});
