@@ -2,7 +2,7 @@
   "id": "./",
   "name": "学習・認知パフォーマンス分析",
   "short_name": "Study Analyzer",
-  "description": "録音を端末内で解析し、内部文字起こし・話者判定・会話構造をChatGPT理解用JSONとして共有する個人用アプリ。",
+  "description": "正答・反応時間・自信度の分析、履歴なし練習、選択肢別解説メモに対応する学習専用Study Analyzer",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

@@ -30,25 +30,13 @@
     .progress{height:7px;border-radius:99px;background:#eceff5;overflow:hidden;margin-bottom:14px}.progress>div{height:100%;background:var(--accent);width:0;transition:width .25s ease}.list{display:grid;gap:10px}.list-item{border:1px solid var(--border);border-radius:14px;padding:13px;background:#fff}.list-title{font-weight:750;margin-bottom:5px;line-height:1.4}.list-meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:12px}.tag{display:inline-block;padding:4px 8px;border-radius:999px;background:#f2f4f7}.q-thumb{width:100%;max-height:180px;object-fit:contain;border:1px solid var(--border);border-radius:10px;background:#f8f9fc;margin:8px 0}
     .bar-wrap{margin-top:10px}.bar-row{display:grid;grid-template-columns:minmax(80px,1fr) 2fr 46px;gap:10px;align-items:center;margin:9px 0;font-size:13px}.bar{height:10px;border-radius:999px;background:#eef1f5;overflow:hidden}.bar>div{height:100%;background:var(--accent);border-radius:999px}.seg{display:grid;grid-template-columns:repeat(3,1fr);background:#eef1f6;padding:4px;border-radius:12px;gap:4px;margin-bottom:14px}.seg button{border:0;background:transparent;min-height:40px;border-radius:9px;font-weight:700;color:var(--muted)}.seg button.active{background:#fff;color:var(--text);box-shadow:0 2px 8px rgba(15,23,42,.07)}
     .answer-checks{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.answer-check{display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--border);border-radius:12px;padding:10px;background:#fff;min-height:46px}.answer-check input{width:auto;margin:0;box-shadow:none}.image-preview{width:100%;max-height:260px;object-fit:contain;border:1px solid var(--border);border-radius:12px;background:#f8f9fc;margin-top:10px}
-    .bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(760px,100%);padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(255,255,255,.92);backdrop-filter:blur(18px);border-top:1px solid rgba(223,227,235,.9);display:grid;grid-template-columns:repeat(5,1fr);z-index:30}.nav-btn{border:0;background:transparent;color:var(--muted);padding:8px 4px;min-height:54px;border-radius:12px;font-weight:700;font-size:12px}.nav-btn.active{color:var(--accent);background:var(--accent-soft)}.empty{text-align:center;padding:28px 10px;color:var(--muted)}
-
-    .conversation-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.conversation-toolbar>*{flex:1;min-width:130px}
-    .local-progress{height:10px;border-radius:999px;background:#eef1f5;overflow:hidden;margin:10px 0}.local-progress>div{height:100%;width:0;background:var(--accent);transition:width .15s ease}
-    .local-audio-note{border:1px solid #b8c5f4;background:#f4f6ff;border-radius:12px;padding:12px;line-height:1.6}.local-warning{border:1px solid #f7d9a8;background:#fff8eb;border-radius:12px;padding:12px;line-height:1.6;color:#8a4b08}.local-ok{border:1px solid #a7ddbd;background:#effbf4;border-radius:12px;padding:12px;line-height:1.6;color:#067647}
-    .local-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.local-metric{border:1px solid var(--border);border-radius:12px;padding:12px;background:#fbfcfe}.local-metric .k{font-size:12px;color:var(--muted)}.local-metric .v{font-size:20px;font-weight:800;margin-top:4px}
-    .wave-wrap{border:1px solid var(--border);border-radius:14px;padding:10px;background:#fbfcfe}.wave-wrap canvas{display:block;width:100%;height:120px}.turn-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.turn-actions button{border:1px solid var(--border);background:#fff;border-radius:9px;padding:7px 10px;font-weight:700}.turn-actions button:active{transform:scale(.98)}
-    .speaker-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.speaker-card{border:1px solid var(--border);border-radius:14px;padding:13px;background:#fff}
-    .timeline{display:grid;gap:8px}.turn{border:1px solid var(--border);border-radius:12px;padding:11px;background:#fff}.turn-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px}.turn-speaker{font-weight:800}.turn-time,.turn-meta{font-size:12px;color:var(--muted)}.turn-text{white-space:pre-wrap;line-height:1.55}
-    .metric-line{display:flex;justify-content:space-between;gap:12px;padding:4px 0;font-size:13px}.metric-line strong{text-align:right}
-
-    .trainer-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.trainer-row button{border:1px solid var(--border);background:#fff;border-radius:10px;padding:8px 10px;font-weight:700}.trainer-row button.active-self{background:#e9eeff;color:#3157d5;border-color:#91a4ef}.trainer-row button.active-other{background:#eefbf3;color:#067647;border-color:#75c69a}.trainer-summary{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}.trainer-summary>div{background:#f8f9fc;border:1px solid var(--border);border-radius:12px;padding:10px}.transcript-block{border:1px solid var(--border);border-radius:12px;padding:11px;background:#fff;margin:8px 0}.transcript-block textarea{min-height:74px;margin-top:8px}.transcript-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}.transcript-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.transcript-actions button{border:1px solid var(--border);background:#fff;border-radius:9px;padding:7px 9px;font-weight:700}.starred{border-color:#f1b44c;background:#fffaf0}.asr-progress{height:8px;background:#eef1f5;border-radius:999px;overflow:hidden}.asr-progress>div{height:100%;background:var(--accent);width:0}.warning-box{border:1px solid #f4c77b;background:#fff8eb;border-radius:12px;padding:12px;color:#7a4d00}.content-badge{display:inline-block;padding:3px 7px;border-radius:999px;background:#eef1f5;color:var(--muted);font-size:11px;font-weight:700}
-    @media(max-width:420px){.speaker-grid{grid-template-columns:1fr}.bottom-nav .nav-btn{font-size:11px;padding-left:2px;padding-right:2px}.trainer-summary{grid-template-columns:1fr}}
+    .bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(760px,100%);padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(255,255,255,.92);backdrop-filter:blur(18px);border-top:1px solid rgba(223,227,235,.9);display:grid;grid-template-columns:repeat(4,1fr);z-index:30}.nav-btn{border:0;background:transparent;color:var(--muted);padding:8px 4px;min-height:54px;border-radius:12px;font-weight:700;font-size:12px}.nav-btn.active{color:var(--accent);background:var(--accent-soft)}.empty{text-align:center;padding:28px 10px;color:var(--muted)}
     @media(min-width:640px){.stats{grid-template-columns:repeat(4,1fr)}.app{padding-left:22px;padding-right:22px}}
   </style>
 </head>
 <body>
 <main class="app">
-  <header><div class="title-wrap"><h1>学習・認知パフォーマンス分析</h1><p>正答 × 反応時間 × 自信度</p></div><div class="pill">Web Ver.4.1</div></header>
+  <header><div class="title-wrap"><h1>学習・認知パフォーマンス分析</h1><p>正答 × 反応時間 × 自信度</p></div><div class="pill">Web Ver.2.9</div></header>
 
   <section id="homeView" class="view active">
     <div class="card"><h2>今日の学習</h2><p class="muted small">登録問題からランダムに出題します。</p>
@@ -141,106 +129,17 @@
         <p class="muted small">読み込み時は現在の問題・画像を置き換えます。回答履歴は残ります。同じIDの問題DBなら過去の履歴と再び紐付きます。</p>
         <button class="danger" id="clearQuestionsBtn" type="button" style="width:100%">問題だけ一斉削除</button>
       </div>
-      <div class="card"><h2>バックアップ / 移行</h2><p class="muted small">JSONは問題・画像・登録済み解説・学習履歴・会話分析を丸ごと保存。CSVは学習履歴の分析用です。iPhoneでは保存準備後に共有画面から「ファイルに保存」を選べます。</p><div class="row"><button class="secondary" id="exportJsonBtn">完全バックアップJSON</button><button class="secondary" id="exportCsvBtn">履歴CSV</button></div><div id="preparedExportBox" class="notice hidden" style="margin-top:12px"><div id="preparedExportText" class="small"></div><button class="primary" id="sharePreparedBtn" type="button" style="margin-top:10px">ファイルに保存 / 共有</button></div><div style="height:10px"></div><label for="importJsonInput">完全バックアップJSONを読み込む</label><input type="file" id="importJsonInput" accept=".json,application/json"></div>
+      <div class="card"><h2>バックアップ / 移行</h2><p class="muted small">JSONは問題・画像・登録済み解説・学習履歴を丸ごと保存。CSVは分析用です。iPhoneでは保存準備後に共有画面から「ファイルに保存」を選べます。</p><div class="row"><button class="secondary" id="exportJsonBtn">完全バックアップJSON</button><button class="secondary" id="exportCsvBtn">履歴CSV</button></div><div id="preparedExportBox" class="notice hidden" style="margin-top:12px"><div id="preparedExportText" class="small"></div><button class="primary" id="sharePreparedBtn" type="button" style="margin-top:10px">ファイルに保存 / 共有</button></div><div style="height:10px"></div><label for="importJsonInput">完全バックアップJSONを読み込む</label><input type="file" id="importJsonInput" accept=".json,application/json"></div>
       <div class="card"><h3>全データ初期化</h3><p class="muted small">端末内の問題・画像・登録済み解説・回答履歴・中断データをすべて削除して空にします。</p><button class="danger" id="resetBtn">全データ削除</button></div>
     </div>
   </section>
 
   <section id="analysisView" class="view"><div class="stats" id="analysisStats"></div><div class="card"><h3>学習状態分類</h3><p id="classificationNote" class="muted small"></p><div id="stateClassification" class="list"></div></div><div class="card"><h3>分野別 正答率</h3><div id="categoryBars" class="bar-wrap"></div></div><div class="card"><h3>自信度と正誤</h3><div id="confidenceAnalysis" class="list"></div></div><div class="card"><h3>直近の学習</h3><div id="recentResults" class="list"></div></div></section>
 
-
-  <section id="conversationView" class="view">
-    <div class="card">
-      <h2>録音を入れる → 裏で理解 → ChatGPTに聞く</h2>
-      <p class="muted small">WAV原音は解析中だけ読みます。内部文字起こしは画面には出しません。ChatGPTへ共有するまでは、会話内容はこの端末内の解析データとして保持します。</p>
-      <div class="local-audio-note small"><strong>Ver.4.1：</strong>2人話者推定・話者名・会話タイムライン・数値結果の表示をやめました。自動推定は裏側だけで使い、必要な場所だけ人間の判定で補正します。</div>
-      <div style="height:12px"></div>
-      <div class="field">
-        <label for="conversationAudioInput">音声ファイル（WAV）</label>
-        <input type="file" id="conversationAudioInput" accept=".wav,audio/wav,audio/x-wav">
-      </div>
-      <details>
-        <summary style="font-weight:800;cursor:pointer">詳細設定</summary>
-        <div style="height:10px"></div>
-        <div class="row">
-          <div class="field">
-            <label for="localSensitivity">声の検出</label>
-            <select id="localSensitivity"><option value="sensitive">拾いやすい</option><option value="normal" selected>標準</option><option value="strict">厳しめ</option></select>
-          </div>
-          <div class="field">
-            <label for="localGroupGap">発話候補の分割</label>
-            <select id="localGroupGap"><option value="0.15">0.15秒</option><option value="0.20" selected>0.20秒</option><option value="0.35">0.35秒</option><option value="0.55">0.55秒</option></select>
-          </div>
-        </div>
-        <select id="localSpeakerMode" class="hidden"><option value="two" selected>two</option></select>
-      </details>
-      <button class="primary" id="localAnalyzeBtn" type="button" style="width:100%">録音を解析</button>
-      <div id="localAnalyzeProgressWrap" class="hidden"><div class="local-progress"><div id="localAnalyzeProgress"></div></div><p id="localAnalyzeStatus" class="muted small"></p></div>
-    </div>
-
-    <div class="card">
-      <h3>保存した会話</h3>
-      <div id="conversationList" class="list"></div>
-    </div>
-
-    <div id="conversationDetail" class="hidden">
-      <!-- 既存JS互換用。ユーザーには表示しない -->
-      <div id="conversationStats" class="hidden"></div>
-      <div id="conversationWaveCard" class="hidden"><canvas id="conversationWaveCanvas" width="1200" height="120"></canvas></div>
-      <div id="conversationLocalMetricsCard" class="hidden"><div id="conversationLocalMetrics"></div></div>
-      <div id="conversationSpeakerSamplesCard" class="hidden"><div id="conversationSpeakerSamples"></div></div>
-      <div id="conversationSpeakerNames" class="hidden"></div>
-      <button id="saveConversationSpeakerNamesBtn" class="hidden" type="button"></button>
-      <div id="conversationSpeakerMetrics" class="hidden"></div>
-      <div id="conversationObservations" class="hidden"></div>
-      <select id="conversationTurnFilter" class="hidden"><option value="all">all</option></select>
-      <div id="conversationTimeline" class="hidden"></div>
-      <button id="exportConversationPackBtn" class="hidden" type="button"></button>
-
-      <div id="conversationTrainerCard" class="card hidden">
-        <h3>話者判定</h3>
-        <p class="muted small">原音を聞いてボタンを1回押すだけです。押した瞬間に保存して次へ進みます。自動推定は裏で更新されます。</p>
-        <div id="conversationTrainerSummary" class="trainer-summary"></div>
-        <div id="activeJudgeBox" class="notice" style="margin-top:12px"></div>
-        <p id="conversationTrainerStatus" class="muted small"></p>
-        <div class="row"><button class="ghost" id="clearSpeakerTrainingBtn" type="button">判定を全解除</button><button id="retrainSpeakersBtn" class="hidden" type="button"></button></div>
-      </div>
-
-      <div id="conversationInternalAiCard" class="card hidden">
-        <h3>内容理解</h3>
-        <p class="muted small">逐語録は表示しません。内部では日本語音声を長めの文脈で認識し、ChatGPTが話の内容・流れを読むためのデータを作っています。</p>
-        <select id="internalAsrQuality" class="hidden"><option value="standard" selected>standard</option></select>
-        <button id="startInternalAsrBtn" class="hidden" type="button"></button>
-        <button id="clearInternalAsrBtn" class="hidden" type="button"></button>
-        <div id="internalAsrProgressWrap">
-          <div class="local-progress"><div id="internalAsrProgress"></div></div>
-          <p id="internalAsrStatus" class="muted small"></p>
-        </div>
-        <div id="internalAsrSummary" class="notice" style="margin-top:12px"></div>
-        <div style="height:10px"></div>
-        <button class="primary" id="shareChatGPTInternalPackBtn" type="button" style="width:100%">ChatGPTに共有して分析する</button>
-        <p class="muted small" style="margin-bottom:0">共有するまで、生のWAVは端末外へ送りません。共有されるのは内部文字起こし・話者判定・会話構造をまとめたJSONで、生WAVそのものは含みません。</p>
-      </div>
-
-      <div class="card">
-        <div class="field">
-          <label for="conversationAudioReconnect">原音を選び直す</label>
-          <input type="file" id="conversationAudioReconnect" accept=".wav,audio/wav,audio/x-wav">
-          <p class="muted small">ページを開き直した後、話者判定や内容理解を続ける時だけ同じWAVを選び直してください。</p>
-        </div>
-        <button class="danger" id="deleteConversationBtn" type="button" style="width:100%">この会話を削除</button>
-      </div>
-    </div>
-
-    <!-- PC JSON import is kept only as an internal compatibility hook -->
-    <input type="file" id="conversationJsonInput" class="hidden" accept=".json,application/json">
-    <p id="conversationImportStatus" class="hidden"></p>
-  </section>
-
   <section id="settingsView" class="view">
     <div class="card">
       <h2>このアプリについて</h2>
-      <p class="small muted">問題・履歴はブラウザ内、画像・登録した選択肢別メモ・会話分析結果はブラウザのIndexedDB内に保存されます。iPhoneローカル音声解析で選んだWAV原音は保存せず、解析中だけ読み取ります。ページを閉じると原音との接続も切れます。内部内容解析AIのモデルは初回に外部CDN/Hugging Faceから取得しますが、WAVの認識処理はブラウザ内で行う設計です。内部文字起こしは画面表示せず、ChatGPT共有時だけJSONに含めます。</p>
+      <p class="small muted">問題・履歴はブラウザ内、画像と登録した選択肢別メモはブラウザのIndexedDB内に保存されます。サーバー送信はしていません。</p>
       <p class="small muted">医学的な認知機能検査ではなく、自分の学習傾向を見るための個人用ツールです。</p>
     </div>
     <div class="card">
@@ -265,12 +164,12 @@
     </div>
   </section>
 </main>
-<nav class="bottom-nav"><button class="nav-btn active" data-view="homeView">ホーム</button><button class="nav-btn" data-view="questionsView">問題</button><button class="nav-btn" data-view="analysisView">分析</button><button class="nav-btn" data-view="conversationView">会話</button><button class="nav-btn" data-view="settingsView">設定</button></nav>
+<nav class="bottom-nav"><button class="nav-btn active" data-view="homeView">ホーム</button><button class="nav-btn" data-view="questionsView">問題</button><button class="nav-btn" data-view="analysisView">分析</button><button class="nav-btn" data-view="settingsView">設定</button></nav>
 <script>
 (() => {
   "use strict";
   const STORAGE={questions:"studyAnalyzer.questions.v1",results:"studyAnalyzer.results.v1",session:"studyAnalyzer.session.v1"};
-  const DB_NAME="studyAnalyzerDB"; const DB_VERSION=3; const IMAGE_STORE="images"; const NOTE_STORE="choiceNotes"; const CONVERSATION_STORE="conversationAnalyses";
+  const DB_NAME="studyAnalyzerDB"; const DB_VERSION=2; const IMAGE_STORE="images"; const NOTE_STORE="choiceNotes";
   const sampleQuestions=[
     {id:uid(),category:"サンプル",question:"作業療法士が評価で扱う情報として最も適切なのはどれ？",choices:["疾患名だけ","筋力だけ","作業・環境・本人の価値を含む情報","年齢だけ","画像所見だけ"],answer:3},
     {id:uid(),category:"サンプル",question:"自信度が高いのに誤答した問題を別に見る主な目的はどれ？",choices:["誤って定着している知識候補を見つける","回答時間を消す","問題数を減らす","正答率を必ず上げる","分野を削除する"],answer:1}
@@ -309,7 +208,7 @@
   function updateReviewAvailable(){const type=$("reviewType").value,pool=reviewPool(type);$("reviewAvailable").textContent=`対象 ${pool.length}問${type==="slow"&&results.length?"（各問題の最新RTが全体中央値より遅い問題）":""}`;$("reviewStartBtn").disabled=pool.length===0}
   function beginSession(pool,count,mode,{practice=false}={}){if(!pool.length){alert("対象の問題がありません。");return}if(!practice){const existing=savedSession();if(existing&&!confirm("中断中の学習があります。新しいセッションを始めると、中断位置を上書きします。続けますか？"))return}session={items:shuffle(pool).slice(0,count),index:0,shownAt:0,selected:new Set(),rtMs:null,confidence:null,resultIds:[],mode,createdAt:new Date().toISOString(),practice,tempResults:[],noteDirty:false};if(!practice)saveSessionState(0);switchView("studyView");renderStudyQuestion()}
 
-  function openDb(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,DB_VERSION);req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(IMAGE_STORE))db.createObjectStore(IMAGE_STORE,{keyPath:"id"});if(!db.objectStoreNames.contains(NOTE_STORE))db.createObjectStore(NOTE_STORE,{keyPath:"id"});if(!db.objectStoreNames.contains(CONVERSATION_STORE))db.createObjectStore(CONVERSATION_STORE,{keyPath:"id"})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+  function openDb(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,DB_VERSION);req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(IMAGE_STORE))db.createObjectStore(IMAGE_STORE,{keyPath:"id"});if(!db.objectStoreNames.contains(NOTE_STORE))db.createObjectStore(NOTE_STORE,{keyPath:"id"})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
   async function saveImage(id,blob){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(IMAGE_STORE,"readwrite");tx.objectStore(IMAGE_STORE).put({id,blob});tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
   async function getImageBlob(id){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(IMAGE_STORE,"readonly");const req=tx.objectStore(IMAGE_STORE).get(id);req.onsuccess=()=>{db.close();resolve(req.result?.blob||null)};req.onerror=()=>{db.close();reject(req.error)}})}
   async function deleteImage(id){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(IMAGE_STORE,"readwrite");tx.objectStore(IMAGE_STORE).delete(id);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
@@ -326,7 +225,7 @@
   function prepareImage(file){return new Promise((resolve,reject)=>{if(!file||!file.type.startsWith("image/")){reject(new Error("画像ファイルではありません"));return}const reader=new FileReader();reader.onerror=()=>reject(reader.error);reader.onload=()=>{const img=new Image();img.onerror=()=>reject(new Error("画像を読み込めません"));img.onload=()=>{const max=1800,scale=Math.min(1,max/Math.max(img.width,img.height));const w=Math.max(1,Math.round(img.width*scale)),h=Math.max(1,Math.round(img.height*scale));const canvas=document.createElement("canvas");canvas.width=w;canvas.height=h;const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,w,h);ctx.drawImage(img,0,0,w,h);canvas.toBlob(blob=>resolve(blob||file),"image/jpeg",.92)};img.src=reader.result};reader.readAsDataURL(file)})}
   async function showImageForQuestion(qid,imgEl){try{const blob=await getImageBlob(qid);if(!blob){imgEl.classList.add("hidden");imgEl.removeAttribute("src");return null}const url=URL.createObjectURL(blob);imgEl.src=url;imgEl.classList.remove("hidden");return url}catch{imgEl.classList.add("hidden");return null}}
 
-  function switchView(id){$$('.view').forEach(v=>v.classList.remove("active"));$(id).classList.add("active");$$('.nav-btn').forEach(b=>b.classList.toggle("active",b.dataset.view===id));window.scrollTo({top:0,behavior:"instant"});if(id==="analysisView")renderAnalysis();if(id==="questionsView")renderQuestionList();if(id==="conversationView")renderConversationView()}
+  function switchView(id){$$('.view').forEach(v=>v.classList.remove("active"));$(id).classList.add("active");$$('.nav-btn').forEach(b=>b.classList.toggle("active",b.dataset.view===id));window.scrollTo({top:0,behavior:"instant"});if(id==="analysisView")renderAnalysis();if(id==="questionsView")renderQuestionList()}
   $$('.nav-btn').forEach(btn=>btn.addEventListener("click",()=>switchView(btn.dataset.view)));
   function refreshCategories(){const cats=[...new Set(questions.map(q=>q.category||"未分類"))].sort();for(const id of ["sessionCategory","practiceCategory"]){const sel=$(id);if(!sel)continue;const current=sel.value;sel.innerHTML='<option value="all">すべて</option>'+cats.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");if([...sel.options].some(o=>o.value===current))sel.value=current}}
   function renderHome(){const total=results.length,correct=results.filter(r=>r.correct).length,accuracy=total?Math.round(correct/total*100):0,rt=total?Math.round(median(results.map(r=>Number(r.rtMs)||0))):0,high=results.filter(r=>!r.correct&&Number(r.confidence)>=4).length;$("homeStats").innerHTML=`<div class="stat"><div class="label">登録問題</div><div class="value">${questions.length}</div></div><div class="stat"><div class="label">総回答</div><div class="value">${total}</div></div><div class="stat"><div class="label">正答率</div><div class="value">${accuracy}%</div></div><div class="stat"><div class="label">RT中央値</div><div class="value">${rt?(rt/1000).toFixed(1)+"s":"-"}</div></div>`;const riskCounts=new Map();for(const r of results)if(!r.correct&&Number(r.confidence)>=4)riskCounts.set(r.questionId,(riskCounts.get(r.questionId)||0)+1);const risk=[...riskCounts.entries()].map(([id,n])=>({q:questions.find(q=>q.id===id),n})).filter(x=>x.q).sort((a,b)=>b.n-a.n).slice(0,5);$("riskList").innerHTML=risk.length?risk.map(x=>`<div class="list-item"><div class="list-title">${esc(x.q.question)}</div><div class="list-meta"><span class="tag">${esc(x.q.category)}</span><span>自信あり誤答 ${x.n}回</span></div></div>`).join(""):'<div class="empty">まだ要注意問題はありません。</div>';renderResumeCard();updateReviewAvailable()}
@@ -450,579 +349,6 @@
   async function exportQuestionDb(){try{const images={};for(const q of questions.filter(q=>q.hasImage)){const blob=await getImageBlob(q.id);if(blob)images[q.id]=await blobToDataURL(blob)}const notes=await exportAllChoiceNotes();const data={kind:"study-analyzer-question-db",version:2,exportedAt:new Date().toISOString(),questions,images,notes};const filename=`study-analyzer-question-db-${new Date().toISOString().slice(0,10)}.json`;showPreparedExport(new File([JSON.stringify(data,null,2)],filename,{type:"application/json;charset=utf-8"}))}catch{alert("問題DBの作成に失敗しました。")}}
   function importQuestionDb(file){const reader=new FileReader();reader.onload=async()=>{try{const data=JSON.parse(reader.result);if(!Array.isArray(data.questions))throw new Error("形式");const imageCount=data.images&&typeof data.images==="object"?Object.keys(data.images).length:0,noteCount=data.notes&&typeof data.notes==="object"?Object.keys(data.notes).length:0;if(!confirm(`${data.questions.length}問・画像${imageCount}点・解説${noteCount}問分を読み込み、現在の問題データベースを置き換えますか？\n\n回答履歴は残ります。`))return;const embeddedNotes={};questions=data.questions.map(q=>{const copy={...q};if(Array.isArray(copy.choiceNotes)){embeddedNotes[copy.id]=copy.choiceNotes;delete copy.choiceNotes}return copy});await clearImages();await clearChoiceNotes();if(data.images&&typeof data.images==="object")for(const [id,url] of Object.entries(data.images)){try{await saveImage(id,dataURLToBlob(url))}catch{}}await importChoiceNotesObject({...embeddedNotes,...(data.notes||{})});clearSavedSession();saveQuestionsRaw();refreshAll();alert(`${questions.length}問を問題データベースから復元しました。`)}catch(e){alert("読み込みに失敗しました。Study Analyzerの問題DBまたはバックアップJSONか確認してください。")}};reader.readAsText(file,"utf-8")}
   async function clearQuestionsOnly(){if(!confirm(`登録問題 ${questions.length}問・画像・登録済み解説を一斉削除しますか？\n\n回答履歴は残します。あとで同じ問題DBを読み込めば、問題IDが同じなので履歴と再び紐付きます。`))return;questions=[];await clearImages();await clearChoiceNotes();clearSavedSession();saveQuestionsRaw();refreshAll();alert("問題・画像・登録済み解説を削除しました。回答履歴は残っています。")}
-
-
-  // ---- iPhone / browser local WAV analysis (v3.0) ----
-  let localConversationAudioFile=null, localConversationAudioUrl=null, localAudioStopTimer=null;
-  function setLocalAudioFile(file){if(localConversationAudioUrl)URL.revokeObjectURL(localConversationAudioUrl);localConversationAudioFile=file||null;localConversationAudioUrl=file?URL.createObjectURL(file):null}
-  function pct(sorted,p){if(!sorted.length)return 0;const x=(sorted.length-1)*p,i=Math.floor(x),f=x-i;return sorted[i]+((sorted[i+1]??sorted[i])-sorted[i])*f}
-  function roundN(x,n=3){const k=10**n;return Math.round((Number(x)||0)*k)/k}
-  function localSetProgress(frac,msg){$("localAnalyzeProgressWrap").classList.remove("hidden");$("localAnalyzeProgress").style.width=`${Math.max(0,Math.min(1,frac))*100}%`;$("localAnalyzeStatus").textContent=msg||""}
-  async function parseWavHeader(file){
-    const max=Math.min(file.size,1024*1024),buf=await file.slice(0,max).arrayBuffer(),v=new DataView(buf);
-    function str(off,n){let x="";for(let i=0;i<n&&off+i<v.byteLength;i++)x+=String.fromCharCode(v.getUint8(off+i));return x}
-    if(str(0,4)!=="RIFF"||str(8,4)!=="WAVE")throw new Error("PCM WAVではありません。録音をWAV形式で選んでください。");
-    let pos=12,fmt=null,dataOffset=null,dataSize=null;
-    while(pos+8<=v.byteLength){const id=str(pos,4),size=v.getUint32(pos+4,true),body=pos+8;if(id==="fmt "){fmt={audioFormat:v.getUint16(body,true),channels:v.getUint16(body+2,true),sampleRate:v.getUint32(body+4,true),byteRate:v.getUint32(body+8,true),blockAlign:v.getUint16(body+12,true),bitsPerSample:v.getUint16(body+14,true)}}else if(id==="data"){dataOffset=body;dataSize=size;break}pos=body+size+(size%2)}
-    if(!fmt||dataOffset===null)throw new Error("WAVヘッダを読めませんでした。");
-    if(![1,3].includes(fmt.audioFormat))throw new Error("このWAV圧縮形式にはまだ対応していません（PCM/Float WAVのみ）。");
-    if(![16,24,32].includes(fmt.bitsPerSample))throw new Error(`このWAVの${fmt.bitsPerSample}bitには未対応です。`);
-    return {...fmt,dataOffset,dataSize:Math.min(dataSize,file.size-dataOffset),durationSec:Math.min(dataSize,file.size-dataOffset)/fmt.byteRate}
-  }
-  function wavSample(view,off,bits,audioFormat){if(audioFormat===3&&bits===32)return view.getFloat32(off,true);if(bits===16)return view.getInt16(off,true)/32768;if(bits===24){let x=view.getUint8(off)|(view.getUint8(off+1)<<8)|(view.getUint8(off+2)<<16);if(x&0x800000)x|=0xff000000;return x/8388608}if(bits===32)return view.getInt32(off,true)/2147483648;return 0}
-  async function analyzeWavEnvelope(file,header,sensitivity,progress){
-    const frameSec=.02,frameSamples=Math.max(1,Math.round(header.sampleRate*frameSec)),frameBytes=frameSamples*header.blockAlign,batchFrames=1200,batchBytes=frameBytes*batchFrames,db=[],peaks=[];
-    const bytesPerSample=header.bitsPerSample/8,channelStep=header.blockAlign,subStep=Math.max(1,Math.floor(header.sampleRate/12000));
-    let pos=header.dataOffset,processed=0,total=header.dataSize;
-    while(processed<total){const remaining=total-processed,take=Math.min(batchBytes,remaining-(remaining%header.blockAlign)||remaining),buf=await file.slice(pos,pos+take).arrayBuffer(),v=new DataView(buf),usable=Math.floor(v.byteLength/frameBytes)*frameBytes;
-      for(let base=0;base<usable;base+=frameBytes){let ss=0,n=0,pk=0;for(let j=0;j<frameSamples;j+=subStep){let mono=0;for(let c=0;c<header.channels;c++)mono+=wavSample(v,base+j*channelStep+c*bytesPerSample,header.bitsPerSample,header.audioFormat);mono/=header.channels;ss+=mono*mono;pk=Math.max(pk,Math.abs(mono));n++}const rms=Math.sqrt(ss/Math.max(1,n)+1e-12);db.push(20*Math.log10(rms+1e-12));peaks.push(20*Math.log10(pk+1e-12))}
-      pos+=usable;processed+=usable;if(usable===0)break;progress(Math.min(.78,processed/total*.78),`音量を解析中… ${Math.round(processed/total*100)}%`);await new Promise(r=>setTimeout(r,0));
-    }
-    const sorted=[...db].sort((a,b)=>a-b),p20=pct(sorted,.20),p90=pct(sorted,.90),factor=sensitivity==="sensitive"?.24:sensitivity==="strict"?.42:.32,threshold=Math.max(-58,Math.min(-24,p20+factor*(p90-p20)));
-    let active=db.map(x=>x>threshold);
-    const bridgeFrames=Math.round(.12/frameSec),minFrames=Math.max(3,Math.round(.10/frameSec));
-    for(let i=0;i<active.length;){if(active[i]){i++;continue}let j=i;while(j<active.length&&!active[j])j++;if(i>0&&j<active.length&&j-i<=bridgeFrames)for(let k=i;k<j;k++)active[k]=true;i=j}
-    for(let i=0;i<active.length;){if(!active[i]){i++;continue}let j=i;while(j<active.length&&active[j])j++;if(j-i<minFrames)for(let k=i;k<j;k++)active[k]=false;i=j}
-    return {frameSec,db,peaks,active,threshold,p20,p90}
-  }
-  function buildLocalAudioResult(file,header,e,groupGap){
-    const raw=[];for(let i=0;i<e.active.length;){if(!e.active[i]){i++;continue}let j=i;while(j<e.active.length&&e.active[j])j++;raw.push({start:i*e.frameSec,end:Math.min(header.durationSec,j*e.frameSec),i0:i,i1:j});i=j}
-    const speechSec=e.active.filter(Boolean).length*e.frameSec,gaps=[];for(let i=1;i<raw.length;i++)gaps.push(Math.max(0,raw[i].start-raw[i-1].end));
-    const groups=[];for(const r of raw){const prev=groups[groups.length-1];if(prev&&r.start-prev.end<=groupGap){prev.end=r.end;prev.i1=r.i1}else groups.push({...r})}
-    const turns=groups.map((g,idx)=>{const vals=e.db.slice(g.i0,g.i1),pks=e.peaks.slice(g.i0,g.i1),gap=idx?Math.max(0,g.start-groups[idx-1].end):null;return {start:roundN(g.start),end:roundN(g.end),duration:roundN(g.end-g.start),speaker:null,text:"",response_latency_sec:null,overlaps_previous_sec:0,gap_before_sec:gap===null?null:roundN(gap),avg_rms_db:roundN(vals.reduce((a,b)=>a+b,0)/Math.max(1,vals.length),1),peak_db:roundN(Math.max(...pks),1),f0_hz:null,local_audio:true}});
-    const gapSorted=[...gaps].sort((a,b)=>a-b),pauseBins={under_03:gaps.filter(x=>x<.3).length,from_03_08:gaps.filter(x=>x>=.3&&x<.8).length,from_08_2:gaps.filter(x=>x>=.8&&x<2).length,over_2:gaps.filter(x=>x>=2).length};
-    const wf=[];const target=900,step=Math.max(1,Math.ceil(e.db.length/target));for(let i=0;i<e.db.length;i+=step){const part=e.db.slice(i,Math.min(e.db.length,i+step));wf.push(roundN(Math.max(...part),1))}
-    return {raw,turns,speechSec,gaps,gapSorted,pauseBins,waveform:wf}
-  }
-  function fftPower1024(samples){
-    const n=1024,re=new Float64Array(n),im=new Float64Array(n);for(let i=0;i<n;i++){const w=.5-.5*Math.cos(2*Math.PI*i/(n-1));re[i]=(samples[i]||0)*w}
-    for(let i=1,j=0;i<n;i++){let bit=n>>1;for(;j&bit;bit>>=1)j^=bit;j^=bit;if(i<j){const tr=re[i];re[i]=re[j];re[j]=tr}}
-    for(let len=2;len<=n;len<<=1){const ang=-2*Math.PI/len,wr0=Math.cos(ang),wi0=Math.sin(ang);for(let i=0;i<n;i+=len){let wr=1,wi=0;for(let j=0;j<len/2;j++){const u=i+j,v=i+j+len/2,tr=wr*re[v]-wi*im[v],ti=wr*im[v]+wi*re[v],ur=re[u],ui=im[u];re[u]=ur+tr;im[u]=ui+ti;re[v]=ur-tr;im[v]=ui-ti;const nw=wr*wr0-wi*wi0;wi=wr*wi0+wi*wr0;wr=nw}}}
-    const p=new Float64Array(n/2+1);for(let i=0;i<p.length;i++)p[i]=re[i]*re[i]+im[i]*im[i];return p
-  }
-  function voicePitch(x,sr){if(x.length<160)return null;let mean=0;for(const v of x)mean+=v;mean/=x.length;const y=new Float64Array(x.length);let ss=0;for(let i=0;i<x.length;i++){y[i]=x[i]-mean;ss+=y[i]*y[i]}if(Math.sqrt(ss/x.length)<.0025)return null;const minLag=Math.max(2,Math.floor(sr/350)),maxLag=Math.min(x.length-2,Math.ceil(sr/70));let best=-1,bestLag=0;for(let lag=minLag;lag<=maxLag;lag++){let num=0,a2=0,b2=0;for(let i=0;i+lag<y.length;i+=1){const a=y[i],b=y[i+lag];num+=a*b;a2+=a*a;b2+=b*b}const c=num/Math.sqrt(a2*b2+1e-12);if(c>best){best=c;bestLag=lag}}if(best>.34&&bestLag){const f=sr/bestLag;return f>=70&&f<=350?f:null}return null}
-  function vecDist(a,b){let s=0;for(let i=0;i<a.length;i++){const d=a[i]-b[i];s+=d*d}return Math.sqrt(s)}
-  function meanVec(rows){if(!rows.length)return [];const out=new Array(rows[0].length).fill(0);for(const r of rows)for(let j=0;j<out.length;j++)out[j]+=r[j];for(let j=0;j<out.length;j++)out[j]/=rows.length;return out}
-  function robustScaleMatrix(rows){if(!rows.length)return {z:[],med:[],scale:[]};const d=rows[0].length,med=[],scale=[];for(let j=0;j<d;j++){const vals=rows.map(r=>Number.isFinite(r[j])?r[j]:NaN).filter(Number.isFinite).sort((a,b)=>a-b),m=vals.length?pct(vals,.5):0,q1=vals.length?pct(vals,.25):0,q3=vals.length?pct(vals,.75):1;med[j]=m;scale[j]=Math.max(1e-5,q3-q1)}const weights=Array(d).fill(1);if(d>=3){weights[d-3]=1.25;weights[d-2]=.65;weights[d-1]=.55}const z=rows.map(r=>r.map((v,j)=>((Number.isFinite(v)?v:med[j])-med[j])/scale[j]*weights[j]));return {z,med,scale}}
-  function kmeansTwo(z){if(z.length<4)return null;const global=meanVec(z);let ia=0,far=-1;for(let i=0;i<z.length;i++){const d=vecDist(z[i],global);if(d>far){far=d;ia=i}}let ib=ia;far=-1;for(let i=0;i<z.length;i++){const d=vecDist(z[i],z[ia]);if(d>far){far=d;ib=i}}let c0=[...z[ia]],c1=[...z[ib]],lab=new Array(z.length).fill(0);for(let it=0;it<18;it++){const a=[],b=[];for(let i=0;i<z.length;i++){const d0=vecDist(z[i],c0),d1=vecDist(z[i],c1);lab[i]=d0<=d1?0:1;(lab[i]===0?a:b).push(z[i])}if(!a.length||!b.length)return null;const n0=meanVec(a),n1=meanVec(b),move=vecDist(c0,n0)+vecDist(c1,n1);c0=n0;c1=n1;if(move<1e-4)break}
-    let within=0;for(let i=0;i<z.length;i++)within+=vecDist(z[i],lab[i]===0?c0:c1);within/=z.length;const between=vecDist(c0,c1),quality=Math.round(100*between/(between+2*within+1e-9));return {labels:lab,centers:[c0,c1],quality,between,within}}
-  async function estimateVoiceFeaturesAndCluster(file,header,turns,progress,enabled=true){
-    if(!enabled||header.audioFormat!==1||header.bitsPerSample!==16)return {enabled:false,quality:null,classified:0,samples:{}};
-    const eligible=turns.map((t,i)=>({t,i})).filter(x=>x.t.duration>=.18).slice(0,900);if(eligible.length<10)return {enabled:false,quality:null,classified:0,samples:{}};
-    const bytesPerSample=2,targetSr=8000,stride=Math.max(1,Math.round(header.sampleRate/targetSr)),sr2=header.sampleRate/stride,bands=[[80,160],[160,280],[280,450],[450,700],[700,1050],[1050,1550],[1550,2300],[2300,3400],[3400,3900]],features=[],turnRefs=[];
-    for(let q=0;q<eligible.length;q++){const {t}=eligible[q],mid=(t.start+t.end)/2,sec=Math.min(.18,Math.max(.11,t.duration*.75)),start=Math.max(t.start,mid-sec/2),sampleStart=Math.floor(start*header.sampleRate),sampleCount=Math.floor(sec*header.sampleRate),byteStart=header.dataOffset+sampleStart*header.blockAlign,byteEnd=Math.min(header.dataOffset+header.dataSize,byteStart+sampleCount*header.blockAlign),buf=await file.slice(byteStart,byteEnd).arrayBuffer(),v=new DataView(buf),raw=[];
-      for(let i=0;i+header.blockAlign<=v.byteLength;i+=header.blockAlign*stride){let mono=0;for(let c=0;c<header.channels;c++)mono+=v.getInt16(i+c*bytesPerSample,true)/32768;raw.push(mono/header.channels)}
-      if(raw.length<300)continue;let mean=0;for(const x of raw)mean+=x;mean/=raw.length;for(let i=0;i<raw.length;i++)raw[i]-=mean;let ss=0;for(const x of raw)ss+=x*x;const rms=Math.sqrt(ss/raw.length+1e-12);if(rms<.0025)continue;
-      const center=Math.floor(raw.length/2),half=512,specX=new Float64Array(1024);for(let i=0;i<1024;i++)specX[i]=raw[Math.max(0,Math.min(raw.length-1,center-half+i))]||0;const power=fftPower1024(specX),binHz=sr2/1024,totalStart=Math.ceil(80/binHz),totalEnd=Math.min(power.length-1,Math.floor(3900/binHz));let total=1e-12;for(let k=totalStart;k<=totalEnd;k++)total+=power[k];const fv=[];for(const [lo,hi] of bands){let e=1e-12;for(let k=Math.ceil(lo/binHz);k<Math.min(power.length,Math.ceil(hi/binHz));k++)e+=power[k];fv.push(Math.log(e/total+1e-10))}let centNum=0,centDen=1e-12;for(let k=1;k<power.length;k++){centNum+=k*binHz*power[k];centDen+=power[k]}const centroid=centNum/centDen;let zc=0;for(let i=1;i<specX.length;i++)if((specX[i]>=0)!==(specX[i-1]>=0))zc++;const zcr=zc/(specX.length-1),pitchX=raw.slice(Math.max(0,center-300),Math.min(raw.length,center+300)),f0=voicePitch(pitchX,sr2);t.f0_hz=f0?roundN(f0,1):null;fv.push(f0?Math.log(f0):NaN,Math.log(centroid+1),zcr);t.voice_feature=fv.map(x=>Number.isFinite(x)?roundN(x,6):null);features.push(fv);turnRefs.push(t);
-      if(q%12===0){progress(.80+.18*(q+1)/eligible.length,`声の特徴を解析中… ${q+1}/${eligible.length}`);await new Promise(r=>setTimeout(r,0))}
-    }
-    if(features.length<10)return {enabled:false,quality:null,classified:0,samples:{}};const {z}=robustScaleMatrix(features),km=kmeansTwo(z);if(!km)return {enabled:false,quality:null,classified:0,samples:{}};
-    const f0by=[[],[]];for(let i=0;i<turnRefs.length;i++)if(turnRefs[i].f0_hz)f0by[km.labels[i]].push(turnRefs[i].f0_hz);const medF0=f0by.map(a=>a.length?pct(a.sort((x,y)=>x-y),.5):999),order=medF0[0]<=medF0[1]?[0,1]:[1,0],nameFor={};nameFor[order[0]]='VOICE_A';nameFor[order[1]]='VOICE_B';let classified=0;const bestSample={VOICE_A:null,VOICE_B:null};
-    for(let i=0;i<turnRefs.length;i++){const d0=vecDist(z[i],km.centers[0]),d1=vecDist(z[i],km.centers[1]),best=Math.min(d0,d1),other=Math.max(d0,d1),margin=(other-best)/(other+best+1e-9),spk=nameFor[km.labels[i]];turnRefs[i].speaker_confidence=roundN(margin,3);if(margin>=.09){turnRefs[i].speaker=spk;classified++;if(!bestSample[spk]||margin>bestSample[spk].confidence)bestSample[spk]={start:Math.max(0,turnRefs[i].start-1.25),end:turnRefs[i].end+1.75,f0_hz:turnRefs[i].f0_hz,confidence:roundN(margin,3)}}else turnRefs[i].speaker=null}
-    for(let i=0;i<turns.length;i++){const t=turns[i],p=i?turns[i-1]:null;t.response_latency_sec=null;t.fast_response=false;if(t.speaker&&p?.speaker&&t.speaker!==p.speaker&&t.gap_before_sec!==null&&t.gap_before_sec!==undefined){t.response_latency_sec=roundN(t.gap_before_sec,3);t.fast_response=t.response_latency_sec<=.5}}
-    return {enabled:true,quality:km.quality,classified,feature_count:features.length,classified_pct:roundN(100*classified/features.length,1),samples:bestSample}
-  }
-  function buildLocalSpeakerMetrics(turns){const speakers=[...new Set(turns.map(t=>t.speaker).filter(Boolean))],classifiedSpeech=turns.filter(t=>t.speaker).reduce((a,t)=>a+(Number(t.duration)||0),0);return speakers.map(spk=>{const ts=turns.filter(t=>t.speaker===spk),speech=ts.reduce((a,t)=>a+(Number(t.duration)||0),0),lat=ts.map(t=>t.response_latency_sec).filter(x=>x!==null&&x!==undefined&&Number.isFinite(Number(x))),f0=ts.map(t=>Number(t.f0_hz)).filter(x=>x>0).sort((a,b)=>a-b),conf=ts.map(t=>Number(t.speaker_confidence)).filter(Number.isFinite);return {speaker:spk,speech_sec:roundN(speech,2),speech_share_pct:classifiedSpeech?roundN(100*speech/classifiedSpeech,1):null,turns:ts.length,mean_turn_sec:ts.length?roundN(speech/ts.length,2):null,median_response_sec:lat.length?roundN(pct([...lat].sort((a,b)=>a-b),.5),3):null,fast_response_rate_pct:lat.length?roundN(100*lat.filter(x=>x<=.5).length/lat.length,1):null,interruptions_started:null,chars_per_min:null,median_f0_hz:f0.length?roundN(pct(f0,.5),1):null,mean_speaker_confidence:conf.length?roundN(conf.reduce((a,b)=>a+b,0)/conf.length,3):null}})}
-  async function analyzeLocalAudio(){
-    const file=$("conversationAudioInput").files?.[0];if(!file){alert("WAVファイルを選んでください。");return}if(!/\.wav$/i.test(file.name)&&!String(file.type).includes("wav")){alert("スマホローカル版は現在WAV専用です。");return}
-    $("localAnalyzeBtn").disabled=true;try{setLocalAudioFile(file);localSetProgress(.01,"WAVを確認中…");const h=await parseWavHeader(file);if(h.durationSec>4*3600)throw new Error("4時間を超える音声はこの版では対象外です。");localSetProgress(.04,`${(h.durationSec/60).toFixed(1)}分 / ${h.sampleRate}Hz / ${h.channels}ch / ${h.bitsPerSample}bit`);const e=await analyzeWavEnvelope(file,h,$("localSensitivity").value,localSetProgress),groupGap=Number($("localGroupGap").value)||.20,b=buildLocalAudioResult(file,h,e,groupGap),speakerMode=$("localSpeakerMode").value==="two",speakerResult=await estimateVoiceFeaturesAndCluster(file,h,b.turns,localSetProgress,true);for(const t of b.turns){if(!t.manual_speaker){t.speaker=null;t.speaker_confidence=0}}localSetProgress(.99,"保存中…");
-      const medianGap=b.gapSorted.length?pct(b.gapSorted,.5):0,longestGap=b.gapSorted.length?Math.max(...b.gapSorted):0,allF0=b.turns.map(t=>Number(t.f0_hz)).filter(x=>x>0).sort((a,b)=>a-b),f0med=allF0.length?pct(allF0,.5):null,speakerMetrics=[];
-      const localMetrics={speech_sec:roundN(b.speechSec,2),speech_share_pct:roundN(b.speechSec/h.durationSec*100,1),activity_groups:b.turns.length,raw_speech_bursts:b.raw.length,median_pause_sec:roundN(medianGap),longest_pause_sec:roundN(longestGap),bursts_per_min:roundN(b.raw.length/(h.durationSec/60),1),threshold_db:roundN(e.threshold,1),median_f0_hz:f0med?roundN(f0med,1):null,pause_bins:b.pauseBins,speaker_clustering:speakerResult.enabled?{quality:speakerResult.quality,classified_pct:speakerResult.classified_pct,feature_count:speakerResult.feature_count,samples:speakerResult.samples}:null};
-      const observations=[`iPhone内でWAVをローカル解析。原音は保存・アップロードしていません。`,`推定発話率 ${localMetrics.speech_share_pct}%（音量しきい値 ${localMetrics.threshold_db} dB）。`,`ポーズ中央値 ${localMetrics.median_pause_sec}秒、2秒以上のポーズ ${b.pauseBins.over_2}回。`,f0med?`解析できた発話候補のF0中央値は約 ${localMetrics.median_f0_hz} Hz。F0単独では話者を断定しません。`:`F0はこのファイル条件では十分に推定できませんでした。`,speakerResult.enabled?`2人話者クラスタリング: 分離度 ${speakerResult.quality}/100、分類できた区間 ${speakerResult.classified_pct}%（VOICE_A/Bは代表区間を聞いて名前対応してください）。`:`2人話者クラスタリングは未使用です。`,`VOICE_A/BはF0＋周波数帯バランス等による同一録音内の推定で、本人確認ではありません。誤分類はあり得ます。`,`モノラル音声では同時発話を完全には分離できないため、被せ回数はまだ確定しません。話者交代の間隔は推定ラベルが異なる連続区間だけに表示します。`];
-      const row={id:uid(),title:file.name,importedAt:new Date().toISOString(),speakerNames:{},analysis:{meta:{source_name:file.name,source_type:"iphone_local_wav_v33",sample_rate:h.sampleRate,channels:h.channels,bits_per_sample:h.bitsPerSample,group_gap_sec:groupGap,voice_threshold_db:roundN(e.threshold,1),speaker_clustering_enabled:speakerResult.enabled},summary:{duration_sec:roundN(h.durationSec,2),turn_count:b.turns.length,silence_sec:roundN(Math.max(0,h.durationSec-b.speechSec),2),overlap_count:null,overlap_sec:null,diarization_enabled:speakerResult.enabled},speaker_metrics:speakerMetrics,turns:b.turns,observations,local_metrics:localMetrics,local_waveform_db:b.waveform,speaker_samples:speakerResult.samples||{}}};
-      await saveConversationRow(row);activeConversationId=row.id;localSetProgress(1,"音響解析完了。続けて内容理解を準備します…");await renderConversationView();setTimeout(()=>startInternalAsr(),120);
-    }catch(err){console.error(err);localSetProgress(0,"解析に失敗しました: "+(err?.message||err));alert(err?.message||"解析に失敗しました。")}finally{$("localAnalyzeBtn").disabled=false}
-  }
-  function drawLocalWave(row){const card=$("conversationWaveCard"),canvas=$("conversationWaveCanvas"),arr=row?.analysis?.local_waveform_db;if(!card||!canvas||!Array.isArray(arr)||!arr.length){card?.classList.add("hidden");return}card.classList.remove("hidden");const ctx=canvas.getContext("2d"),w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);ctx.strokeStyle="#3157d5";ctx.lineWidth=2;ctx.beginPath();const min=-70,max=-5;for(let i=0;i<arr.length;i++){const x=i/(arr.length-1||1)*w,y=h-(Math.max(min,Math.min(max,arr[i]))-min)/(max-min)*h;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();ctx.strokeStyle="#dfe3eb";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,h*.7);ctx.lineTo(w,h*.7);ctx.stroke()}
-  function renderLocalMetrics(row){const box=$("conversationLocalMetricsCard"),dst=$("conversationLocalMetrics"),m=row?.analysis?.local_metrics;if(!box||!dst||!m){box?.classList.add("hidden");return}box.classList.remove("hidden");const bin=m.pause_bins||{};const sc=m.speaker_clustering||null,items=[["推定発話率",`${m.speech_share_pct??"-"}%`],["発話まとまり",`${m.activity_groups??"-"}`],["ポーズ中央値",`${m.median_pause_sec??"-"}s`],["最長ポーズ",`${m.longest_pause_sec??"-"}s`],["2秒以上ポーズ",`${bin.over_2??"-"}回`],["F0中央値",m.median_f0_hz?`${m.median_f0_hz}Hz`:"-"],["2人分離度",sc?`${sc.quality}/100`:"-"],["話者分類率",sc?`${sc.classified_pct}%`:"-"]];dst.innerHTML=items.map(([k,v])=>`<div class="local-metric"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`).join("")}
-  function playLocalTurn(start,end){if(!localConversationAudioUrl){alert("原音は保存していません。上の『原音を再生する場合』から元WAVをもう一度選んでください。");return}let a=$("localConversationPlayer");if(!a){a=document.createElement("audio");a.id="localConversationPlayer";a.src=localConversationAudioUrl;a.preload="metadata";document.body.appendChild(a)}else if(a.src!==localConversationAudioUrl)a.src=localConversationAudioUrl;if(localAudioStopTimer)clearInterval(localAudioStopTimer);a.currentTime=Math.max(0,Number(start)||0);a.play().catch(()=>{});localAudioStopTimer=setInterval(()=>{if(a.currentTime>=Number(end)||a.paused){a.pause();clearInterval(localAudioStopTimer);localAudioStopTimer=null}},60)}
-
-  // ---- v3.3 supervised speaker learning ----
-  function updateResponseLatencies(turns){for(let i=0;i<turns.length;i++){const t=turns[i],p=i?turns[i-1]:null;t.response_latency_sec=null;t.fast_response=false;if(t.speaker&&p?.speaker&&t.speaker!==p.speaker&&t.gap_before_sec!==null&&t.gap_before_sec!==undefined){t.response_latency_sec=roundN(t.gap_before_sec,3);t.fast_response=t.response_latency_sec<=.5}}}
-  function speakerTrainingCounts(row){const ts=row?.analysis?.turns||[],self=ts.filter(t=>t.manual_speaker==='SELF'),other=ts.filter(t=>t.manual_speaker==='OTHER');return {selfN:self.length,otherN:other.length,selfSec:self.reduce((a,t)=>a+(Number(t.duration)||0),0),otherSec:other.reduce((a,t)=>a+(Number(t.duration)||0),0)}}
-  async function labelTurn(turnIndex,label){const row=await getConversationRow(activeConversationId);if(!row)return;const t=row.analysis?.turns?.[turnIndex];if(!t)return;t.manual_speaker=label||null;if(label){t.speaker=label;t.speaker_confidence=1}await saveConversationRow(row);await renderConversationDetail()}
-  async function clearSpeakerTraining(){const row=await getConversationRow(activeConversationId);if(!row)return;if(!confirm('自分/相手として付けた教師ラベルをすべて解除しますか？'))return;for(const t of row.analysis?.turns||[])delete t.manual_speaker;await saveConversationRow(row);await renderConversationDetail()}
-
-  const TURN_ACTS={
-    question:"質問",
-    self_disclosure:"自己開示",
-    hypothesis:"分析・仮説",
-    agreement:"同意",
-    backchannel:"相槌（うん/うんうん/そうそう等）",
-    correction:"修正・反論",
-    topic_shift:"話題転換",
-    humor:"冗談・雑談",
-    laughter:"笑い",
-    overlap:"同時発話",
-    nonverbal:"非言語反応",
-    other:"その他"
-  };
-  function activeJudgeCandidateIndex(row){
-    const turns=row?.analysis?.turns||[];
-    const labelled=turns.map((t,i)=>t.manual_speaker?i:null).filter(i=>i!==null);
-    const labelledTimes=labelled.map(i=>(Number(turns[i].start)+Number(turns[i].end))/2);
-    let best=-1,bestScore=-1e9;
-    for(let i=0;i<turns.length;i++){
-      const t=turns[i];
-      if(t.manual_speaker||t.judge_skip||!Array.isArray(t.voice_feature)||t.duration<1.0||t.duration>7)continue;
-      const mid=(Number(t.start)+Number(t.end))/2;
-      let distance=120;if(labelledTimes.length)distance=Math.min(...labelledTimes.map(x=>Math.abs(x-mid)));
-      const spread=Math.min(1,distance/100),dur=Math.min(1,Number(t.duration)/4);
-      const conf=Number(t.speaker_confidence);
-      const uncertainty=Number.isFinite(conf)?1-Math.min(1,conf):1;
-      const score=uncertainty*1.4+spread*.9+dur*.5;
-      if(score>bestScore){bestScore=score;best=i}
-    }
-    return best;
-  }
-  function renderActiveJudge(row){
-    const box=$('activeJudgeBox');if(!box)return;
-    const i=activeJudgeCandidateIndex(row),turns=row?.analysis?.turns||[],c=speakerTrainingCounts(row);
-    if(i<0){
-      box.innerHTML='<strong>話者判定は十分です。</strong><div class="muted small">内容理解が終わったら、そのままChatGPTへ共有できます。</div>';
-      return;
-    }
-    const t=turns[i];
-    box.innerHTML=`<div class="list-title">この区間は誰？</div>
-      <div class="list-meta"><span>${secText(t.start)}–${secText(t.end)}</span></div>
-      <div class="turn-actions" style="margin-top:10px"><button type="button" id="activeJudgePlay" style="width:100%">▶︎ 聞く</button></div>
-      <div class="trainer-row" style="margin-top:10px">
-        <button type="button" data-quick-label="SELF">自分</button>
-        <button type="button" data-quick-label="OTHER">相手</button>
-        <button type="button" data-quick-label="BOTH">両方</button>
-        <button type="button" data-quick-label="LAUGHTER">笑い</button>
-        <button type="button" data-quick-label="UNKNOWN">不明</button>
-      </div>
-      <div class="muted small" style="margin-top:8px">確定例：自分 ${c.selfN} / 相手 ${c.otherN}。同時発話は「両方」、笑いだけなら「笑い」。</div>`;
-    $('activeJudgePlay')?.addEventListener('click',()=>playLocalTurn(Math.max(0,Number(t.start)-1),Math.max(Number(t.end)+1.6,Number(t.start)+3.5)));
-    $$('[data-quick-label]',box).forEach(b=>b.addEventListener('click',async()=>{
-      const label=b.dataset.quickLabel;
-      const row2=await getConversationRow(activeConversationId),tt=row2?.analysis?.turns?.[i];if(!tt)return;
-      if(label==='SELF'||label==='OTHER'){
-        tt.manual_speaker=label;tt.speaker=label;tt.speaker_confidence=1;
-      }else if(label==='BOTH'){
-        tt.manual_speaker='BOTH';tt.speaker='BOTH';tt.speaker_confidence=1;tt.manual_act='overlap';
-      }else if(label==='LAUGHTER'){
-        tt.manual_speaker='NONVERBAL';tt.speaker='NONVERBAL';tt.speaker_confidence=1;tt.manual_act='laughter';
-      }else{
-        tt.judge_skip=true;
-      }
-      await saveConversationRow(row2);
-      const cc=speakerTrainingCounts(row2);
-      if(cc.selfN>=2&&cc.otherN>=2)await retrainSpeakers();
-      else await renderConversationDetail();
-    }));
-  }
-  async function toggleTurnStar(i){
-    const row=await getConversationRow(activeConversationId);const t=row?.analysis?.turns?.[i];if(!t)return;t.starred=!t.starred;await saveConversationRow(row);await renderConversationTimeline(row)
-  }
-  async function editTurnNote(i){
-    const row=await getConversationRow(activeConversationId);const t=row?.analysis?.turns?.[i];if(!t)return;
-    const v=window.prompt('この区間の要点を一言で（空欄で削除）',t.content_note||'');if(v===null)return;t.content_note=String(v).trim();await saveConversationRow(row);await renderConversationTimeline(row)
-  }
-  async function setTurnAct(i,act){
-    const row=await getConversationRow(activeConversationId);const t=row?.analysis?.turns?.[i];if(!t)return;t.manual_act=act||null;await saveConversationRow(row);await renderConversationTimeline(row)
-  }
-  async function retrainSpeakers(){const row=await getConversationRow(activeConversationId);if(!row)return;const turns=row.analysis?.turns||[],usable=turns.filter(t=>Array.isArray(t.voice_feature)&&t.voice_feature.length),self=usable.filter(t=>t.manual_speaker==='SELF'),other=usable.filter(t=>t.manual_speaker==='OTHER');if(self.length<2||other.length<2){alert('自分・相手を最低2区間ずつ教えてください。できれば各3〜5区間以上がおすすめです。');return}const raw=usable.map(t=>t.voice_feature.map(v=>v===null?NaN:Number(v))),scaled=robustScaleMatrix(raw),z=scaled.z,idx=new Map(usable.map((t,i)=>[t,i])),cSelf=meanVec(self.map(t=>z[idx.get(t)])),cOther=meanVec(other.map(t=>z[idx.get(t)]));let classified=0;for(const t of usable){if(t.manual_speaker){t.speaker=t.manual_speaker;t.speaker_confidence=1;classified++;continue}const zz=z[idx.get(t)],dS=vecDist(zz,cSelf),dO=vecDist(zz,cOther),best=Math.min(dS,dO),otherD=Math.max(dS,dO),margin=(otherD-best)/(otherD+best+1e-9);if(margin>=.055){t.speaker=dS<dO?'SELF':'OTHER';t.speaker_confidence=roundN(margin,3);classified++}else{t.speaker=null;t.speaker_confidence=roundN(margin,3)}}for(let i=1;i<turns.length-1;i++){const t=turns[i],a=turns[i-1],b=turns[i+1];if(!t.manual_speaker&&!t.speaker&&a.speaker&&a.speaker===b.speaker&&Number(t.gap_before_sec||9)<.7&&Number(b.gap_before_sec||9)<.7){t.speaker=a.speaker;t.speaker_confidence=.05}}updateResponseLatencies(turns);if(Array.isArray(row.analysis?.transcript_blocks)){for(const b of row.analysis.transcript_blocks){const tally={};for(const i of b.turn_indexes||[]){const sp=turns[i]?.speaker;if(sp)tally[sp]=(tally[sp]||0)+(Number(turns[i]?.duration)||0)}b.speaker=Object.keys(tally).sort((a,c)=>(tally[c]||0)-(tally[a]||0))[0]||null}}row.speakerNames={...(row.speakerNames||{}),SELF:row.speakerNames?.SELF||'自分',OTHER:row.speakerNames?.OTHER||'相手'};row.analysis.speaker_metrics=buildLocalSpeakerMetrics(turns);row.analysis.meta={...(row.analysis.meta||{}),speaker_supervised:true};row.analysis.local_metrics=row.analysis.local_metrics||{};row.analysis.local_metrics.supervised_speaker={self_examples:self.length,other_examples:other.length,classified_pct:roundN(100*classified/Math.max(1,usable.length),1)};await saveConversationRow(row);$('conversationTrainerStatus').textContent=`再分類しました。自分 ${self.length}区間 / 相手 ${other.length}区間を教師データに使用。`;await renderConversationDetail()}
-
-  // ---- v3.3 browser-local Whisper Tiny transcription ----
-  let asrWorker=null,asrReady=false,asrInitPromise=null,asrPending=new Map();
-  function setTranscriptionProgress(frac,msg){$('transcriptionProgressWrap').classList.remove('hidden');$('transcriptionProgress').style.width=`${Math.max(0,Math.min(1,frac||0))*100}%`;$('transcriptionStatus').textContent=msg||''}
-  function makeAsrWorker(){if(asrWorker)return asrWorker;const code=`
-    import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/dist/transformers.min.js';
-    env.allowRemoteModels=true; env.allowLocalModels=false;
-    try{ if(env.backends?.onnx?.wasm) env.backends.onnx.wasm.numThreads=1; }catch(e){}
-    let transcriber=null;
-    self.onmessage=async(e)=>{const m=e.data||{};try{
-      if(m.type==='init'){
-        if(!transcriber){transcriber=await pipeline('automatic-speech-recognition','onnx-community/whisper-tiny',{device:'wasm',dtype:'q4',progress_callback:(p)=>{if(p&&p.status)self.postMessage({type:'model-progress',status:p.status,file:p.file,progress:p.progress||0})}})}
-        self.postMessage({type:'ready'});return;
-      }
-      if(m.type==='transcribe'){
-        if(!transcriber)throw new Error('model not initialized');const audio=new Float32Array(m.audio);const opts={task:'transcribe',return_timestamps:true};if(m.language&&m.language!=='auto')opts.language=m.language;const result=await transcriber(audio,opts);self.postMessage({type:'result',id:m.id,result});return;
-      }
-    }catch(err){self.postMessage({type:'error',id:m.id,message:String(err?.message||err)})}}
-  `;const url=URL.createObjectURL(new Blob([code],{type:'text/javascript'}));asrWorker=new Worker(url,{type:'module'});asrWorker.onmessage=(e)=>{const m=e.data||{};if(m.type==='ready'){asrReady=true;if(asrInitPromise?.resolve)asrInitPromise.resolve(true)}else if(m.type==='model-progress'){setTranscriptionProgress(.02,`AIモデル準備中… ${m.file||m.status||''}${m.progress?` ${Math.round(m.progress)}%`:''}`)}else if(m.type==='result'||m.type==='error'){const p=asrPending.get(m.id);if(p){asrPending.delete(m.id);m.type==='result'?p.resolve(m.result):p.reject(new Error(m.message||'文字起こし失敗'))}}};asrWorker.onerror=()=>{if(asrInitPromise?.reject)asrInitPromise.reject(new Error('Whisperの読み込みに失敗しました。Safariのメモリ不足の可能性があります。'))};return asrWorker}
-  async function ensureAsr(){if(asrReady)return true;if(asrInitPromise)return asrInitPromise.promise;let resolve,reject;const promise=new Promise((res,rej)=>{resolve=res;reject=rej});asrInitPromise={promise,resolve,reject};makeAsrWorker().postMessage({type:'init'});return promise}
-  function workerTranscribe(audio,language,id){return new Promise((resolve,reject)=>{asrPending.set(id,{resolve,reject});makeAsrWorker().postMessage({type:'transcribe',id,language,audio:audio.buffer},[audio.buffer])})}
-  async function readWavRange16k(file,h,start,end){start=Math.max(0,start);end=Math.min(h.durationSec,end);const srcStart=Math.floor(start*h.sampleRate),srcEnd=Math.ceil(end*h.sampleRate),byteStart=h.dataOffset+srcStart*h.blockAlign,byteEnd=Math.min(h.dataOffset+h.dataSize,h.dataOffset+srcEnd*h.blockAlign),buf=await file.slice(byteStart,byteEnd).arrayBuffer(),v=new DataView(buf),bps=h.bitsPerSample/8,src=new Float32Array(Math.floor(v.byteLength/h.blockAlign));for(let i=0;i<src.length;i++){let mono=0;for(let c=0;c<h.channels;c++)mono+=wavSample(v,i*h.blockAlign+c*bps,h.bitsPerSample,h.audioFormat);src[i]=mono/h.channels}const outLen=Math.max(1,Math.round(src.length*16000/h.sampleRate)),out=new Float32Array(outLen),ratio=h.sampleRate/16000;for(let i=0;i<outLen;i++){const x=i*ratio,j=Math.floor(x),f=x-j,a=src[Math.min(j,src.length-1)]||0,b=src[Math.min(j+1,src.length-1)]||a;out[i]=a+(b-a)*f}return out}
-  function makeTranscriptBlocks(row){const turns=row.analysis?.turns||[],blocks=[];for(let i=0;i<turns.length;i++){const t=turns[i];if(Number(t.duration||0)<.08)continue;const sp=t.speaker||null,prev=blocks[blocks.length-1],can=prev&&(sp===prev.speaker||!sp||!prev.speaker)&&(t.start-prev.end)<=1.0&&(t.end-prev.start)<=11.5;if(can){prev.end=t.end;prev.turn_indexes.push(i);if(!prev.speaker&&sp)prev.speaker=sp}else blocks.push({id:`b-${i}-${Math.round(t.start*1000)}`,start:t.start,end:t.end,speaker:sp,turn_indexes:[i],text:'',edited_text:'',starred:false,status:'pending'})}return blocks}
-  function transcriptText(block){return String(block.edited_text||block.text||'').trim()}
-  async function startTranscription(){const row=await getConversationRow(activeConversationId);if(!row)return;if(!localConversationAudioFile){alert('文字起こしには元WAVが必要です。上の「原音を再生する場合」から同じWAVを選び直してください。');return}let h;try{h=await parseWavHeader(localConversationAudioFile)}catch(e){alert(e.message);return}const scope=$('transcribeScope').value,lang=$('transcribeLanguage').value;let blocks=Array.isArray(row.analysis.transcript_blocks)&&row.analysis.transcript_blocks.length?row.analysis.transcript_blocks:makeTranscriptBlocks(row);row.analysis.transcript_blocks=blocks;let pending=blocks.filter(b=>b.status!=='done');if(scope==='test3')pending=pending.filter(b=>b.start<180);else if(scope==='next5'){const first=pending[0]?.start??0;pending=pending.filter(b=>b.start<first+300)}if(!pending.length){alert('この範囲は文字起こし済みです。');return}$('startTranscriptionBtn').disabled=true;try{setTranscriptionProgress(.01,'Whisper Tinyを準備中… 初回はモデル取得に時間がかかります');await ensureAsr();let done=0;for(const b of pending){setTranscriptionProgress(done/pending.length,`内容を文字起こし中… ${done+1}/${pending.length}  ${secText(b.start)}–${secText(b.end)}`);try{const audio=await readWavRange16k(localConversationAudioFile,h,Math.max(0,b.start-.2),Math.min(h.durationSec,b.end+.25)),result=await workerTranscribe(audio,lang,`${row.id}-${b.id}-${Date.now()}`);b.text=String(result?.text||'').trim();b.status='done';b.error=null}catch(err){b.status='error';b.error=String(err?.message||err)}done++;row.analysis.transcript_blocks=blocks;row.analysis.meta={...(row.analysis.meta||{}),browser_asr:'whisper-tiny-wasm',browser_asr_language:lang};await saveConversationRow(row);if(done%2===0)await new Promise(r=>setTimeout(r,50))}setTranscriptionProgress(1,'文字起こし区間を保存しました。誤変換は下で直せます。');await renderConversationDetail()}catch(err){console.error(err);setTranscriptionProgress(0,`文字起こしに失敗: ${err.message||err}`);alert('iPhoneでWhisperを実行できませんでした。端末メモリ不足の可能性があります。音響解析はそのまま残っています。')}finally{$('startTranscriptionBtn').disabled=false}}
-  async function saveTranscriptEdits(){const row=await getConversationRow(activeConversationId);if(!row)return;$$('[data-transcript-edit]').forEach(el=>{const b=row.analysis?.transcript_blocks?.find(x=>x.id===el.dataset.transcriptEdit);if(b)b.edited_text=el.value});await saveConversationRow(row);$('transcriptionStatus').textContent='訂正を保存しました。';await renderConversationDetail()}
-  async function toggleTranscriptStar(id){const row=await getConversationRow(activeConversationId);if(!row)return;const b=row.analysis?.transcript_blocks?.find(x=>x.id===id);if(!b)return;b.starred=!b.starred;await saveConversationRow(row);await renderConversationDetail()}
-
-  // ---- v4.1 hidden on-device ASR: Safari-friendly v2/WASM route ----
-  let hiddenAsrWorker=null,hiddenAsrPending=new Map(),hiddenAsrReady=false,hiddenAsrInit=null;
-
-  function internalAsrSetProgress(frac,msg){
-    const b=$("internalAsrProgress"),s=$("internalAsrStatus");
-    if(b)b.style.width=`${Math.max(0,Math.min(1,Number(frac)||0))*100}%`;
-    if(s)s.textContent=msg||"";
-  }
-
-  function disposeHiddenAsrWorker(){
-    try{hiddenAsrWorker?.terminate()}catch{}
-    hiddenAsrWorker=null;hiddenAsrPending.clear();hiddenAsrReady=false;hiddenAsrInit=null;
-  }
-
-  function withTimeout(promise,ms,label){
-    return Promise.race([
-      promise,
-      new Promise((_,rej)=>setTimeout(()=>rej(new Error(`${label}がタイムアウトしました`)),ms))
-    ]);
-  }
-
-  function makeHiddenAsrWorker(modelName="Xenova/whisper-base"){
-    disposeHiddenAsrWorker();
-    const code=`
-      import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.15.1';
-      env.allowRemoteModels=true;env.allowLocalModels=false;
-      try{if(env.backends?.onnx?.wasm){env.backends.onnx.wasm.numThreads=1}}catch(e){}
-      let transcriber=null;
-      self.onmessage=async(e)=>{
-        const m=e.data||{};
-        try{
-          if(m.type==='init'){
-            transcriber=await pipeline('automatic-speech-recognition',m.model,{quantized:true,
-              progress_callback:(p)=>self.postMessage({type:'model-progress',status:p?.status||'',file:p?.file||'',progress:p?.progress||0})
-            });
-            self.postMessage({type:'ready'});return;
-          }
-          if(m.type==='transcribe'){
-            if(!transcriber)throw new Error('model not initialized');
-            const audio=new Float32Array(m.audio);
-            const result=await transcriber(audio,{language:'japanese',task:'transcribe',return_timestamps:true,chunk_length_s:18,stride_length_s:2});
-            self.postMessage({type:'result',id:m.id,result});return;
-          }
-        }catch(err){self.postMessage({type:'error',id:m.id,message:String(err?.message||err)})}
-      };
-    `;
-    const url=URL.createObjectURL(new Blob([code],{type:"text/javascript"}));
-    hiddenAsrWorker=new Worker(url,{type:"module"});
-    hiddenAsrWorker.onmessage=(e)=>{
-      const m=e.data||{};
-      if(m.type==="ready"){
-        hiddenAsrReady=true;hiddenAsrInit?.resolve?.(true);
-      }else if(m.type==="model-progress"){
-        const p=Number(m.progress||0);
-        internalAsrSetProgress(.01,`内部AI準備中… ${m.status||""}${m.file?` ${m.file}`:""}${p?` ${Math.round(p)}%`:""}`);
-      }else if(m.type==="result"||m.type==="error"){
-        const x=hiddenAsrPending.get(m.id);
-        if(x){hiddenAsrPending.delete(m.id);m.type==="result"?x.resolve(m.result):x.reject(new Error(m.message||"内部認識失敗"))}
-      }
-    };
-    hiddenAsrWorker.onerror=(e)=>hiddenAsrInit?.reject?.(new Error("iPhone Safariで内部AIを起動できませんでした"));
-    return hiddenAsrWorker;
-  }
-
-  async function ensureHiddenAsr(){
-    if(hiddenAsrReady&&hiddenAsrWorker)return true;
-    if(hiddenAsrInit)return hiddenAsrInit.promise;
-    let resolve,reject;const promise=new Promise((res,rej)=>{resolve=res;reject=rej});
-    hiddenAsrInit={promise,resolve,reject};
-    makeHiddenAsrWorker("Xenova/whisper-base").postMessage({type:"init",model:"Xenova/whisper-base"});
-    try{
-      return await withTimeout(promise,120000,"AIモデル準備");
-    }catch(err){
-      disposeHiddenAsrWorker();
-      let r2,j2;const p2=new Promise((res,rej)=>{r2=res;j2=rej});
-      hiddenAsrInit={promise:p2,resolve:r2,reject:j2};
-      internalAsrSetProgress(.01,"Baseが動かなかったため軽量モデルへ切り替えます…");
-      makeHiddenAsrWorker("Xenova/whisper-tiny").postMessage({type:"init",model:"Xenova/whisper-tiny"});
-      return await withTimeout(p2,90000,"軽量AIモデル準備");
-    }
-  }
-
-  function hiddenWorkerTranscribe(audio,id){
-    return withTimeout(new Promise((resolve,reject)=>{
-      hiddenAsrPending.set(id,{resolve,reject});
-      hiddenAsrWorker.postMessage({type:"transcribe",id,audio:audio.buffer},[audio.buffer]);
-    }),120000,"音声認識");
-  }
-
-  function localOverlapSec(a0,a1,b0,b1){return Math.max(0,Math.min(a1,b1)-Math.max(a0,b0))}
-
-  function hiddenSpeakerMix(row,start,end){
-    const totals={SELF:0,OTHER:0,BOTH:0,NONVERBAL:0,UNKNOWN:0},manual=[];
-    for(const t of row.analysis?.turns||[]){
-      const ov=localOverlapSec(start,end,Number(t.start),Number(t.end));if(ov<=0)continue;
-      const sp=t.manual_speaker||t.speaker||"UNKNOWN";totals[sp]=(totals[sp]||0)+ov;
-      if(t.manual_speaker)manual.push({start:t.start,end:t.end,speaker:t.manual_speaker,event:t.manual_act||null});
-    }
-    const denom=Math.max(.001,Object.values(totals).reduce((a,b)=>a+b,0)),percent={};
-    for(const [k,v] of Object.entries(totals))percent[k]=Math.round(v/denom*1000)/10;
-    const ranked=Object.entries(totals).filter(([k])=>!["UNKNOWN","NONVERBAL"].includes(k)).sort((a,b)=>b[1]-a[1]);
-    const likely=ranked[0]&&ranked[0][1]/denom>=.70?ranked[0][0]:null;
-    return {percent,likely,manual};
-  }
-
-  function makeHiddenAsrBlocks(row){
-    const duration=Number(row.analysis?.summary?.duration_sec||0),turns=row.analysis?.turns||[],chunk=20,step=17,blocks=[];
-    for(let start=0,idx=0;start<duration;start+=step,idx++){
-      const end=Math.min(duration,start+chunk);let speechSec=0;
-      for(const t of turns)speechSec+=localOverlapSec(start,end,Number(t.start),Number(t.end));
-      const mix=hiddenSpeakerMix(row,start,end);
-      blocks.push({id:`h-${idx}-${Math.round(start*1000)}`,start:roundN(start),end:roundN(end),speech_sec:roundN(speechSec,2),
-        speaker_mix:mix.percent,likely_speaker:mix.likely,manual_anchors:mix.manual,text:"",segments:[],status:speechSec>=1.2?"pending":"skip",quality_flags:[],error:null});
-      if(end>=duration)break;
-    }
-    return blocks;
-  }
-
-  function cleanInternalText(s){return String(s||"").replace(/\s+/g," ").trim()}
-
-  function internalTextQuality(text,speechSec){
-    const flags=[],s=cleanInternalText(text);
-    if(!s&&speechSec>3)flags.push("empty_despite_speech");
-    if(/ご視聴ありがとうございました|チャンネル登録|字幕/.test(s))flags.push("possible_whisper_hallucination");
-    if(s.length>Math.max(160,Number(speechSec||1)*14))flags.push("too_much_text_for_audio");
-    if(s.length>20){
-      const chunks=[];for(let i=0;i<s.length-3;i+=4)chunks.push(s.slice(i,i+4));
-      const uniq=new Set(chunks).size/Math.max(1,chunks.length);
-      if(uniq<.42)flags.push("high_repetition");
-    }
-    return flags;
-  }
-
-  function resultSegments(result,blockStart,blockEnd,row){
-    const out=[],chunks=Array.isArray(result?.chunks)?result.chunks:[];
-    if(chunks.length){
-      for(const c of chunks){
-        const ts=Array.isArray(c.timestamp)?c.timestamp:[0,null];
-        const st=Math.max(blockStart,blockStart+Number(ts[0]||0));
-        const en=Math.min(blockEnd,blockStart+Number(ts[1]??(ts[0]||0)+4));
-        if(en<=st)continue;
-        const mix=hiddenSpeakerMix(row,st,en);
-        out.push({start:roundN(st,2),end:roundN(en,2),text:cleanInternalText(c.text),speaker_mix:mix.percent,likely_speaker:mix.likely});
-      }
-    }
-    if(!out.length&&cleanInternalText(result?.text)){
-      const mix=hiddenSpeakerMix(row,blockStart,blockEnd);
-      out.push({start:blockStart,end:blockEnd,text:cleanInternalText(result.text),speaker_mix:mix.percent,likely_speaker:mix.likely});
-    }
-    return out;
-  }
-
-  async function startInternalAsr(){
-    const row=await getConversationRow(activeConversationId);if(!row)return;
-    if(!localConversationAudioFile){
-      internalAsrSetProgress(0,"続けるには同じWAVを下で選び直してください。");
-      return;
-    }
-    let h;try{h=await parseWavHeader(localConversationAudioFile)}catch(e){internalAsrSetProgress(0,e.message);return}
-    let state=row.analysis.hidden_internal_asr;
-    if(!state||state.version!=="4.1"){
-      state={version:"4.1",engine:"Transformers.js 2.15.1 / Whisper Base",createdAt:new Date().toISOString(),blocks:makeHiddenAsrBlocks(row),complete:false};
-      row.analysis.hidden_internal_asr=state;await saveConversationRow(row);
-    }
-    const pending=state.blocks.filter(b=>b.status==="pending"||b.status==="error");
-    if(!pending.length){state.complete=true;await saveConversationRow(row);renderInternalAsr(row);return}
-    try{
-      internalAsrSetProgress(.01,"内部AIを準備しています…");
-      await ensureHiddenAsr();
-      let done=state.blocks.filter(b=>["done","skip"].includes(b.status)).length,total=state.blocks.length;
-      for(const b of state.blocks){
-        if(!["pending","error"].includes(b.status))continue;
-        internalAsrSetProgress(done/total,`内容を内部で理解中… ${done+1}/${total}`);
-        try{
-          const audio=await readWavRange16k(localConversationAudioFile,h,Math.max(0,b.start-.3),Math.min(h.durationSec,b.end+.3));
-          const result=await hiddenWorkerTranscribe(audio,`${row.id}-${b.id}-${Date.now()}`);
-          b.text=cleanInternalText(result?.text);
-          b.segments=resultSegments(result,b.start,b.end,row);
-          b.quality_flags=internalTextQuality(b.text,b.speech_sec);
-          b.status="done";b.error=null;
-        }catch(err){
-          b.status="error";b.error=String(err?.message||err);
-        }
-        done++;state.updatedAt=new Date().toISOString();
-        state.complete=state.blocks.every(x=>["done","skip"].includes(x.status));
-        row.analysis.hidden_internal_asr=state;await saveConversationRow(row);
-        await new Promise(r=>setTimeout(r,80));
-      }
-      state.complete=state.blocks.every(x=>["done","skip"].includes(x.status));await saveConversationRow(row);
-      internalAsrSetProgress(1,state.complete?"内容理解データの準備ができました。":"一部失敗しました。もう一度開くと続きから再開します。");
-      await renderConversationDetail();
-    }catch(err){
-      console.error(err);
-      internalAsrSetProgress(0,"iPhone Safariでは内部AIが安定して動きませんでした。会話構造と話者判定は残っています。");
-    }
-  }
-
-  async function clearInternalAsr(){
-    const row=await getConversationRow(activeConversationId);if(!row)return;
-    delete row.analysis.hidden_internal_asr;await saveConversationRow(row);disposeHiddenAsrWorker();await renderConversationDetail();
-  }
-
-  function compactTurnForChatGPT(row,t){
-    return {
-      start:t.start,end:t.end,duration:t.duration,
-      speaker_code:t.speaker||null,manual_speaker_code:t.manual_speaker||null,
-      speaker_confidence:t.speaker_confidence??null,gap_before_sec:t.gap_before_sec??null,response_latency_sec:t.response_latency_sec??null,
-      avg_rms_db:t.avg_rms_db??null,peak_db:t.peak_db??null,f0_hz:t.f0_hz??null,
-      event:t.manual_act?TURN_ACTS[t.manual_act]||t.manual_act:null
-    };
-  }
-
-  function buildChatGPTInternalPack(row){
-    const a=row.analysis||{},h=a.hidden_internal_asr||{},blocks=Array.isArray(h.blocks)?h.blocks:[];
-    const semantic=[];
-    for(const b of blocks){
-      if(b.status!=="done")continue;
-      if(Array.isArray(b.segments)&&b.segments.length)semantic.push(...b.segments.map(s=>({...s,quality_flags:b.quality_flags||[]})));
-      else if(String(b.text||"").trim())semantic.push({start:b.start,end:b.end,text:b.text,speaker_mix:b.speaker_mix||{},likely_speaker:b.likely_speaker||null,quality_flags:b.quality_flags||[]});
-    }
-    return {
-      schema:"study-analyzer-chatgpt-conversation-v2",
-      created_at:new Date().toISOString(),
-      purpose:"Use hidden_semantic_segments as an internal transcript-like source. Reconstruct the actual topics and semantic flow, accounting for 3-second chunk overlap and possible ASR errors. Downweight segments flagged high_repetition, possible_whisper_hallucination, too_much_text_for_audio, or empty_despite_speech. Use interaction_timeline to understand pauses, response timing, pitch/energy and speaker changes. manual_speaker_code is human-confirmed and overrides automatic speaker_code. BOTH means simultaneous speech. NONVERBAL with laughter event means laughter. Identify short utterances such as うん/うんうん/そうそう as backchannels when supported by the hidden transcript. Analyze the user's speaking style, the other person's style, and their interaction. Do not reproduce the full transcript unless the user explicitly asks.",
-      conversation:{title:row.title,duration_sec:a.summary?.duration_sec??null,summary:a.summary||{},local_metrics:a.local_metrics||{}},
-      hidden_semantic_segments:semantic,
-      interaction_timeline:(a.turns||[]).map(t=>compactTurnForChatGPT(row,t)),
-      observations:a.observations||[]
-    };
-  }
-
-  function renderInternalAsr(row){
-    const card=$("conversationInternalAiCard"),sum=$("internalAsrSummary"),btn=$("shareChatGPTInternalPackBtn");
-    const isLocal=String(row?.analysis?.meta?.source_type||"").startsWith("iphone_local_wav");
-    if(!card||!isLocal){card?.classList.add("hidden");return}
-    card.classList.remove("hidden");
-    const h=row.analysis?.hidden_internal_asr,counts={done:0,skip:0,error:0,pending:0};
-    for(const b of h?.blocks||[])counts[b.status]=(counts[b.status]||0)+1;
-    if(!h){
-      sum.innerHTML="<strong>内容理解を準備中です。</strong>";
-      btn.disabled=true;
-    }else{
-      const total=(h.blocks||[]).length,processed=counts.done+counts.skip;
-      sum.innerHTML=`<strong>${h.complete?"ChatGPTに渡せる状態です":"内容理解中"}</strong><div class="muted small">${processed}/${total}区間${counts.error?` / 再試行待ち ${counts.error}`:""}</div>`;
-      btn.disabled=counts.done===0;
-    }
-  }
-
-  async function shareChatGPTInternalPack(){
-    const row=await getConversationRow(activeConversationId);if(!row)return;
-    const h=row.analysis?.hidden_internal_asr;
-    if(!h||!(h.blocks||[]).some(b=>b.status==="done")){alert("内容理解データがまだありません。");return}
-    const pack=buildChatGPTInternalPack(row),safe=(row.title||"conversation").replace(/[\\/:*?"<>|]+/g,"_").slice(0,60);
-    const file=new File([JSON.stringify(pack,null,2)],`chatgpt-understanding-${safe}.json`,{type:"application/json"});
-    try{
-      if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){
-        await navigator.share({
-          files:[file],title:"ChatGPT 会話分析",
-          text:"この内部理解パックを読んで、逐語録を再掲せずに、話の内容と流れを理解したうえで、私と相手の話し方の特徴、相槌、被せ、先読み、質問、自己開示、修正の受け方、主導権、二人の関係性を分析してください。"
-        });
-      }else{
-        downloadBlob(file.name,file);
-        alert("ChatGPT用JSONを保存しました。このファイルをChatGPTに添付してください。");
-      }
-    }catch(e){if(e?.name!=="AbortError"){console.error(e);alert("共有できませんでした。")}}
-  }
-  let activeConversationId=null;
-  function secText(sec){sec=Math.max(0,Number(sec)||0);const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=Math.round(sec%60);return h?`${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`:`${m}:${String(s).padStart(2,"0")}`}
-  function conversationSpeakerName(row,spk){if(spk==="BOTH")return "両方";if(spk==="NONVERBAL")return "話者なし";return row?.speakerNames?.[spk]||spk||"不明"}
-  function compactConversationAnalysis(data,filename=""){
-    if(!data||typeof data!=="object"||!data.summary||!Array.isArray(data.turns))throw new Error("Conversation Audio AnalyzerのJSONではありません。");
-    const turns=data.turns.map(t=>{const x={...t};delete x.words;return x});
-    const id=uid();
-    return {id,title:String(data.meta?.source_name||filename||"会話分析"),importedAt:new Date().toISOString(),speakerNames:{},analysis:{meta:data.meta||{},summary:data.summary||{},speaker_metrics:Array.isArray(data.speaker_metrics)?data.speaker_metrics:[],turns,observations:Array.isArray(data.observations)?data.observations:[]}}
-  }
-  async function saveConversationRow(row){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(CONVERSATION_STORE,"readwrite");tx.objectStore(CONVERSATION_STORE).put(row);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
-  async function getConversationRow(id){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(CONVERSATION_STORE,"readonly"),req=tx.objectStore(CONVERSATION_STORE).get(id);req.onsuccess=()=>{db.close();resolve(req.result||null)};req.onerror=()=>{db.close();reject(req.error)}})}
-  async function getAllConversationRows(){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(CONVERSATION_STORE,"readonly"),req=tx.objectStore(CONVERSATION_STORE).getAll();req.onsuccess=()=>{const rows=(req.result||[]).sort((a,b)=>String(b.importedAt||"").localeCompare(String(a.importedAt||"")));db.close();resolve(rows)};req.onerror=()=>{db.close();reject(req.error)}})}
-  async function deleteConversationRow(id){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(CONVERSATION_STORE,"readwrite");tx.objectStore(CONVERSATION_STORE).delete(id);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
-  async function clearConversationRows(){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(CONVERSATION_STORE,"readwrite");tx.objectStore(CONVERSATION_STORE).clear();tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
-  async function importConversationJson(file){const reader=new FileReader();reader.onload=async()=>{try{const data=JSON.parse(reader.result),row=compactConversationAnalysis(data,file.name);await saveConversationRow(row);activeConversationId=row.id;$("conversationImportStatus").textContent=`「${row.title}」を保存しました。`;await renderConversationView()}catch(e){$("conversationImportStatus").textContent="読み込みに失敗しました。Conversation Audio AnalyzerのJSONか確認してください。"}};reader.readAsText(file,"utf-8")}
-  async function renderConversationView(){
-    const rows=await getAllConversationRows();
-    $("conversationList").innerHTML=rows.length?rows.map(r=>`<button class="list-item conversation-open" data-id="${esc(r.id)}" type="button" style="text-align:left;width:100%;cursor:pointer"><div class="list-title">${esc(r.title)}</div><div class="list-meta"><span>${new Date(r.importedAt).toLocaleString("ja-JP")}</span><span>${secText(r.analysis?.summary?.duration_sec)}</span></div></button>`).join(""):'<div class="empty">まだ会話分析がありません。上でWAVを選んで、このiPhoneで解析できます。</div>';
-    $$(".conversation-open").forEach(b=>b.addEventListener("click",async()=>{activeConversationId=b.dataset.id;await renderConversationDetail()}));
-    if(activeConversationId&&rows.some(r=>r.id===activeConversationId))await renderConversationDetail();else $("conversationDetail").classList.add("hidden")
-  }
-  function renderSpeakerSamples(row){const card=$("conversationSpeakerSamplesCard"),dst=$("conversationSpeakerSamples"),samples=row?.analysis?.speaker_samples||row?.analysis?.local_metrics?.speaker_clustering?.samples||{},isLocal=String(row?.analysis?.meta?.source_type||"").startsWith("iphone_local_wav");if(!card||!dst||!isLocal||!samples||(!samples.VOICE_A&&!samples.VOICE_B)){card?.classList.add("hidden");return}card.classList.remove("hidden");dst.innerHTML=['VOICE_A','VOICE_B'].map(spk=>{const x=samples[spk];if(!x)return `<div class="list-item"><div class="list-title">${spk}</div><div class="list-meta"><span>代表区間なし</span></div></div>`;return `<div class="list-item"><div class="list-title">${esc(conversationSpeakerName(row,spk))} <span class="tag">${spk}</span></div><div class="list-meta"><span>代表 ${secText(x.start)}–${secText(x.end)}</span>${x.f0_hz?`<span>F0 ${Number(x.f0_hz).toFixed(1)}Hz</span>`:""}<span>信頼 ${Math.round(Number(x.confidence||0)*100)}%</span></div><div class="turn-actions" style="margin-top:8px"><button type="button" data-local-play-start="${Math.max(0,Number(x.start)-.5)}" data-local-play-end="${Math.max(Number(x.end)+.5,Number(x.start)+3)}">▶︎ 原音</button></div></div>`}).join('');$$('[data-local-play-start]',dst).forEach(b=>b.addEventListener('click',()=>playLocalTurn(Number(b.dataset.localPlayStart),Number(b.dataset.localPlayEnd))))}
-
-  function renderTrainer(row){const card=$("conversationTrainerCard"),sum=$("conversationTrainerSummary"),isLocal=String(row?.analysis?.meta?.source_type||"").startsWith("iphone_local_wav");if(!card||!isLocal){card?.classList.add("hidden");return}card.classList.remove("hidden");const c=speakerTrainingCounts(row);sum.innerHTML=`<div><div class="muted small">自分の教師データ</div><strong>${c.selfN}区間 / ${c.selfSec.toFixed(1)}秒</strong></div><div><div class="muted small">相手の教師データ</div><strong>${c.otherN}区間 / ${c.otherSec.toFixed(1)}秒</strong></div>`;const status=$("conversationTrainerStatus");if(status&&Math.max(c.selfSec,c.otherSec)>Math.max(5,Math.min(c.selfSec,c.otherSec)*2.5))status.textContent="片方の教師データがかなり多いです。次は少ない側を確実に聞き分けられる区間で教えると改善しやすいです。";renderActiveJudge(row)}
-  async function renderConversationDetail(){
-    const row=await getConversationRow(activeConversationId),detail=$("conversationDetail");
-    if(!row){detail.classList.add("hidden");return}
-    detail.classList.remove("hidden");
-    renderTrainer(row);
-    renderInternalAsr(row);
-  }
-  async function renderConversationTimeline(rowArg=null){
-    const row=rowArg||await getConversationRow(activeConversationId);if(!row)return;const turns=Array.isArray(row.analysis?.turns)?row.analysis.turns:[],filter=$("conversationTurnFilter")?.value||"all",isLocal=String(row.analysis?.meta?.source_type||"").startsWith("iphone_local_wav");
-    let pairs=turns.map((t,i)=>({t,i}));
-    if(filter==="fast")pairs=pairs.filter(x=>x.t.fast_response===true||(x.t.response_latency_sec!==null&&Number(x.t.response_latency_sec)<=Number(row.analysis?.meta?.fast_response_sec??.5)));
-    if(filter==="overlap")pairs=pairs.filter(x=>Number(x.t.overlaps_previous_sec)>0);
-    if(filter==="longpause")pairs=pairs.filter(x=>Number(x.t.gap_before_sec)>=2);
-    if(filter==="training")pairs=pairs.filter(x=>Number(x.t.duration)>=.9&&Array.isArray(x.t.voice_feature)).sort((a,b)=>(Number(a.t.speaker_confidence||0)-Number(b.t.speaker_confidence||0))||Number(b.t.duration)-Number(a.t.duration));
-    if(filter==="starred")pairs=pairs.filter(x=>x.t.starred);
-    if(filter==="noted")pairs=pairs.filter(x=>String(x.t.content_note||'').trim());if(filter==="overlap_manual")pairs=pairs.filter(x=>x.t.manual_speaker==="BOTH"||x.t.manual_act==="overlap");if(filter==="backchannel")pairs=pairs.filter(x=>x.t.manual_act==="backchannel");if(filter==="laughter")pairs=pairs.filter(x=>x.t.manual_act==="laughter");
-    const limited=pairs.slice(0,300);
-    $("conversationTimeline").innerHTML=limited.length?limited.map(({t,i})=>{
-      const meta=[];if(t.response_latency_sec!==null&&t.response_latency_sec!==undefined)meta.push(`${isLocal?"推定応答":"応答"} ${Number(t.response_latency_sec).toFixed(3)}s`);if(Number(t.overlaps_previous_sec)>0)meta.push(`重なり ${Number(t.overlaps_previous_sec).toFixed(3)}s`);if(t.gap_before_sec!==null&&t.gap_before_sec!==undefined)meta.push(`前区間から ${Number(t.gap_before_sec).toFixed(2)}s`);if(t.avg_rms_db!==null&&t.avg_rms_db!==undefined)meta.push(`平均 ${Number(t.avg_rms_db).toFixed(1)}dB`);if(t.f0_hz)meta.push(`F0 ${Number(t.f0_hz).toFixed(1)}Hz`);if(t.speaker_confidence!==undefined)meta.push(`話者信頼 ${Math.round(Number(t.speaker_confidence||0)*100)}%`);
-      const who=isLocal?(t.speaker?conversationSpeakerName(row,t.speaker):"未分類"):conversationSpeakerName(row,t.speaker),act=t.manual_act?TURN_ACTS[t.manual_act]||t.manual_act:null;
-      return `<div class="turn ${t.starred?'starred':''}"><div class="turn-head"><span class="turn-speaker">${t.starred?'★ ':''}${esc(who)}</span><span class="turn-time">${secText(t.start)}–${secText(t.end)}</span></div>${meta.length?`<div class="turn-meta">${esc(meta.join(" / "))}</div>`:""}${act?`<div class="turn-meta">会話機能：${esc(act)}</div>`:""}${t.content_note?`<div class="turn-text"><strong>要点：</strong>${esc(t.content_note)}</div>`:""}${t.text?`<div class="turn-text">${esc(t.text)}</div>`:""}${isLocal?`<div class="turn-actions"><button type="button" data-local-play-start="${Math.max(0,Number(t.start)-.8)}" data-local-play-end="${Math.max(Number(t.end)+1.2,Number(t.start)+3)}">▶︎ 原音</button><button type="button" data-turn-star="${i}">${t.starred?'★ 重要':'☆ 重要'}</button><button type="button" data-turn-note="${i}">要点</button></div><div class="trainer-row"><button type="button" data-train-self="${i}" class="${t.manual_speaker==='SELF'?'active-self':''}">自分</button><button type="button" data-train-other="${i}" class="${t.manual_speaker==='OTHER'?'active-other':''}">相手</button><button type="button" data-train-both="${i}">両方</button><button type="button" data-train-nonverbal="${i}">話者なし</button><button type="button" data-train-clear="${i}">解除</button><select data-turn-act="${i}" style="min-width:120px"><option value="">機能未指定</option>${Object.entries(TURN_ACTS).map(([k,v])=>`<option value="${k}" ${t.manual_act===k?'selected':''}>${v}</option>`).join('')}</select></div>`:""}</div>`
-    }).join(""):'<div class="empty">該当する区間がありません。</div>';
-    if(pairs.length>limited.length)$("conversationTimeline").insertAdjacentHTML("beforeend",`<div class="empty">表示は先頭300区間までです（全${pairs.length}区間）。</div>`);
-    $$('[data-local-play-start]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>playLocalTurn(Number(b.dataset.localPlayStart),Number(b.dataset.localPlayEnd))));
-    $$('[data-train-self]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>labelTurn(Number(b.dataset.trainSelf),'SELF')));
-    $$('[data-train-other]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>labelTurn(Number(b.dataset.trainOther),'OTHER')));$$('[data-train-both]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>labelTurn(Number(b.dataset.trainBoth),'BOTH')));$$('[data-train-nonverbal]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>labelTurn(Number(b.dataset.trainNonverbal),'NONVERBAL')));
-    $$('[data-train-clear]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>labelTurn(Number(b.dataset.trainClear),null)));
-    $$('[data-turn-star]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>toggleTurnStar(Number(b.dataset.turnStar))));
-    $$('[data-turn-note]',$("conversationTimeline")).forEach(b=>b.addEventListener('click',()=>editTurnNote(Number(b.dataset.turnNote))));
-    $$('[data-turn-act]',$("conversationTimeline")).forEach(s=>s.addEventListener('change',()=>setTurnAct(Number(s.dataset.turnAct),s.value||null)));
-  }
-
-  async function saveConversationSpeakerNames(){const row=await getConversationRow(activeConversationId);if(!row)return;const names={};$$(".conversation-speaker-name").forEach(inp=>{if(inp.value.trim())names[inp.dataset.speaker]=inp.value.trim()});row.speakerNames=names;await saveConversationRow(row);await renderConversationDetail();$("conversationImportStatus").textContent="話者名を保存しました。"}
-  function conversationAnalysisPack(row){
-    const a=row.analysis||{},isLocal=String(a.meta?.source_type||"").startsWith("iphone_local_wav"),lines=[
-      "# Study Analyzer 会話構造パック","",
-      `タイトル: ${row.title}`,`読み込み日時: ${row.importedAt}`,
-      `解析方式: ${isLocal?"iPhoneローカル音響解析＋人間の判定":"PC/外部解析JSON"}`,"",
-      "## 前提",
-      "- 数値は観察指標であり、感情・性格・診断を直接示すものではありません。",
-      "- 短い間や声の高さだけから心理を断定しません。"
-    ];
-    if(isLocal)lines.push(
-      "- 自動話者推定は本人確認ではありません。manual_speaker（自分/相手/両方等の人間判定）を最優先してください。",
-      "- response_latency_secは推定話者ラベルが切り替わった連続区間の間隔で、完全な応答潜時ではありません。",
-      "- この予備パックには内部文字起こし本文を含めません。"
-    );
-    lines.push("","## 概要");
-    Object.entries(a.summary||{}).forEach(([k,v])=>lines.push(`- ${k}: ${v}`));
-    if(a.local_metrics)lines.push("","## iPhoneローカル音響指標",JSON.stringify(a.local_metrics,null,2));
-    lines.push("","## 話者別指標");
-    for(const m of a.speaker_metrics||[])lines.push(`- ${conversationSpeakerName(row,m.speaker)}: ${JSON.stringify(m)}`);
-    lines.push("","## 人間が判定・注記した区間");
-    const marked=(a.turns||[]).filter(t=>t.manual_speaker||t.manual_act||t.starred||String(t.content_note||"").trim());
-    if(!marked.length)lines.push("- なし");
-    for(const t of marked){
-      const meta=[];
-      if(t.manual_speaker)meta.push(`話者判定=${conversationSpeakerName(row,t.manual_speaker)}`);
-      if(t.manual_act)meta.push(`会話機能=${TURN_ACTS[t.manual_act]||t.manual_act}`);
-      if(t.starred)meta.push("重要");
-      if(t.content_note)meta.push(`要点=${t.content_note}`);
-      if(t.response_latency_sec!==null&&t.response_latency_sec!==undefined)meta.push(`推定応答=${Number(t.response_latency_sec).toFixed(3)}s`);
-      lines.push(`${secText(t.start)}-${secText(t.end)} [${meta.join(", ")}]`);
-    }
-    lines.push("","## 全会話タイムライン（音響・話者推定）");
-    for(const t of a.turns||[]){
-      const meta=[];
-      if(t.response_latency_sec!==null&&t.response_latency_sec!==undefined)meta.push(`推定応答=${Number(t.response_latency_sec).toFixed(3)}s`);
-      if(t.gap_before_sec!==null&&t.gap_before_sec!==undefined)meta.push(`前区間から=${Number(t.gap_before_sec).toFixed(3)}s`);
-      if(t.avg_rms_db!==undefined)meta.push(`平均RMS=${t.avg_rms_db}dB`);
-      if(t.f0_hz)meta.push(`F0=${t.f0_hz}Hz`);
-      if(t.speaker_confidence!==undefined)meta.push(`自動話者信頼=${Math.round(Number(t.speaker_confidence||0)*100)}%`);
-      lines.push(`${secText(t.start)}-${secText(t.end)} ${t.speaker?conversationSpeakerName(row,t.speaker):"未分類"}${meta.length?" ["+meta.join(", ")+"]":""}`);
-    }
-    lines.push("","## 分析依頼","人間判定を優先し、発話量・応答間隔・ポーズ・F0・相槌・笑い・同時発話を、①観察事実 ②会話機能 ③関係性/心理の仮説に分けて分析する。");
-    return lines.join("\n");
-  }
-  async function exportConversationPack(){const row=await getConversationRow(activeConversationId);if(!row)return;const file=new File([conversationAnalysisPack(row)],`conversation-analysis-${new Date().toISOString().slice(0,10)}.txt`,{type:"text/plain;charset=utf-8"});showPreparedExport(file);switchView("questionsView");$$('[data-qtab]').forEach(b=>b.classList.remove("active"));const importTab=$('[data-qtab="import"]');if(importTab)importTab.classList.add("active");["qtabAdd","qtabList","qtabImport"].forEach(id=>$(id).classList.add("hidden"));$("qtabImport").classList.remove("hidden");}
-  async function exportAllConversations(){return await getAllConversationRows()}
-  async function importAllConversations(rows){await clearConversationRows();if(!Array.isArray(rows))return;for(const row of rows)if(row&&row.id&&row.analysis)await saveConversationRow(row)}
-
   function renderClassification(){const latest=latestResultsMap(),questionIds=new Set(questions.map(q=>q.id)),rows=[...latest.values()].filter(r=>questionIds.has(r.questionId)),rtValues=rows.map(r=>Number(r.rtMs)||0).filter(v=>v>0),cut=rtValues.length?median(rtValues):0;const counts={mastered:0,hesitant:0,mislearned:0,weak:0};for(const r of rows){const conf=Number(r.confidence)||0,fast=!cut||(Number(r.rtMs)||0)<=cut;if(r.correct&&conf>=4&&fast)counts.mastered++;else if(r.correct)counts.hesitant++;else if(conf>=4)counts.mislearned++;else counts.weak++}$("classificationNote").textContent=rows.length?`各問題の最新回答で分類。RTの速い/遅いは最新回答の中央値 ${(cut/1000).toFixed(2)}秒を基準にしています。`:"回答すると分類されます。";$("stateClassification").innerHTML=rows.length?`<div class="list-item"><div class="list-title">定着　${counts.mastered}問</div><div class="list-meta"><span>○・自信4〜5・RT中央値以下</span></div></div><div class="list-item"><div class="list-title">迷って正解　${counts.hesitant}問</div><div class="list-meta"><span>○だが自信が低い、またはRTが遅い</span></div></div><div class="list-item"><div class="list-title">誤学習注意　${counts.mislearned}問</div><div class="list-meta"><span>×・自信4〜5</span></div></div><div class="list-item"><div class="list-title">未定着　${counts.weak}問</div><div class="list-meta"><span>×・自信1〜3</span></div></div>`:'<div class="empty">まだ分類できる回答がありません。</div>'}
   function renderAnalysis(){const total=results.length,correctN=results.filter(r=>r.correct).length,accuracy=total?Math.round(correctN/total*100):0,rt=total?Math.round(median(results.map(r=>Number(r.rtMs)||0))):0,high=results.filter(r=>!r.correct&&Number(r.confidence)>=4).length;$("analysisStats").innerHTML=`<div class="stat"><div class="label">総回答</div><div class="value">${total}</div></div><div class="stat"><div class="label">正答率</div><div class="value">${accuracy}%</div></div><div class="stat"><div class="label">RT中央値</div><div class="value">${rt?(rt/1000).toFixed(1)+"s":"-"}</div></div><div class="stat"><div class="label">自信あり誤答</div><div class="value">${high}</div></div>`;const byCat=new Map();for(const r of results){if(!byCat.has(r.category))byCat.set(r.category,{total:0,correct:0});const x=byCat.get(r.category);x.total++;if(r.correct)x.correct++}const cats=[...byCat.entries()].sort((a,b)=>b[1].total-a[1].total);$("categoryBars").innerHTML=cats.length?cats.map(([cat,x])=>{const p=Math.round(x.correct/x.total*100);return `<div class="bar-row"><div>${esc(cat)}</div><div class="bar"><div style="width:${p}%"></div></div><div style="text-align:right">${p}%</div></div>`}).join(""):'<div class="empty">まだ履歴がありません。</div>';$("confidenceAnalysis").innerHTML=[1,2,3,4,5].map(n=>{const rows=results.filter(r=>Number(r.confidence)===n),c=rows.filter(r=>r.correct).length;return `<div class="list-item"><div class="list-title">自信度 ${n}</div><div class="list-meta"><span>${rows.length}回答</span><span>正答 ${c}</span><span>正答率 ${rows.length?Math.round(c/rows.length*100):0}%</span></div></div>`}).join("");$("recentResults").innerHTML=results.length?[...results].reverse().slice(0,10).map(r=>{const q=questions.find(q=>q.id===r.questionId);return `<div class="list-item"><div class="list-title">${esc(q?q.question:"削除済み問題")}</div><div class="list-meta"><span class="tag">${esc(r.category)}</span><span>${r.correct?"○ 正解":"× 不正解"}</span><span>${((Number(r.rtMs)||0)/1000).toFixed(2)}秒</span><span>自信 ${r.confidence}</span><span>回答 ${resultSelected(r).join("・")}</span></div></div>`}).join(""):'<div class="empty">まだ履歴がありません。</div>';renderClassification()}
 
@@ -1030,27 +356,15 @@
   function canShareFile(file){try{return !!(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]}))}catch{return false}}
   function showPreparedExport(file){preparedExportFile=file;$("preparedExportText").textContent=`${file.name} の準備ができました。iPhoneでは下のボタンを押し、共有画面の「ファイルに保存」を選んでください。`;$("preparedExportBox").classList.remove("hidden");$("sharePreparedBtn").textContent=canShareFile(file)?"ファイルに保存 / 共有":"ダウンロード"}
   async function sharePreparedExport(){if(!preparedExportFile)return;try{if(canShareFile(preparedExportFile)){await navigator.share({files:[preparedExportFile],title:preparedExportFile.name})}else{downloadBlob(preparedExportFile.name,preparedExportFile)}}catch(e){if(e&&e.name!=="AbortError")alert("保存画面を開けませんでした。Safariで再読み込みしてもう一度試してください。")} }
-  async function exportJson(){try{const images={};for(const q of questions.filter(q=>q.hasImage)){const blob=await getImageBlob(q.id);if(blob)images[q.id]=await blobToDataURL(blob)}const notes=await exportAllChoiceNotes();const conversations=await exportAllConversations();const data={version:4,exportedAt:new Date().toISOString(),questions,results,images,notes,conversations};const filename=`study-analyzer-backup-${new Date().toISOString().slice(0,10)}.json`;const text=JSON.stringify(data,null,2);const file=new File([text],filename,{type:"application/json;charset=utf-8"});showPreparedExport(file)}catch{alert("バックアップ作成に失敗しました。")} }
+  async function exportJson(){try{const images={};for(const q of questions.filter(q=>q.hasImage)){const blob=await getImageBlob(q.id);if(blob)images[q.id]=await blobToDataURL(blob)}const notes=await exportAllChoiceNotes();const data={version:3,exportedAt:new Date().toISOString(),questions,results,images,notes};const filename=`study-analyzer-backup-${new Date().toISOString().slice(0,10)}.json`;const text=JSON.stringify(data,null,2);const file=new File([text],filename,{type:"application/json;charset=utf-8"});showPreparedExport(file)}catch{alert("バックアップ作成に失敗しました。")} }
   function csvCell(v){const s=String(v??"");return `"${s.replaceAll('"','""')}"`}
   function exportCsv(){const headers=["timestamp","question_id","category","selected_answers","correct_answers","is_correct","reaction_time_ms","confidence","question"],lines=[headers.map(csvCell).join(",")];for(const r of results){const q=questions.find(q=>q.id===r.questionId);lines.push([r.timestamp,r.questionId,r.category,resultSelected(r).join("|"),resultAnswers(r).join("|"),r.correct?1:0,r.rtMs,r.confidence,q?q.question:""].map(csvCell).join(","))}const filename=`study-analyzer-results-${new Date().toISOString().slice(0,10)}.csv`;const file=new File(["\ufeff"+lines.join("\r\n")],filename,{type:"text/csv;charset=utf-8"});showPreparedExport(file)}
-  function importJson(file){const reader=new FileReader();reader.onload=async()=>{try{const data=JSON.parse(reader.result);if(!Array.isArray(data.questions)||!Array.isArray(data.results))throw new Error("形式");if(!confirm("現在の問題・画像・解説・履歴・会話分析を、このバックアップで置き換えますか？"))return;const embeddedNotes={};questions=data.questions.map(q=>{const copy={...q};if(Array.isArray(copy.choiceNotes)){embeddedNotes[copy.id]=copy.choiceNotes;delete copy.choiceNotes}return copy});results=data.results;await clearImages();await clearChoiceNotes();if(data.images&&typeof data.images==="object")for(const [id,url] of Object.entries(data.images))await saveImage(id,dataURLToBlob(url));await importChoiceNotesObject({...embeddedNotes,...(data.notes||{})});await importAllConversations(data.conversations||[]);activeConversationId=null;clearSavedSession();saveQuestionsRaw();saveResultsRaw();refreshAll();alert("読み込みました。") }catch(e){alert("読み込みに失敗しました。Study AnalyzerのJSONか確認してください。")}};reader.readAsText(file,"utf-8")}
-  async function resetAll(){if(!confirm("本当に全データを削除しますか？"))return;if(!confirm("問題・画像・登録済み解説・回答履歴・中断データ・会話分析をすべて削除します。元に戻せません。削除しますか？"))return;questions=[];results=[];await clearImages();await clearChoiceNotes();await clearConversationRows();activeConversationId=null;clearSavedSession();saveQuestionsRaw();saveResultsRaw();refreshAll();alert("全データを削除しました。")}
-  function refreshAll(){refreshCategories();renderHome();renderQuestionList();renderAnalysis();if($("conversationView").classList.contains("active"))renderConversationView()}
+  function importJson(file){const reader=new FileReader();reader.onload=async()=>{try{const data=JSON.parse(reader.result);if(!Array.isArray(data.questions)||!Array.isArray(data.results))throw new Error("形式");if(!confirm("現在の問題・画像・解説・履歴を、このバックアップで置き換えますか？"))return;const embeddedNotes={};questions=data.questions.map(q=>{const copy={...q};if(Array.isArray(copy.choiceNotes)){embeddedNotes[copy.id]=copy.choiceNotes;delete copy.choiceNotes}return copy});results=data.results;await clearImages();await clearChoiceNotes();if(data.images&&typeof data.images==="object")for(const [id,url] of Object.entries(data.images))await saveImage(id,dataURLToBlob(url));await importChoiceNotesObject({...embeddedNotes,...(data.notes||{})});clearSavedSession();saveQuestionsRaw();saveResultsRaw();refreshAll();alert("読み込みました。") }catch(e){alert("読み込みに失敗しました。Study AnalyzerのJSONか確認してください。")}};reader.readAsText(file,"utf-8")}
+  async function resetAll(){if(!confirm("本当に全データを削除しますか？"))return;if(!confirm("問題・画像・登録済み解説・回答履歴・中断データをすべて削除します。元に戻せません。削除しますか？"))return;questions=[];results=[];await clearImages();await clearChoiceNotes();clearSavedSession();saveQuestionsRaw();saveResultsRaw();refreshAll();alert("全データを削除しました。")}
+  function refreshAll(){refreshCategories();renderHome();renderQuestionList();renderAnalysis()}
 
   $$('[data-qtab]').forEach(btn=>btn.addEventListener("click",()=>{$$('[data-qtab]').forEach(b=>b.classList.remove("active"));btn.classList.add("active");["qtabAdd","qtabList","qtabImport"].forEach(id=>$(id).classList.add("hidden"));$("qtab"+btn.dataset.qtab.charAt(0).toUpperCase()+btn.dataset.qtab.slice(1)).classList.remove("hidden")}));
   renderChoiceInputs();updateTypeUi();$("qType").addEventListener("change",updateTypeUi);$("qImage").addEventListener("change",onImageChosen);$("removeImageBtn").addEventListener("click",clearPendingImage);$("bulkTextInput").addEventListener("change",onBulkTextChosen);$("bulkImportBtn").addEventListener("click",importBulkQuestions);$("datasetJsonInput").addEventListener("change",onDatasetChosen);$("datasetImportBtn").addEventListener("click",importDatasetQuestions);$("startBtn").addEventListener("click",startSession);$("practiceStartBtn").addEventListener("click",startPracticeSession);$("resumeBtn").addEventListener("click",resumeSession);$("discardSessionBtn").addEventListener("click",()=>{if(confirm("中断位置だけ破棄しますか？回答済みの履歴は残ります。")){clearSavedSession();renderResumeCard()}});$("reviewType").addEventListener("change",updateReviewAvailable);$("reviewStartBtn").addEventListener("click",startReviewSession);$("multiSubmitBtn").addEventListener("click",()=>{if(session.selected.size===2)finalizeSelection([...session.selected])});$("nextBtn").addEventListener("click",nextQuestion);$("savePracticeNotesBtn").addEventListener("click",saveCurrentPracticeNotes);$("clearPracticeNotesBtn").addEventListener("click",clearCurrentPracticeNotes);$("quitBtn").addEventListener("click",()=>{if(session.practice){if(session.noteDirty&&!confirm("未登録の解説は保存されません。練習を中断してホームへ戻りますか？"))return;switchView("homeView");return}saveSessionState(session.confidence!==null?session.index+1:session.index);switchView("homeView")});$("addQuestionBtn").addEventListener("click",addQuestion);$("exportQuestionDbBtn").addEventListener("click",exportQuestionDb);$("questionDbInput").addEventListener("change",e=>{const f=e.target.files?.[0];if(f)importQuestionDb(f);e.target.value=""});$("clearQuestionsBtn").addEventListener("click",clearQuestionsOnly);$("exportJsonBtn").addEventListener("click",exportJson);$("exportCsvBtn").addEventListener("click",exportCsv);$("sharePreparedBtn").addEventListener("click",sharePreparedExport);$("resetBtn").addEventListener("click",resetAll);$("importJsonInput").addEventListener("change",e=>{const f=e.target.files?.[0];if(f)importJson(f);e.target.value=""});
-  $("conversationJsonInput").addEventListener("change",e=>{const f=e.target.files?.[0];if(f)importConversationJson(f);e.target.value=""});
-  $("localAnalyzeBtn").addEventListener("click",analyzeLocalAudio);
-  $("conversationAudioReconnect").addEventListener("change",e=>{const f=e.target.files?.[0];if(f){setLocalAudioFile(f);$("conversationImportStatus").textContent=`原音「${f.name}」を一時接続しました。保存はしていません。`}});
-  $("conversationTurnFilter").addEventListener("change",()=>renderConversationTimeline());
-  $("retrainSpeakersBtn").addEventListener("click",retrainSpeakers);
-  $("clearSpeakerTrainingBtn").addEventListener("click",clearSpeakerTraining);
-  $("startInternalAsrBtn").addEventListener("click",startInternalAsr);
-  $("clearInternalAsrBtn").addEventListener("click",clearInternalAsr);
-  $("shareChatGPTInternalPackBtn").addEventListener("click",shareChatGPTInternalPack);
-  $("saveConversationSpeakerNamesBtn").addEventListener("click",saveConversationSpeakerNames);
-  $("exportConversationPackBtn").addEventListener("click",exportConversationPack);
-  $("deleteConversationBtn").addEventListener("click",async()=>{if(!activeConversationId)return;const row=await getConversationRow(activeConversationId);if(!row)return;if(!confirm(`「${row.title}」の会話分析を削除しますか？`))return;await deleteConversationRow(activeConversationId);activeConversationId=null;await renderConversationView();$("conversationImportStatus").textContent="削除しました。"});
   $("confidenceButtons").innerHTML=[1,2,3,4,5].map(n=>`<button data-conf="${n}">${n}</button>`).join("");$$("#confidenceButtons button").forEach(btn=>btn.addEventListener("click",()=>chooseConfidence(Number(btn.dataset.conf))));
   document.addEventListener("keydown",e=>{if(!$("studyView").classList.contains("active"))return;if(/^[1-5]$/.test(e.key)&&session.rtMs===null){handleChoice(Number(e.key))}else if(!session.practice&&/^[1-5]$/.test(e.key)&&session.rtMs!==null&&session.confidence===null){chooseConfidence(Number(e.key))}else if((e.key==="Enter"||e.key===" ")&&!$("feedbackArea").classList.contains("hidden")&&!session.noteDirty){e.preventDefault();nextQuestion()}});
   let deferredInstallPrompt=null;
